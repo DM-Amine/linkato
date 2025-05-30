@@ -1,0 +1,27 @@
+@import 'tailwindcss';
+
+
+@config '../../tailwind.config.ts';
+
+@custom-variant dark (&:is(.dark *));
+
+html {
+  opacity: 1 !important;
+  transition: opacity 0.2s ease-in-out;
+  scroll-behavior: smooth;
+}
+
+
+@layer base {
+
+}
+
+
+.scrollbar-hide {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE/Edge */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+

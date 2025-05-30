@@ -1,0 +1,333 @@
+/* blog content's styles for single blog page, use it to customize HTML tags style to match with your brand */
+
+:root {
+  /* Color Scheme */
+  --primary-text: #2e2e2e; /* Darker text for contrast */
+  --secondary-text: #8e8e8e; /* Slightly lighter text */
+  --background: #dfdfdf; /* Light background */
+  --surface: #f5f5f5; /* Light surface color */
+  --hover: #dfdfdf; /* Same as background to keep consistency */
+  --border: #b8b8b8; /* Subtle border, slightly darker */
+  --accent: #df5d23; /* Primary accent color */
+  --accent-hover: #dfab94; /* Lighter shade for hover */
+  --code-bg: #f8f8f8; /* Background for code blocks (matches neutral background) */
+}
+.dark {
+  /* Text Colors */
+  --primary-text: #f0f0f0;
+  --secondary-text: #b8b8b8;
+
+  /* Backgrounds */
+  --background: #090909;
+  --surface: #1a1a1a;
+  --hover: #252525;
+
+  /* Borders */
+  --border: #2e2e2e;
+
+  /* Accent Colors */
+  --accent: #df5d23;
+  --accent-hover: #743316;
+
+  /* Code Block BG */
+  --code-bg: #0d0d0d;
+}
+
+/* task (todo list) */
+/* Enhanced Todo List Styles */
+ul[data-type="taskList"] {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0;
+}
+
+ul[data-type="taskList"] li {
+  display: flex;
+  align-items: center; /* Align checkbox and text vertically */
+  margin: 0.25rem 0;
+  padding: 0.25rem 0.6rem;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+ul[data-type="taskList"] li:hover {
+  background: var(--hover);
+  
+}
+
+ul[data-type="taskList"] label {
+  display: flex;
+  align-items: center;
+  margin-right: 0.55rem;
+  cursor: pointer;
+}
+
+/* Custom Checkbox */
+ul[data-type="taskList"] input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+  appearance: none;
+  position: relative;
+  transition: all 0.2s ease;
+  margin: 0; /* Remove default margin */
+}
+
+ul[data-type="taskList"] input[type="checkbox"]:checked {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+ul[data-type="taskList"] input[type="checkbox"]::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: translate(-50%, -60%) rotate(45deg);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+ul[data-type="taskList"] input[type="checkbox"]:checked::before {
+  opacity: 1;
+}
+
+/* Task Content */
+ul[data-type="taskList"] li > div {
+  flex: 1;
+  min-width: 0;
+  padding: 0.125rem 0;
+  display: flex;
+  align-items: center; /* Ensure text aligns with checkbox */
+}
+
+ul[data-type="taskList"] li > div p {
+  margin: 0;
+  line-height: 1.5; /* Match Notion's line height */
+}
+
+/* Completed Task Style */
+ul[data-type="taskList"] li[data-checked="true"] div p {
+  color: var(--secondary-text);
+  text-decoration: line-through;
+}
+
+/* Remove Bullet Points */
+ul[data-type="taskList"] li::before {
+  content: none !important;
+}
+
+/* Focus State */
+ul[data-type="taskList"] input[type="checkbox"]:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Nested Lists */
+ul[data-type="taskList"] ul[data-type="taskList"] {
+  margin-left: 0.25rem;
+  margin-top: 0.25rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Base Styles */
+.ProseMirror {
+  font-family: -apple-system, 'Inter', BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  font-size: 14px;
+  line-height: 1.1;
+  color: var(--primary-text);
+  padding: 1rem 0.7rem;
+  min-height: 100vh;
+  caret-color: var(--accent);
+}
+/* Headings */
+.ProseMirror h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 1.5rem 0 0.75rem;
+}
+
+.ProseMirror h2 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 1.25rem 0 0.6rem;
+}
+
+.ProseMirror h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 1rem 0 0.5rem;
+}
+
+/* Text Formatting */
+.ProseMirror p {
+  margin: 0.5rem 0;
+}
+
+.ProseMirror strong {
+  font-weight: 600;
+}
+
+/* .ProseMirror em {
+  font-style: italic;
+} */
+
+.ProseMirror code {
+  font-family: 'SF Mono', Menlo, Consolas, monospace;
+  background: var(--code-bg);
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  font-size: 13px;
+}
+
+.ProseMirror a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: all 0.1s ease;
+}
+
+.ProseMirror a:hover {
+  border-bottom-color: var(--accent);
+}
+
+/* Lists */
+.ProseMirror ul,
+.ProseMirror ol {
+  padding-left: 0.5rem;
+  margin: 0.5rem 0;
+}
+
+.ProseMirror li {
+  position: relative;
+  padding-left: 0.25rem;
+  margin: 0.25rem 0;
+}
+
+.ProseMirror ul > li::before {
+  content: '•';
+  position: absolute;
+  left: -1rem;
+  color: var(--secondary-text);
+}
+
+/* Checkbox */
+.ProseMirror .task-item {
+  display: flex;
+  align-items: center;
+}
+
+.ProseMirror .task-item input[type="checkbox"] {
+  margin-right: 0.5rem;
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.ProseMirror .task-item input[type="checkbox"]:checked {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+/* Blockquote */
+.ProseMirror blockquote {
+  border-left: 3px solid var(--border);
+  margin: 0.5rem 0;
+  padding-left: 1rem;
+  color: var(--secondary-text);
+}
+
+/* Code Block */
+.ProseMirror pre {
+  background: var(--code-bg);
+  padding: 1rem;
+  border-radius: 4px;
+  margin: 0.75rem 0;
+  font-size: 13px;
+  overflow-x: auto;
+}
+
+.ProseMirror pre code {
+  background: none;
+  padding: 0;
+  font-size: inherit;
+}
+
+/* Table */
+.ProseMirror table {
+  border-collapse: collapse;
+  margin: 0.75rem 0;
+}
+
+.ProseMirror th,
+.ProseMirror td {
+  border: 1px solid var(--border);
+  padding: 0.5rem;
+  min-width: 100px;
+}
+
+.ProseMirror th {
+  background: var(--surface);
+  font-weight: 600;
+}
+
+/* Focus States */
+.ProseMirror-focused {
+  outline: none;
+}
+
+.ProseMirror-focused .has-focus {
+  box-shadow: 0 0 0 2px var(--accent);
+}
+
+/* Selection */
+.ProseMirror ::selection {
+  background: rgba(46, 170, 220, 0.15);
+}
+
+/* Horizontal Rule */
+.ProseMirror hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 1.5rem 0;
+}
+
+/* Image */
+.ProseMirror img {
+  max-width: 100%;
+  border-radius: 4px;
+  margin: 0.75rem 0;
+}
+
+/* Callout/Alert */
+.ProseMirror .callout {
+  background: var(--surface);
+  border-left: 3px solid var(--accent);
+  padding: 1rem;
+  border-radius: 4px;
+  margin: 0.75rem 0;
+}
