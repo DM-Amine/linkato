@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
@@ -23,25 +22,23 @@ export function CreatePageModal({ isOpen, onClose }: CreatePageModalProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  // Generate slug from page name
   useEffect(() => {
     if (!isSlugEdited && pageName) {
       setSlug(slugify(pageName))
     }
   }, [pageName, isSlugEdited])
 
-  // Slugify function to convert page name to URL-friendly slug
   const slugify = (text: string): string => {
     return text
       .toString()
       .toLowerCase()
       .trim()
-      .replace(/\s+/g, "-") // Replace spaces with -
-      .replace(/&/g, "-and-") // Replace & with 'and'
-      .replace(/[^\w-]+/g, "") // Remove all non-word characters
-      .replace(/--+/g, "-") // Replace multiple - with single -
-      .replace(/^-+/, "") // Trim - from start of text
-      .replace(/-+$/, "") // Trim - from end of text
+      .replace(/\s+/g, "-")
+      .replace(/&/g, "-and-")
+      .replace(/[^\w-]+/g, "")
+      .replace(/--+/g, "-")
+      .replace(/^-+/, "")
+      .replace(/-+$/, "")
   }
 
   const handleSlugChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,7 +57,6 @@ export function CreatePageModal({ isOpen, onClose }: CreatePageModalProps) {
       return false
     }
 
-    // Check if slug contains only allowed characters
     if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) {
       setError("Slug can only contain lowercase letters, numbers, and hyphens")
       return false
@@ -78,14 +74,27 @@ export function CreatePageModal({ isOpen, onClose }: CreatePageModalProps) {
     }
 
     setIsSubmitting(true)
+    setError(null)
 
     try {
-      // Here you would typically make an API call to create the page
-      // For now, we'll simulate a successful creation
-      await new Promise((resolve) => setTimeout(resolve, 800))
+      const response = await fetch("/api/page", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name: pageName, slug }),
+      })
 
-      // Redirect to the new page
+      if (!response.ok) {
+        const data = await response.json()
+        setError(data.error || "Failed to create page. Please try again.")
+        setIsSubmitting(false)
+        return
+      }
+
+      // Success: navigate to the new page URL
       router.push(`/dashboard/pages/${slug}`)
+      onClose()
     } catch (err) {
       setError("Failed to create page. Please try again.")
       setIsSubmitting(false)
@@ -93,7 +102,6 @@ export function CreatePageModal({ isOpen, onClose }: CreatePageModalProps) {
   }
 
   const handleClose = () => {
-    // Reset form state
     setPageName("")
     setSlug("")
     setIsSlugEdited(false)
@@ -120,6 +128,7 @@ export function CreatePageModal({ isOpen, onClose }: CreatePageModalProps) {
               placeholder="My Awesome Page"
               className="border-neutral-300 focus:border-primary"
               autoFocus
+              disabled={isSubmitting}
             />
           </div>
 
@@ -136,6 +145,7 @@ export function CreatePageModal({ isOpen, onClose }: CreatePageModalProps) {
               onChange={handleSlugChange}
               placeholder="my-awesome-page"
               className="border-neutral-300 focus:border-primary"
+              disabled={isSubmitting}
             />
             <p className="text-xs text-neutral-500">
               This will be the URL of your page. Only use lowercase letters, numbers, and hyphens.

@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
 
 const pageSchema = new mongoose.Schema({
-    title: {
+    name: {
         type: String,
-        required: [true, 'Title is required'],
+        required: [false, 'name is required'],
         trim: true,
-        maxLength: [50, 'Title cannot be more than 50 characters'],
+        maxLength: [50, 'name cannot be more than 50 characters'],
     },
     slug: {
         type: String,
