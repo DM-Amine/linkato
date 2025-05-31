@@ -16,7 +16,7 @@ export function ThemePreviewCard({ theme, isSelected, onSelect }: ThemePreviewCa
       onClick={onSelect}
       className={`relative w-full p-4 rounded-lg border-2 transition-all hover:border-primary/50 ${
         isSelected ? "border-primary" : "border-neutral-200 dark:border-neutral-700"
-      } group text-left bg-white dark:bg-neutral-900`}
+      } group text-left bg-neutral-50 dark:bg-neutral-900`}
     >
       <div className="space-y-3">
         {/* Theme Preview */}

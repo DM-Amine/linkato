@@ -258,7 +258,7 @@ export const themes: Theme[] = [
       border: "border-yellow-300/40",
       hover:
         "hover:bg-yellow-500/30 hover:border-yellow-300/60 hover:shadow-md hover:shadow-yellow-500/20 transition-all duration-200",
-    },
+    }, 
     socialIcons: {
       background: "bg-yellow-500/20 backdrop-blur-md",
       border: "border-yellow-300/40",

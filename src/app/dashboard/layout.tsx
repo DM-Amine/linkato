@@ -20,7 +20,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
           </div>
       
           {/* Main  */}
-          <main className="max-w-full text-neutral-800 dark:text-neutral-200 pb-8 px-2 py-1 flex-1 overflow-y-scroll overflow-x-hidden">
+          <main className="max-w-full text-neutral-800 dark:text-neutral-200   flex-1 overflow-y-scroll overflow-x-hidden">
             {children}
           </main>
         </div>

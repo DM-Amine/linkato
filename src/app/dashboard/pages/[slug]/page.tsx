@@ -1,14 +1,14 @@
 "use client"
 
 import { useState } from "react"
-import { ProfileCard } from "@/components/dashboard/mylinks/profileCard"
-import { LinksManager } from "@/components/dashboard/mylinks/linkManager"
-import { SocialMediaManager } from "@/components/dashboard/mylinks/socialMediaManager"
+import { ProfileCard } from "@/components/dashboard/pages/profileCard"
+import { LinksManager } from "@/components/dashboard/pages/linkManager"
+import { SocialMediaManager } from "@/components/dashboard/pages/socialMediaManager"
 
-import { ThemeCustomizer } from "@/components/dashboard/mylinks/themeCutomizer"
+import { ThemeCustomizer } from "@/components/dashboard/pages/themeCutomizer"
 
-import { MobilePreview } from "@/components/dashboard/mylinks/mobilePreview"
-import { Share } from "@/components/dashboard/mylinks/share"
+import { MobilePreview } from "@/components/dashboard/pages/mobilePreview"
+import { Share } from "@/components/dashboard/pages/share"
 import type { Profile, Link, SocialMedia, Theme } from "./types"
 import { themes } from "@/components/dashboard/themes/themes"
 
@@ -30,16 +30,16 @@ const initialSocialMedia: SocialMedia[] = []
 export default function Dashboard() {
   const [profile, setProfile] = useState<Profile>(initialProfile)
   const [links, setLinks] = useState<Link[]>(initialLinks)
-    const [socialMedia, setSocialMedia] = useState<SocialMedia[]>(initialSocialMedia)
+  const [socialMedia, setSocialMedia] = useState<SocialMedia[]>(initialSocialMedia)
   const [selectedTheme, setSelectedTheme] = useState<Theme>(themes[0])
 
 
   return (
-    <div className="min-h-screen bg-neutral-300 dark:bg-neutral-900/70 rounded-xl p-4">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <div className="min-h-screen bg-neutral-300 dark:bg-neutral-900/70  p-4">
+      <div className="w-full mx-auto">
+        <div className="flex min-w-full justify-between ">
           {/* Editor Panel */}
-          <div className="space-y-6">
+          <div className="w-full mx-3 space-y-6">
             {/* Header */}
             <div className="flex items-center justify-between">
               {/* <h1 className="text-3xl font-bold text-neutral-800">Dashboard</h1> */}
@@ -49,7 +49,7 @@ export default function Dashboard() {
             {/* Profile Section */}
             <ProfileCard profile={profile} onProfileUpdate={setProfile} />
 
- {/* Social Media Section */}
+            {/* Social Media Section */}
             <SocialMediaManager socialMedia={socialMedia} onSocialMediaUpdate={setSocialMedia} />
             {/* Links Section */}
             <LinksManager links={links} onLinksUpdate={setLinks} />
@@ -59,8 +59,8 @@ export default function Dashboard() {
           </div>
 
           {/* Mobile Preview */}
-          <div className="lg:sticky lg:top-0 lg:h-fit">
-             <MobilePreview profile={profile} links={links} socialMedia={socialMedia} theme={selectedTheme} />
+          <div className="w-4/12 lg:sticky lg:top-0 lg:h-fit">
+            <MobilePreview profile={profile} links={links} socialMedia={socialMedia} theme={selectedTheme} />
           </div>
         </div>
       </div>

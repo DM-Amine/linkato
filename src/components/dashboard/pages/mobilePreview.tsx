@@ -17,7 +17,7 @@ interface MobilePreviewProps {
 export function MobilePreview({ profile, links, socialMedia, theme }: MobilePreviewProps) {
 
   return (
-    <Card className="border-neutral-50 h-fit  dark:border-neutral-600 bg-neutral-200 dark:bg-neutral-800 py-2">
+    <Card className="w-fit border-neutral-50 h-fit  dark:border-neutral-600 bg-neutral-200 dark:bg-neutral-800 py-2">
       <CardHeader>
         <div className="flex items-center justify-center gap-2">
           <Eye className="w-4 h-4 text-neutral-600 dark:text-neutral-300" />
@@ -46,12 +46,17 @@ export function MobilePreview({ profile, links, socialMedia, theme }: MobilePrev
                 <div className={`text-center space-y-4 ${profile.coverImage ? "px-6 pb-6" : "p-6"}`}>
                   {/* Profile Section with conditional positioning */}
                   <div className={`space-y-3 ${profile.coverImage ? "-mt-12" : ""}`}>
+                      {profile.image && (
                     <Avatar className={`${theme.avatar.size} mx-auto ${theme.avatar.border}`}>
-                    <AvatarImage src={profile.image || "/placeholder.svg"} className="object-cover" />
-                    <AvatarFallback className="text-xl bg-neutral-100 text-neutral-600">
+                    {/*  */}
+                   
+<AvatarImage src={profile.image || "/placeholder.svg"} className="object-cover" />
+                     
+                    {/* <AvatarFallback className="text-xl bg-neutral-100 text-neutral-600">
                       {profile.name.charAt(0)}
-                    </AvatarFallback>
+                    </AvatarFallback> */}
                   </Avatar>
+                  )}
                   <div>
                    <h2 className={`text-lg mb-2 ${theme.text.name}`}>{profile.name}</h2>
                       <p className={`text-sm leading-relaxed ${theme.text.bio}`}>{profile.bio}</p>
@@ -73,7 +78,9 @@ export function MobilePreview({ profile, links, socialMedia, theme }: MobilePrev
                             className={`w-10 h-10 rounded-full flex items-center justify-center cursor-pointer border ${theme.socialIcons.background} ${theme.socialIcons.border} ${theme.socialIcons.hover}`}
                           >
                             <IconComponent
-                              className="w-5 h-5"
+                              className={`w-5 h-5 ${
+                                theme.socialIcons.iconColor === "platform-color" ? "" : theme.socialIcons.iconColor
+                              }`}
                               style={{
                                  color: theme.socialIcons.iconColor === "platform-color" ? platform?.color : undefined,
                               }}
@@ -84,7 +91,7 @@ export function MobilePreview({ profile, links, socialMedia, theme }: MobilePrev
                     </div>
                   )}
 
-                <Separator className={theme.separator} />
+                {/* <Separator className={theme.separator} /> */}
 
                 {/* Links Preview */}
                 <div className="space-y-2 pb-4">

@@ -29,7 +29,7 @@ const Sidebar = () => {
 
   const links = [
     // { name: "Home", href: "/dashboard", icon: <Home size={18} strokeWidth={1.5} /> },
-    { name: "my links", href: "/dashboard/mylinks", icon: <Folder size={18} strokeWidth={1.5} /> },
+    { name: "Pages", href: "/dashboard/pages", icon: <Folder size={18} strokeWidth={1.5} /> },
     // { name: "Blogs", href: "/dashboard/blogs", icon: <File size={18} strokeWidth={1.5} /> },
     // { name: "Members", href: "/dashboard/members", icon: <Users size={18} strokeWidth={1.5} /> },
     // { name: "Workspaces", href: "/dashboard/workspaces", icon: <Workflow size={18} strokeWidth={1.5} /> }, 

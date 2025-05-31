@@ -2,7 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Crown, Grid, Star } from "lucide-react"
-import { ThemePreviewCard } from "@/components/dashboard/mylinks/themePreviewCard"
+import { ThemePreviewCard } from "@/components/dashboard/pages/themePreviewCard"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 // import { Check, Crown, Lock, Grid, Star } from "lucide-react"
 import { themes } from "@/components/dashboard/themes/themes"
