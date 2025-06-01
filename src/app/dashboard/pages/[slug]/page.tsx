@@ -1,6 +1,7 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+
 import { ProfileCard } from "@/components/dashboard/pages/profileCard"
 import { LinksManager } from "@/components/dashboard/pages/linkManager"
 import { SocialMediaManager } from "@/components/dashboard/pages/socialMediaManager"
@@ -9,6 +10,8 @@ import { MobilePreview } from "@/components/dashboard/pages/mobilePreview"
 import { Share } from "@/components/dashboard/pages/share"
 import type { Profile, Link, SocialMedia, Theme } from "./types"
 import { themes } from "@/components/dashboard/themes/themes"
+import { useParams } from "next/navigation";
+
 
 const initialProfile: Profile = {
   name: "Your Name",
@@ -28,7 +31,11 @@ export default function Dashboard() {
   const [profile, setProfile] = useState<Profile>(initialProfile)
   const [links, setLinks] = useState<Link[]>(initialLinks)
   const [socialMedia, setSocialMedia] = useState<SocialMedia[]>(initialSocialMedia)
-  const [selectedTheme, setSelectedTheme] = useState<Theme>(themes[0])
+  const [selectedTheme, setSelectedTheme] = useState<Theme>(() => {
+    return themes.find((theme) => theme.id === "minimal-light") ?? themes[0]
+  })
+  const { slug } = useParams() as { slug: string };
+
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
@@ -44,19 +51,22 @@ export default function Dashboard() {
         profile,
         links,
         socialMedia,
-        theme: selectedTheme,
+        theme: selectedTheme.id,
+
+
       }
 
-      // Replace this with your actual API call
-      // Example:
-      // await fetch('/api/dashboard/save', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(payload),
-      // })
 
-      // Simulate network delay
-      await new Promise((resolve) => setTimeout(resolve, 1000))
+      const res = await fetch(`/api/page/${slug}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      })
+
+      const resJson = await res.json()
+      console.log("📥 Response JSON:", resJson)
+
+      if (!res.ok) throw new Error(resJson?.error || "Failed to update page")
 
       setSubmitSuccess(true)
     } catch (error) {
@@ -66,31 +76,51 @@ export default function Dashboard() {
     }
   }
 
+  useEffect(() => {
+    const fetchPageData = async () => {
+      try {
+        const res = await fetch(`/api/page/${slug}`)
+        if (!res.ok) throw new Error("Failed to fetch page data")
+
+        const data = await res.json()
+        console.log("📥 Loaded page data:", data)
+
+        setProfile(data.profile)
+        setLinks(data.links)
+        setSocialMedia(data.socialMedia)
+        const matchedTheme = themes.find((t) => t.id === data.theme) ?? themes[0]
+        setSelectedTheme(matchedTheme)
+      } catch (err) {
+        console.error("❌ Failed to load page data:", err)
+      }
+    }
+
+    if (slug) fetchPageData()
+  }, [slug])
+
+
+  useEffect(() => {
+    console.log("🎨 selectedTheme updated:", selectedTheme)
+  }, [selectedTheme])
+
+
   return (
     <div className="min-h-screen bg-neutral-300 dark:bg-neutral-900/70 p-4">
       <div className="w-full mx-auto">
         <div className="flex min-w-full justify-between">
           {/* Editor Panel */}
           <div className="w-full mx-3 space-y-6">
-            {/* Header */}
             <div className="flex items-center justify-between">
               <h1 className="text-3xl font-bold text-neutral-800 dark:text-neutral-100">Dashboard</h1>
               <Share profileName={profile.name} />
             </div>
 
-            {/* Profile Section */}
             <ProfileCard profile={profile} onProfileUpdate={setProfile} />
-
-            {/* Social Media Section */}
             <SocialMediaManager socialMedia={socialMedia} onSocialMediaUpdate={setSocialMedia} />
-
-            {/* Links Section */}
             <LinksManager links={links} onLinksUpdate={setLinks} />
+            <ThemeCustomizer initialThemeId={selectedTheme.id} onThemeChange={setSelectedTheme} />
 
-            {/* Design Section */}
-            <ThemeCustomizer selectedTheme={selectedTheme} onThemeChange={setSelectedTheme} />
 
-            {/* Submission Controls */}
             <div className="mt-6 flex items-center gap-4">
               <button
                 onClick={handleSubmit}
@@ -112,7 +142,12 @@ export default function Dashboard() {
 
           {/* Mobile Preview */}
           <div className="w-4/12 lg:sticky lg:top-0 lg:h-fit">
-            <MobilePreview profile={profile} links={links} socialMedia={socialMedia} theme={selectedTheme} />
+            <MobilePreview
+              profile={profile}
+              links={links}
+              socialMedia={socialMedia}
+              theme={selectedTheme} // ✅ This is required!
+            />
           </div>
         </div>
       </div>

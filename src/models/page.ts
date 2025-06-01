@@ -1,13 +1,19 @@
 import mongoose from 'mongoose';
 
 const pageSchema = new mongoose.Schema({
+    id: {
+        type: String,
+        required: [false, 'id is required'],
+        trim: true,
+        unique: true,
+    },
     name: {
         type: String,
         required: [false, 'name is required'],
         trim: true,
         maxLength: [50, 'name cannot be more than 50 characters'],
     },
-    slug: {
+    slug: { 
         type: String,
         required: [true, 'Slug is required'],
         lowercase: true,
@@ -32,16 +38,21 @@ const pageSchema = new mongoose.Schema({
     },
     socials: {
         type: [{
+            id: {
+                type: String,
+                required: [false, 'Social id is required'],
+                trim: true,
+            },
             platform: {
                 type: String,
-                required: [true, 'Platform is required'],
+               
                 enum: ['twitter', 'facebook', 'instagram', 'linkedin', 'github', 'youtube', 'tiktok', 'website', 'other'],
                 lowercase: true,
                 trim: true,
             },
             url: {
                 type: String,
-                required: [true, 'URL is required'],
+               
                 trim: true,
             },
         }],
@@ -50,15 +61,18 @@ const pageSchema = new mongoose.Schema({
     },
     links: {
         type: [{
+             id: {
+                type: String,
+            },
             title: {
                 type: String,
-                required: [true, 'Link title is required'],
+               
                 trim: true,
                 maxLength: [100, 'Link title cannot exceed 100 characters'],
             },
             url: {
                 type: String,
-                required: [true, 'Link URL is required'],
+              
                 trim: true,
             },
         }],
@@ -67,7 +81,7 @@ const pageSchema = new mongoose.Schema({
     },
     theme: {
         type: String,
-        default: 'default',
+        default: 'minimal-light',
         trim: true,
     },
     createdAt: {

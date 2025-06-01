@@ -113,13 +113,13 @@ export function LinksManager({ links, onLinksUpdate }: LinksManagerProps) {
         <DragDropContext onDragEnd={handleDragEnd}>
           <Droppable droppableId="links">
             {(provided) => (
-              <div {...provided.droppableProps} ref={provided.innerRef} className="space-y-2">
+              <div  {...provided.droppableProps} ref={provided.innerRef} className="space-y-2">
                 {links.map((link, index) => (
                   <Draggable key={link.id} draggableId={link.id} index={index}>
-                    {(provided) => (
-                      <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
+  {(provided) => (
+    <div
+      ref={provided.innerRef}
+      {...provided.draggableProps}
                         className="flex items-center gap-2 p-3 border border-neutral-200 dark:border-neutral-600 rounded-lg bg-neutral-50 dark:bg-neutral-700  hover:border-neutral-300 transition-colors"
                       >
                         <div {...provided.dragHandleProps}>

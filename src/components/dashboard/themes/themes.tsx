@@ -28,7 +28,7 @@ export const themes: Theme[] = [
       iconColor: "platform-color", // Use platform's brand color
       hover: "hover:bg-neutral-50 hover:scale-110",
     },
-    separator: "bg-neutral-200",
+   
   },
   {
     id: "minimal-dark",

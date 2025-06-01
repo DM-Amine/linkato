@@ -100,7 +100,8 @@ export function ProfileCard({ profile, onProfileUpdate }: ProfileEditorProps) {
             <Avatar className="w-20 h-20 border-2 border-neutral-200 dark:border-neutral-700">
               <AvatarImage src={profile.image || "/placeholder.svg"} className="object-cover" />
               <AvatarFallback className="bg-neutral-100 dark:bg-neutral-900 text-neutral-600 dark:text-neutral-300">
-                {profile.name.charAt(0)}
+              {profile.name?.charAt(0) || "?"}
+
               </AvatarFallback>
             </Avatar>
             <Button

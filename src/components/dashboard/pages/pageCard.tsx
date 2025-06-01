@@ -46,6 +46,25 @@ export function PageCard({ page, onDelete }: PageCardProps) {
     e.stopPropagation()
   }
 
+  const handleDeletePage = async (slug: string) => {
+  try {
+    const res = await fetch(`/api/page/${slug}`, {
+      method: "DELETE",
+    });
+
+    if (!res.ok) {
+      const errorData = await res.json();
+      console.error("❌ Delete failed:", errorData.error);
+      return;
+    }
+
+    onDelete(page.id); // Inform parent to remove from UI
+  } catch (error) {
+    console.error("🔥 Error deleting page:", error);
+  }
+};
+
+
   return (
     <Card
       className="group border-neutral-200 dark:border-neutral-600 bg-neutral-50 dark:bg-neutral-900 overflow-hidden h-[290px] cursor-pointer transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 hover:border-primary/30 hover:-translate-y-1"
@@ -114,16 +133,17 @@ export function PageCard({ page, onDelete }: PageCardProps) {
 
             <div className="flex gap-1">
               <Button
-                size="sm"
-                variant="ghost"
-                className="h-6 w-6 p-0 text-neutral-500 hover:text-error hover:bg-error/10 transition-all duration-200"
-                onClick={(e) => {
-                  e.stopPropagation()
-                  onDelete(page.id)
-                }}
-              >
-                <Trash2 className="w-4 h-4" />
-              </Button>
+  size="sm"
+  variant="ghost"
+  className="h-6 w-6 p-0 text-neutral-500 hover:text-error hover:bg-error/10 transition-all duration-200"
+  onClick={(e) => {
+    e.stopPropagation();
+    handleDeletePage(page.slug);
+  }}
+>
+  <Trash2 className="w-4 h-4" />
+</Button>
+
              
             </div>
           </div>

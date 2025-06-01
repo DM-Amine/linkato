@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
 import Page from '@/models/page';
+import { v4 as uuidv4 } from 'uuid';
 
 export async function GET() {
   try {
@@ -8,7 +9,16 @@ export async function GET() {
 
     const pages = await Page.find({}).lean();
 
-    return NextResponse.json(pages, { status: 200 });
+    // Ensure all links have a UUID
+    const sanitizedPages = pages.map(page => ({
+      ...page,
+      links: (page.links || []).map(link => ({
+        ...link,
+        id: link.id || uuidv4(),
+      })),
+    }));
+
+    return NextResponse.json(sanitizedPages, { status: 200 });
   } catch (error) {
     console.error('Failed to fetch pages:', error);
     return NextResponse.json(
@@ -41,7 +51,17 @@ export async function POST(request: Request) {
       );
     }
 
-    const newPage = await Page.create({ name, slug });
+    const newPage = await Page.create({
+      name,
+      slug,
+      bio: 'Welcome to my link page!',
+      avatar: '/placeholder.svg?height=100&width=100',
+      links: [],              // Initialize empty
+      socials: [],            // Initialize empty
+      theme: 'minimal-light', // Default theme
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
 
     return NextResponse.json(newPage, { status: 201 });
   } catch (error) {

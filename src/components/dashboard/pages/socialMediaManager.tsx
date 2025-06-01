@@ -7,9 +7,14 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { socialPlatforms } from "@/components/dashboard/socialPlatforms/socialPlatforms"
-
 
 import type { SocialMedia } from "../types"
 
@@ -18,45 +23,57 @@ interface SocialMediaManagerProps {
   onSocialMediaUpdate: (socialMedia: SocialMedia[]) => void
 }
 
-export function SocialMediaManager({ socialMedia, onSocialMediaUpdate }: SocialMediaManagerProps) {
+export function SocialMediaManager({
+  socialMedia,
+  onSocialMediaUpdate,
+}: SocialMediaManagerProps) {
   const [showAddForm, setShowAddForm] = useState(false)
   const [editingId, setEditingId] = useState<string | null>(null)
-  const [newSocial, setNewSocial] = useState({ platform: "", url: "" })
+  const [newSocial, setNewSocial] = useState({id:"", platform: "", url: "" })
   const [editingUrl, setEditingUrl] = useState("")
 
   const addSocialMedia = () => {
-    if (newSocial.platform && newSocial.url) {
-      const platform = socialPlatforms.find((p) => p.id === newSocial.platform)
-      if (platform) {
-        let formattedUrl = newSocial.url
-        if (
-          !formattedUrl.startsWith("http://") &&
-          !formattedUrl.startsWith("https://") &&
-          !formattedUrl.startsWith("mailto:")
-        ) {
-          formattedUrl = "https://" + formattedUrl
-        }
+    const platform = socialPlatforms.find((p) => p.id === newSocial.platform)
+    if (!platform || !newSocial.url) return
 
-        const social: SocialMedia = {
-          id: Date.now().toString(),
-          platform: platform.id,
-          url: formattedUrl,
-          icon: platform.name,
-          color: platform.color,
-        }
-        onSocialMediaUpdate([...socialMedia, social])
-        setNewSocial({ platform: "", url: "" })
-        setShowAddForm(false)
-      }
+    let formattedUrl = newSocial.url.trim()
+    if (
+      !formattedUrl.startsWith("http://") &&
+      !formattedUrl.startsWith("https://") &&
+      !formattedUrl.startsWith("mailto:")
+    ) {
+      formattedUrl = "https://" + formattedUrl
     }
+
+    const newEntry: SocialMedia = {
+      id: platform.id, 
+      platform: platform.id,
+      url: formattedUrl,
+      icon: platform.name,
+      color: platform.color,
+    }
+
+    onSocialMediaUpdate([...socialMedia, newEntry])
+    setNewSocial({ id: "", platform: "", url: "" })
+    setShowAddForm(false)
   }
 
   const updateSocialMedia = (id: string, url: string) => {
-    let formattedUrl = url
-    if (url && !url.startsWith("http://") && !url.startsWith("https://") && !url.startsWith("mailto:")) {
-      formattedUrl = "https://" + url
+    let formattedUrl = url.trim()
+    if (
+      url &&
+      !formattedUrl.startsWith("http://") &&
+      !formattedUrl.startsWith("https://") &&
+      !formattedUrl.startsWith("mailto:")
+    ) {
+      formattedUrl = "https://" + formattedUrl
     }
-    onSocialMediaUpdate(socialMedia.map((social) => (social.id === id ? { ...social, url: formattedUrl } : social)))
+
+    const updated = socialMedia.map((social) =>
+      social.id === id ? { ...social, url: formattedUrl } : social
+    )
+
+    onSocialMediaUpdate(updated)
     setEditingId(null)
   }
 
@@ -65,14 +82,16 @@ export function SocialMediaManager({ socialMedia, onSocialMediaUpdate }: SocialM
   }
 
   const availablePlatforms = socialPlatforms.filter(
-    (platform) => !socialMedia.some((social) => social.platform === platform.id),
+    (platform) => !socialMedia.some((social) => social.id === platform.id)
   )
 
   return (
     <Card className="border-neutral-50 dark:border-neutral-600 bg-neutral-200 dark:bg-neutral-800 py-4">
       <CardHeader>
         <div className="flex items-center justify-between">
-          <CardTitle className="text-neutral-700 dark:text-neutral-300">Social Media</CardTitle>
+          <CardTitle className="text-neutral-700 dark:text-neutral-300">
+            Social Media
+          </CardTitle>
           <Button
             onClick={() => setShowAddForm(true)}
             size="sm"
@@ -92,7 +111,9 @@ export function SocialMediaManager({ socialMedia, onSocialMediaUpdate }: SocialM
                 <Label className="text-neutral-700 dark:text-neutral-300">Platform</Label>
                 <Select
                   value={newSocial.platform}
-                  onValueChange={(value) => setNewSocial({ ...newSocial, platform: value })}
+                  onValueChange={(value) =>
+                    setNewSocial({ ...newSocial, platform: value })
+                  }
                 >
                   <SelectTrigger className="border-neutral-300 dark:border-neutral-600 focus:border-primary focus:ring-primary">
                     <SelectValue placeholder="Select a platform" />
@@ -121,13 +142,19 @@ export function SocialMediaManager({ socialMedia, onSocialMediaUpdate }: SocialM
                       : "Select a platform first"
                   }
                   value={newSocial.url}
-                  onChange={(e) => setNewSocial({ ...newSocial, url: e.target.value })}
+                  onChange={(e) =>
+                    setNewSocial({ ...newSocial, url: e.target.value })
+                  }
                   type="url"
                   className="border-neutral-300 dark:border-neutral-600 focus:border-primary focus:ring-primary"
                 />
               </div>
               <div className="flex gap-2">
-                <Button onClick={addSocialMedia} size="sm" className="bg-primary hover:bg-primary/90 text-white">
+                <Button
+                  onClick={addSocialMedia}
+                  size="sm"
+                  className="bg-primary hover:bg-primary/90 text-white"
+                >
                   Add
                 </Button>
                 <Button
@@ -158,7 +185,6 @@ export function SocialMediaManager({ socialMedia, onSocialMediaUpdate }: SocialM
                     <IconComponent className="w-5 h-5" style={{ color: platform?.color }} />
                   </div>
                 )}
-
                 {editingId === social.id ? (
                   <div className="flex-1">
                     <Input
@@ -166,12 +192,8 @@ export function SocialMediaManager({ socialMedia, onSocialMediaUpdate }: SocialM
                       onChange={(e) => setEditingUrl(e.target.value)}
                       onBlur={() => updateSocialMedia(social.id, editingUrl)}
                       onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                          updateSocialMedia(social.id, editingUrl)
-                        }
-                        if (e.key === "Escape") {
-                          setEditingId(null)
-                        }
+                        if (e.key === "Enter") updateSocialMedia(social.id, editingUrl)
+                        if (e.key === "Escape") setEditingId(null)
                       }}
                       placeholder={platform?.placeholder}
                       autoFocus
@@ -181,16 +203,19 @@ export function SocialMediaManager({ socialMedia, onSocialMediaUpdate }: SocialM
                 ) : (
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <span className="font-medium text-neutral-700 dark:text-neutral-300">{platform?.name}</span>
+                      <span className="font-medium text-neutral-700 dark:text-neutral-300">
+                        {platform?.name}
+                      </span>
                       <Badge variant="outline" className="text-xs">
                         <ExternalLink className="w-3 h-3 mr-1" />
                         Link
                       </Badge>
                     </div>
-                    <div className="text-sm text-neutral-500 dark:text-neutral-400 truncate">{social.url}</div>
+                    <div className="text-sm text-neutral-500 dark:text-neutral-400 truncate">
+                      {social.url}
+                    </div>
                   </div>
                 )}
-
                 <div className="flex gap-1">
                   <Button
                     size="sm"
