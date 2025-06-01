@@ -31,7 +31,7 @@ export default async function PublicPage({ params }: { params: Promise<{ slug: s
   const coverImage = profile?.coverImage
 
   return (
-    <div className={`min-h-screen flex flex-col items-center ${theme?.background ?? "bg-neutral-100 dark:bg-neutral-900"}`}>
+    <div className={`min-h-screen pb-8 flex flex-col items-center ${theme?.background ?? "bg-neutral-100 dark:bg-neutral-900"}`}>
       
 
       {/* Cover Image */}
@@ -45,8 +45,8 @@ export default async function PublicPage({ params }: { params: Promise<{ slug: s
       {/* Profile Card */}
       <Card className={`max-w-md w-full rounded-xl border ${theme?.avatar?.border ?? "border-neutral-300 dark:border-neutral-700"} shadow-md ${theme?.links?.background ?? "bg-white dark:bg-neutral-800"}`}>
         <CardContent className="flex flex-col items-center space-y-4 py-8 px-6">
-          <Avatar className={`${theme?.avatar?.size ?? "w-24 h-24"} mb-2 border-4 border-white dark:border-black`}>
-            <AvatarImage src={image} alt={name} />
+          <Avatar className={`${theme?.avatar?.size ?? "w-24 h-24"} mb-2 border-4  border-white dark:border-black`}>
+            <AvatarImage src={image} alt={name} className="object-cover" />
             <AvatarFallback>{name.charAt(0)}</AvatarFallback>
           </Avatar>
 

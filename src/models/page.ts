@@ -64,6 +64,10 @@ const pageSchema = new mongoose.Schema({
              id: {
                 type: String,
             },
+            index: {
+            type: Number,
+            required: true,
+            },
             title: {
                 type: String,
                

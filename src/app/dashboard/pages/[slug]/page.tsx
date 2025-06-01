@@ -49,7 +49,10 @@ export default function Dashboard() {
     try {
       const payload = {
         profile,
-        links,
+        links: links.map((link, i) => ({
+    ...link,
+    index: i.toString(), // assign index as string to match your schema
+  })),
         socialMedia,
         theme: selectedTheme.id,
 
