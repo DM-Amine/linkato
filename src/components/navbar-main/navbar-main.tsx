@@ -28,9 +28,9 @@ export default function NavbarMain() {
   
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
-
-  const hideMainNav =
-    pathname.startsWith("/dashboard") || pathname.startsWith("/adminPanel");
+const isDynamicPublicPage = /^\/[^/]+$/.test(pathname);
+  const hideMainNav = pathname.startsWith("/dashboard") || pathname.startsWith("/adminPanel")||
+  isDynamicPublicPage;
 
   if (hideMainNav) return null;
 
