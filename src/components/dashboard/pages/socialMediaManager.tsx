@@ -86,16 +86,17 @@ export function SocialMediaManager({
   )
 
   return (
-    <Card className="border-neutral-50 dark:border-neutral-600 bg-neutral-200 dark:bg-neutral-800 py-4">
-      <CardHeader>
-        <div className="flex items-center justify-between">
+    <Card className="border-neutral-50 dark:border-neutral-600 bg-neutral-200 dark:bg-neutral-800 py-2 ">
+      <CardHeader className="px-2">
+        <div className="flex items-center justify-between ">
           <CardTitle className="text-neutral-700 dark:text-neutral-300">
             Social Media
           </CardTitle>
           <Button
             onClick={() => setShowAddForm(true)}
-            size="sm"
-            className="gap-2 bg-primary hover:bg-primary/90 text-white"
+           
+            variant={"default"}
+           
             disabled={availablePlatforms.length === 0}
           >
             <Plus className="w-4 h-4" />
@@ -103,19 +104,20 @@ export function SocialMediaManager({
           </Button>
         </div>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-4 px-2">
         {showAddForm && (
-          <Card className="border-dashed border-neutral-300 bg-neutral-50 dark:bg-neutral-900">
-            <CardContent className="pt-4 space-y-3">
+          <Card className="border-dashed shadow-none  border-neutral-500 bg-neutral-50   dark:bg-neutral-900"
+          >
+            <CardContent className="pt-4 space-y-3 !px-2.5 py-1.5">
               <div>
-                <Label className="text-neutral-700 dark:text-neutral-300">Platform</Label>
+                <Label className="text-neutral-700 mb-1 dark:text-neutral-300">Platform</Label>
                 <Select
                   value={newSocial.platform}
                   onValueChange={(value) =>
                     setNewSocial({ ...newSocial, platform: value })
                   }
                 >
-                  <SelectTrigger className="border-neutral-300 dark:border-neutral-600 focus:border-primary focus:ring-primary">
+                  <SelectTrigger className="border-neutral-300 bg-neutral-100 dark:bg-neutral-900 px-1 !py-1 !h-fit text-xs font-semibold dark:border-neutral-600 focus:border-primary focus:ring-primary">
                     <SelectValue placeholder="Select a platform" />
                   </SelectTrigger>
                   <SelectContent>
@@ -123,7 +125,7 @@ export function SocialMediaManager({
                       const IconComponent = platform.icon
                       return (
                         <SelectItem key={platform.id} value={platform.id}>
-                          <div className="flex items-center gap-2">
+                          <div className="flex text-xs  items-center gap-2">
                             <IconComponent className="w-4 h-4" style={{ color: platform.color }} />
                             {platform.name}
                           </div>
@@ -134,7 +136,7 @@ export function SocialMediaManager({
                 </Select>
               </div>
               <div>
-                <Label className="text-neutral-700 dark:text-neutral-300">URL</Label>
+                <Label className="text-neutral-700 mb-1 dark:text-neutral-300">URL</Label>
                 <Input
                   placeholder={
                     newSocial.platform
@@ -146,22 +148,23 @@ export function SocialMediaManager({
                     setNewSocial({ ...newSocial, url: e.target.value })
                   }
                   type="url"
-                  className="border-neutral-300 dark:border-neutral-600 focus:border-primary focus:ring-primary"
+                  className="border-neutral-300 !py-1 !h-fit dark:border-neutral-600 focus:border-primary focus:ring-primary"
                 />
               </div>
               <div className="flex gap-2">
                 <Button
                   onClick={addSocialMedia}
-                  size="sm"
-                  className="bg-primary hover:bg-primary/90 text-white"
+                  variant={"default"}
+                 className="px-3"
+                  
                 >
                   Add
                 </Button>
                 <Button
                   onClick={() => setShowAddForm(false)}
                   variant="outline"
-                  size="sm"
-                  className="border-neutral-300 text-neutral-600 hover:bg-neutral-50"
+                
+                  className="border-neutral-400 dark:border-neutral-300 text-neutral-600 dark:text-neutral-300 hover:bg-neutral-200 hover:dark:bg-neutral-700 hover:dark:border-neutral-600"
                 >
                   Cancel
                 </Button>
@@ -178,7 +181,7 @@ export function SocialMediaManager({
             return (
               <div
                 key={social.id}
-                className="flex items-center gap-3 p-3 border border-neutral-200 dark:border-neutral-700 rounded-lg bg-white dark:bg-neutral-900 hover:border-neutral-300 dark:hover:border-neutral-600 transition-colors"
+                className="flex items-center gap-3 px-2 py-1 border border-neutral-200 dark:border-neutral-700 rounded-lg bg-neutral-50 dark:bg-neutral-900 hover:border-neutral-300 dark:hover:border-neutral-600 transition-colors"
               >
                 {IconComponent && (
                   <div className="flex-shrink-0">
@@ -197,7 +200,7 @@ export function SocialMediaManager({
                       }}
                       placeholder={platform?.placeholder}
                       autoFocus
-                      className="border-neutral-300 dark:border-neutral-600 focus:border-primary focus:ring-primary"
+                      className="border-neutral-300 !py-1 !h-fit dark:border-neutral-600 focus:border-primary focus:ring-primary"
                     />
                   </div>
                 ) : (
@@ -206,10 +209,10 @@ export function SocialMediaManager({
                       <span className="font-medium text-neutral-700 dark:text-neutral-300">
                         {platform?.name}
                       </span>
-                      <Badge variant="outline" className="text-xs">
+                      {/* <Badge variant="outline" className="text-xs">
                         <ExternalLink className="w-3 h-3 mr-1" />
                         Link
-                      </Badge>
+                      </Badge> */}
                     </div>
                     <div className="text-sm text-neutral-500 dark:text-neutral-400 truncate">
                       {social.url}
@@ -218,7 +221,7 @@ export function SocialMediaManager({
                 )}
                 <div className="flex gap-1">
                   <Button
-                    size="sm"
+                   
                     variant="ghost"
                     onClick={() => {
                       if (editingId === social.id) {
@@ -228,12 +231,12 @@ export function SocialMediaManager({
                         setEditingId(social.id)
                       }
                     }}
-                    className="text-neutral-500 hover:text-primary hover:bg-primary/10"
+                    className="text-neutral-500 hover:bg-neutral-200   hover:dark:bg-neutral-800"
                   >
                     <Edit2 className="w-4 h-4" />
                   </Button>
                   <Button
-                    size="sm"
+                   
                     variant="ghost"
                     onClick={() => deleteSocialMedia(social.id)}
                     className="text-neutral-500 hover:text-error hover:bg-error/10"

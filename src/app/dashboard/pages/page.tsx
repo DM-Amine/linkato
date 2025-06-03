@@ -59,9 +59,9 @@ export default function MyPages() {
             <h1 className="text-3xl font-bold text-neutral-800 dark:text-neutral-200">My Pages</h1>
             <p className="text-neutral-500 mt-1">Manage all your link pages in one place</p>
           </div>
-          <Button className="bg-primary hover:bg-primary/90 text-white" onClick={openCreateModal}>
+          <Button variant={"default"} className="gap-0 border  !px-2" onClick={openCreateModal}>
             <Plus className="w-4 h-4 mr-2" />
-            Create New Page
+            Create
           </Button>
         </div>
 

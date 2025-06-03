@@ -16,7 +16,7 @@ export default async function PublicPage({ params }: { params: Promise<{ slug: s
   const { slug } = await params
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? `http://localhost:3000`
-  const res = await fetch(`${baseUrl}/api/page/${slug}`, { next: { revalidate: 60 } })
+  const res = await fetch(`${baseUrl}/api/page/${slug}`, { next: { revalidate: 10 } })
 
   if (res.status === 404) return notFound()
   if (!res.ok) throw new Error("Failed to load page")
@@ -31,22 +31,22 @@ export default async function PublicPage({ params }: { params: Promise<{ slug: s
   const coverImage = profile?.coverImage
 
   return (
-    <div className={`min-h-screen pb-8 flex flex-col items-center ${theme?.background ?? "bg-neutral-100 dark:bg-neutral-900"}`}>
+    <div className={`min-h-screen  flex flex-col items-center ${theme?.background ?? "bg-neutral-100 dark:bg-neutral-900"}`}>
       
 
       {/* Cover Image */}
       {coverImage && (
-        <div className="w-full mx-4 my-2 rounded-lg overflow-hidden mb-6 shadow-lg relative">
+        <div className= {` ${theme?.cover_image?.size } mx-4 my-2 ${theme?.cover_image?.corners }  overflow-hidden mb-6 ${theme?.cover_image?.shadow } relative`}>
           <img src={coverImage} alt="Cover" className="w-full h-40 object-cover" />
           {theme?.coverOverlay && <div className={`absolute inset-0 ${theme.coverOverlay}`} />}
         </div>
       )}
 
       {/* Profile Card */}
-      <Card className={`max-w-md w-full rounded-xl border ${theme?.avatar?.border ?? "border-neutral-300 dark:border-neutral-700"} shadow-md ${theme?.links?.background ?? "bg-white dark:bg-neutral-800"}`}>
-        <CardContent className="flex flex-col items-center space-y-4 py-8 px-6">
-          <Avatar className={`${theme?.avatar?.size ?? "w-24 h-24"} mb-2 border-4  border-white dark:border-black`}>
-            <AvatarImage src={image} alt={name} className="object-cover" />
+      <Card className={`max-w-md w-full rounded-xl ${theme?.profile_card?.position } shadow-none border-none`}>
+        <CardContent className={`flex flex-col ${theme?.profile_card?.background } items-center space-y-4 py-8 px-6`}>
+          <Avatar className={`${theme?.avatar?.size ?? "w-24 h-24"} ${theme?.avatar?.border } ${theme?.avatar?.corners }  mb-2   `}>
+            <AvatarImage src={image} alt={name} className="object-cover " />
             <AvatarFallback>{name.charAt(0)}</AvatarFallback>
           </Avatar>
 
@@ -94,12 +94,12 @@ export default async function PublicPage({ params }: { params: Promise<{ slug: s
       </Card>
 
       {/* Separator */}
-      {theme?.separator && (
-        <div className={`h-px w-24 my-6 ${theme.separator}`} />
-      )}
+      {/* {theme?.separator && (
+        <div className={`h-px w-24 my-6 ${theme.separator.background} ${theme.separator.size}`} />
+      )} */}
 
       {/* Links */}
-      <div className="max-w-md w-full mt-8 space-y-4">
+      <div className="max-w-md w-full mt-8 mb-6 space-y-4">
         {links.map((link) => (
           <a
             key={link.id}
@@ -115,6 +115,10 @@ export default async function PublicPage({ params }: { params: Promise<{ slug: s
             {link.title}
           </a>
         ))}
+      </div>
+      {/* watermark */}
+      <div className={`${theme?.links?.background} w-full flex justify-center mt-20 py-3 items-center `}>
+        <h4>Powered by Linkatoo</h4>
       </div>
     </div>
   )

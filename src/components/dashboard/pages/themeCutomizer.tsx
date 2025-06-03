@@ -44,15 +44,15 @@ useEffect(() => {
       <CardContent>
         <Tabs defaultValue="all" className="w-full">
           <TabsList className="grid grid-cols-3 mb-6 bg-neutral-300 dark:bg-neutral-700">
-            <TabsTrigger value="all" className="data-[state=active]:bg-primary data-[state=active]:text-white">
+            <TabsTrigger value="all" >
               <Grid className="w-4 h-4 mr-2" />
               All
             </TabsTrigger>
-            <TabsTrigger value="free" className="data-[state=active]:bg-primary data-[state=active]:text-white">
+            <TabsTrigger value="free" >
               <Star className="w-4 h-4 mr-2" />
               Free
             </TabsTrigger>
-            <TabsTrigger value="pro" className="data-[state=active]:bg-primary data-[state=active]:text-white">
+            <TabsTrigger value="pro" >
               <Crown className="w-4 h-4 mr-2" />
               Pro
             </TabsTrigger>

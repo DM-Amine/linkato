@@ -67,7 +67,7 @@ export function PageCard({ page, onDelete }: PageCardProps) {
 
   return (
     <Card
-      className="group border-neutral-200 dark:border-neutral-600 bg-neutral-50 dark:bg-neutral-900 overflow-hidden h-[290px] cursor-pointer transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 hover:border-primary/30 hover:-translate-y-1"
+      className="group border-neutral-200 dark:border-neutral-600 bg-neutral-50 dark:bg-neutral-900 overflow-hidden h-[290px] cursor-pointer transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 hover:border-primary/30 "
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={handleCardClick}
@@ -86,7 +86,7 @@ export function PageCard({ page, onDelete }: PageCardProps) {
         <div className="px-2 flex-1 flex flex-col">
           <div className="">
             {/* Page name */}
-            <h3 className="font-semibold text-neutral-800 dark:text-neutral-200 mb-2 truncate text-lg group-hover:text-primary group-hover:dark:text-primary transition-colors duration-200">
+            <h3 className="font-semibold text-neutral-800 dark:text-neutral-200 mb-2 truncate text-lg 0">
               {page.name}
             </h3>
 
@@ -94,7 +94,7 @@ export function PageCard({ page, onDelete }: PageCardProps) {
             <div className="flex items-center mb-3">
               <Badge
                 variant="outline"
-                className="text-xs border-primary/20 text-primary bg-primary/5 hover:bg-primary/10 transition-colors"
+                className="text-xs border-primary bg-primary-light/40 dark:bg-d-primary-light/40 text-neutral-600 dark:text-neutral-300  hover:bg-primary/10 transition-colors"
               >
                 /{page.slug}
               </Badge>
@@ -113,7 +113,7 @@ export function PageCard({ page, onDelete }: PageCardProps) {
               <Button
                 size="sm"
                 variant="ghost"
-                className="h-6 w-6 p-0 text-neutral-500 hover:text-primary hover:bg-primary/10 transition-all duration-200"
+                className="h-6 w-6 p-0 text-neutral-500  hover:bg-primary-light transition-all duration-200"
                 onClick={handleActionClick}
               >
                 <Edit2 className="w-4 h-4" />

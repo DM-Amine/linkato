@@ -48,11 +48,9 @@ export function ProfileCard({ profile, onProfileUpdate }: ProfileEditorProps) {
   }
 
   return (
-    <Card className="border-neutral-50 dark:border-neutral-600 bg-neutral-200 dark:bg-neutral-800 py-4">
-      <CardHeader>
-        <CardTitle className="text-neutral-700 dark:text-neutral-300">Header</CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
+    <Card className="border-neutral-50 dark:border-neutral-600 bg-neutral-200 dark:bg-neutral-800 py-2">
+     
+      <CardContent className="space-y-4 px-2">
         {/* Cover Image Section */}
         <div className="space-y-2">
           <Label className="text-neutral-700 dark:text-neutral-300">Cover Image</Label>

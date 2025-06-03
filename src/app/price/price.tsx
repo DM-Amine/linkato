@@ -18,10 +18,16 @@ export default function Price() {
       description: "Perfect for personal use and early testing.",
       highlighted: false,
       features: [
-        { text: "1 project", included: true },
-        { text: "Basic analytics", included: true },
-        { text: "No custom domain", included: false },
-        { text: "Community support", included: true },
+        { text: "unlimited pages", included: true },
+        { text: "unlimited links", included: true },
+        { text: "all popular social media", included: true },
+        { text: "No watermark", included: true },
+        { text: "page editor", included: false },
+        { text: "link custimazation", included: false },
+        { text: "form", included: false },
+        { text: "premium themes", included: false },
+        { text: "analytics", included: false },
+      
       ],
     },
     {

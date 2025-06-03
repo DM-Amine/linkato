@@ -62,14 +62,15 @@ export function LinksManager({ links, onLinksUpdate }: LinksManagerProps) {
   }
 
   return (
-    <Card className="border-neutral-50 dark:border-neutral-600 bg-neutral-200 dark:bg-neutral-800 py-4">
-      <CardHeader className="px-3">
+    <Card className="border-neutral-50 dark:border-neutral-600 bg-neutral-200 dark:bg-neutral-800 py-2">
+      <CardHeader className="px-2">
         <div className="flex items-center  justify-between ">
           <CardTitle className="text-neutral-700 dark:text-neutral-300">Links</CardTitle>
           <Button
             onClick={() => setShowNewLinkForm(true)}
             size="sm"
-            className="gap-2 bg-primary hover:bg-primary/90 text-white"
+            className="gap-2"
+            variant={"default"}
           >
             <Plus className="w-4 h-4" />
             Add Link
@@ -78,30 +79,33 @@ export function LinksManager({ links, onLinksUpdate }: LinksManagerProps) {
       </CardHeader>
       <CardContent className="space-y-4 px-2">
         {showNewLinkForm && (
-          <Card className="border-dashed border-neutral-300 bg-neutral-50 dark:bg-neutral-700 py-2">
-            <CardContent className="pt-4 space-y-3 text-neutral-700 dark:text-neutral-300">
+          <Card className="border-dashed shadow-none  border-neutral-500 bg-neutral-50   dark:bg-neutral-900 py-2">
+            <CardContent className="pt-4 px-2 space-y-3 text-neutral-700 dark:text-neutral-300">
               <Input
                 placeholder="Link title"
                 value={newLink.title}
                 onChange={(e) => setNewLink({ ...newLink, title: e.target.value })}
-                className="border-neutral-300 focus:border-primary focus:ring-primary"
+                className="border-neutral-300  !py-1 !h-fit focus:border-primary focus:ring-primary"
               />
               <Input
                 placeholder="URL (example.com or https://example.com)"
                 value={newLink.url}
                 onChange={(e) => setNewLink({ ...newLink, url: e.target.value })}
                 type="url"
-                className="border-neutral-300 focus:border-primary focus:ring-primary"
+                className="border-neutral-300  !py-1 !h-fit focus:border-primary focus:ring-primary"
               />
               <div className="flex gap-2">
-                <Button onClick={addLink} size="sm" className="bg-primary hover:bg-primary/90 text-white">
+                <Button onClick={addLink} 
+                 variant={"default"}
+                 className="px-3"
+                 >
                   Add
                 </Button>
                 <Button
                   onClick={() => setShowNewLinkForm(false)}
                   variant="outline"
-                  size="sm"
-                  className="border-neutral-300 text-neutral-600 hover:bg-neutral-50"
+                 
+                  className="border-neutral-400 dark:border-neutral-300 text-neutral-600 dark:text-neutral-300 hover:bg-neutral-200 hover:dark:bg-neutral-700 hover:dark:border-neutral-600"
                 >
                   Cancel
                 </Button>
@@ -141,7 +145,7 @@ export function LinksManager({ links, onLinksUpdate }: LinksManagerProps) {
                               }}
                               placeholder="Link title"
                               autoFocus
-                              className="border-neutral-400  focus:border-primary focus:ring-primary"
+                              className="border-neutral-400 !py-1 !h-fit  focus:border-primary focus:ring-primary"
                             />
                             <Input
                               value={editingValues.url}
@@ -156,21 +160,22 @@ export function LinksManager({ links, onLinksUpdate }: LinksManagerProps) {
                               }}
                               placeholder="https://example.com"
                               type="url"
-                              className="border-neutral-400 focus:border-primary focus:ring-primary"
+                              className="border-neutral-400 !py-1 !h-fit focus:border-primary focus:ring-primary"
                             />
                             <div className="flex gap-2 pt-1">
                               <Button
                                 onClick={() => updateLink(link.id, editingValues.title, editingValues.url)}
-                                size="sm"
-                                className="bg-primary hover:bg-primary/90 text-white"
+                               
+                                className="px-3"
                               >
                                 Save
                               </Button>
                               <Button
                                 onClick={() => setEditingLink(null)}
                                 variant="outline"
-                                size="sm"
-                                className="border-neutral-400 text-neutral-600 hover:bg-neutral-50"
+                               
+                              className="border-neutral-400 dark:border-neutral-300 text-neutral-600 dark:text-neutral-300 hover:bg-neutral-200 hover:dark:bg-neutral-700 hover:dark:border-neutral-600"
+               
                               >
                                 Cancel
                               </Button>
@@ -185,7 +190,7 @@ export function LinksManager({ links, onLinksUpdate }: LinksManagerProps) {
 
                         <div className="flex gap-1">
                           <Button
-                            size="sm"
+                          
                             variant="ghost"
                             onClick={() => {
                               if (editingLink === link.id) {
@@ -195,12 +200,12 @@ export function LinksManager({ links, onLinksUpdate }: LinksManagerProps) {
                                 setEditingLink(link.id)
                               }
                             }}
-                            className="text-neutral-500 hover:text-primary hover:bg-primary/10"
+                            className="text-neutral-500 hover:bg-neutral-200   hover:dark:bg-neutral-800"
                           >
                             <Edit2 className="w-4 h-4" />
                           </Button>
                           <Button
-                            size="sm"
+                           
                             variant="ghost"
                             onClick={() => deleteLink(link.id)}
                             className="text-neutral-500 hover:text-error hover:bg-error/10"

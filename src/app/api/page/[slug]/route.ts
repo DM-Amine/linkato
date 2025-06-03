@@ -40,7 +40,7 @@ export async function PUT(request: Request, context: { params: { slug: string } 
     const { slug } = context.params
     const body = await request.json()
 
-    const { profile, links: rawLinks, socialMedia, theme } = body
+    const { profile, links: rawLinks, socialMedia, theme, slug: newSlug } = body
 
     if (!profile || !theme || !Array.isArray(rawLinks) || !Array.isArray(socialMedia)) {
       return NextResponse.json(
@@ -49,24 +49,34 @@ export async function PUT(request: Request, context: { params: { slug: string } 
       )
     }
 
-    // ✅ Generate UUIDs for links without IDs
+    const slugChanged = newSlug && newSlug !== slug
+
+    if (slugChanged) {
+      const slugExists = await Page.findOne({ slug: newSlug })
+      if (slugExists) {
+        return NextResponse.json({ error: "Slug already in use" }, { status: 400 })
+      }
+    }
+
+    // Generate UUIDs for links without IDs
     const links = rawLinks.map((link: any) => ({
       ...link,
       id: link.id || uuidv4(),
     }))
 
     const updatePayload = {
-  name: profile.name,
-  bio: profile.bio,
-  avatar: profile.image,
-  coverImage: profile.coverImage,
-  links,
-  socials: socialMedia,
-  theme, // <--- use directly
-  updatedAt: new Date(),
-}
-    console.log(updatePayload);
-    
+      name: profile.name,
+      bio: profile.bio,
+      avatar: profile.image,
+      coverImage: profile.coverImage,
+      links,
+      socials: socialMedia,
+      theme,
+      ...(slugChanged && { slug: newSlug }), // only include new slug if changed
+      updatedAt: new Date(),
+    }
+
+    console.log("🔄 Update Payload:", updatePayload)
 
     const updatedPage = await Page.findOneAndUpdate({ slug }, updatePayload, {
       new: true,
@@ -85,7 +95,6 @@ export async function PUT(request: Request, context: { params: { slug: string } 
     )
   }
 }
-
 
 export async function DELETE(_: Request, context: { params: { slug: string } }) {
   try {

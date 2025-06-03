@@ -9,8 +9,8 @@ const config: Config = {
     extend: {
       colors: {
         // light mode colors
-        primary: "#0D9488",
-        "primary-light": "#5EEAD4",
+        primary: "#bfe21f",
+        "primary-light": "#E8F5A2",
         info: "#2384DF",
         secondary: "#yet-another-color",
 
@@ -23,8 +23,8 @@ const config: Config = {
         "error-l": "#F09090",
 
         // dark mode colors
-        "d-primary": "#14B8A6",   
-  "d-primary-light": "#134E4A",
+        "d-primary": "#9EDD04",   
+  "d-primary-light": "#3C5403",
         "d-info": "#2384DF",
         "d-secondary": "#yet-another-color",
 

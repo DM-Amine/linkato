@@ -59,14 +59,14 @@ const Sidebar = () => {
               href={link.href}
               className={`sidebar-link w-fit sm:w-full font-normal text-neutral-700 dark:text-neutral-200 hover:bg-primary-light/40 dark:hover:bg-d-primary-light/40 text-sm transition duration-300 p-1 rounded-md ${
                 isActive
-                  ? "bg-primary-light/40 dark:bg-d-primary-light text-primary dark:text-primary-light font-semibold"
+                  ? "bg-gradient-to-r from-[rgba(232,245,162,0.3)] to-[rgba(232,245,162,0.8)] border border-neutral-50 dark:border-d-primary-light dark:bg-gradient-to-r dark:from-[rgba(47,58,1,0.2)] dark:to-[rgba(47,58,1,0.8)] text-neutral-700 dark:text-primary-light font-semibold"
                   : ""
               }`}
             >
               <div className={`flex items-center ${collapsed ? "justify-center" : "gap-2"}`}>
                 <span
                   className={`text-neutral-600 dark:text-neutral-400 ${
-                    isActive ? "text-primary dark:text-primary-light" : ""
+                    isActive ? "text-neutral-700 dark:text-primary-light" : ""
                   }`}
                 >
                   {link.icon}
