@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button"
 import { Share } from "@/components/dashboard/pages/share"
 import type { Profile, Link, SocialMedia, Theme } from "./types"
 import { themes } from "@/components/dashboard/themes/themes"
-import { Download, Pencil } from "lucide-react"
+import { Download,Loader2, Pencil } from "lucide-react"
 
 const initialProfile: Profile = {
   name: "Your Name",
@@ -32,6 +32,10 @@ export default function Dashboard() {
   const router = useRouter()
   const params = useParams() as { slug: string }
   const originalSlug = params.slug
+  const [isCheckingSlug, setIsCheckingSlug] = useState(false)
+const [slugError, setSlugError] = useState<string | null>(null)
+const [slugAvailable, setSlugAvailable] = useState<boolean | null>(null)
+const slugRegex = /^[a-z0-9_-]+$/
 
   const [profile, setProfile] = useState<Profile>(initialProfile)
   const [links, setLinks] = useState<Link[]>(initialLinks)
@@ -76,46 +80,105 @@ export default function Dashboard() {
     setSubmitSuccess(false)
   }, [editableSlug])
 
-  const handleSubmit = async () => {
-    setIsSubmitting(true)
-    setSubmitError(null)
-    setSubmitSuccess(false)
+const handleSubmit = async () => {
+  setSubmitError(null)
+  setSubmitSuccess(false)
+
+  const trimmedSlug = editableSlug.trim()
+
+  // Check if the slug is empty
+  if (!trimmedSlug) {
+    setSlugError("Slug cannot be empty.")
+    return
+  }
+
+  // Check if slug format is invalid
+  if (!slugRegex.test(trimmedSlug)) {
+    setSlugError("Use lowercase letters, numbers, '-' or '_'. No spaces allowed.")
+    return
+  }
+
+  // Check if slug is not available (e.g. taken or failed check)
+  if (slugAvailable === false) {
+    setSlugError("Slug is already taken.")
+    return
+  }
+
+  setIsSubmitting(true)
+
+  try {
+    const payload = {
+      ...(trimmedSlug !== originalSlug && { slug: trimmedSlug }),
+      profile,
+      links: links.map((link, i) => ({
+        ...link,
+        index: i.toString(),
+      })),
+      socialMedia,
+      theme: selectedTheme.id,
+    }
+
+    const res = await fetch(`/api/page/${originalSlug}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    })
+
+    const resJson = await res.json()
+
+    if (!res.ok) throw new Error(resJson?.error || "Failed to update page")
+
+    setSubmitSuccess(true)
+
+    if (trimmedSlug !== originalSlug) {
+      router.push(`/dashboard/pages/${trimmedSlug}`)
+    }
+  } catch (error) {
+    setSubmitError("Failed to save data. Please try again.")
+  } finally {
+    setIsSubmitting(false)
+  }
+}
+
+
+  useEffect(() => {
+  if (!editableSlug || editableSlug === originalSlug) {
+    setSlugError(null)
+    setSlugAvailable(true)
+    return
+  }
+
+  if (!slugRegex.test(editableSlug)) {
+    setSlugError("Use lowercase letters, numbers, '-' or '_'. No spaces allowed.")
+    setSlugAvailable(false)
+    return
+  }
+
+  const handler = setTimeout(async () => {
+    setIsCheckingSlug(true)
+    setSlugError(null)
 
     try {
-      const payload = {
-        slug: editableSlug, // the potentially updated slug
-        profile,
-        links: links.map((link, i) => ({
-          ...link,
-          index: i.toString(),
-        })),
-        socialMedia,
-        theme: selectedTheme.id,
+      const res = await fetch(`/api/page/check-slug?slug=${editableSlug}`)
+
+      const data = await res.json()
+
+      if (data.exists) {
+        setSlugError("Slug is already taken.")
+        setSlugAvailable(false)
+      } else {
+        setSlugAvailable(true)
       }
-
-      const res = await fetch(`/api/page/${originalSlug}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      })
-
-      const resJson = await res.json()
-      console.log("📥 Response JSON:", resJson)
-
-      if (!res.ok) throw new Error(resJson?.error || "Failed to update page")
-
-      setSubmitSuccess(true)
-
-      // If slug changed, update URL and state
-      if (editableSlug !== originalSlug) {
-        router.push(`/dashboard/pages/${editableSlug}`) // adjust path to your actual route
-      }
-    } catch (error) {
-      setSubmitError("Failed to save data. Please try again.")
+    } catch (err) {
+      setSlugError("Failed to check slug availability.")
     } finally {
-      setIsSubmitting(false)
+      setIsCheckingSlug(false)
     }
-  }
+  }, 800)
+
+  return () => clearTimeout(handler)
+}, [editableSlug])
+
 
   return (
     <div className="min-h-screen bg-neutral-400/30 dark:bg-neutral-900/70 p-4">
@@ -124,28 +187,39 @@ export default function Dashboard() {
           {/* Editor Panel */}
           <div className="w-full mx-3 space-y-6">
             <div className="flex items-center justify-between">
-              <h1 className="text-lg flex items-center font-bold text-neutral-800 dark:text-neutral-100">
-                Page Slug:
-                <div className="flex items-center text-sm font-semibold text-neutral-700 bg-primary-light/60 border-2 border-neutral-50 rounded-lg px-1 py-0.5 ml-2">
-                  <input
-                    type="text"
-                    value={editableSlug}
-                    onChange={(e) => setEditableSlug(e.target.value)}
-                    className="bg-transparent outline-none text-sm font-semibold text-neutral-700 dark:text-neutral-200 w-auto min-w-[4rem] max-w-[12rem] truncate"
-                  />
-                  <Pencil className="w-4 h-4 p-px bg-primary text-white rounded m-1" />
-                </div>
-              </h1>
+              <div className="flex flex-col space-y-1">
+  <label className="text-sm font-semibold text-neutral-700 dark:text-neutral-300">Page Slug:</label>
+  <div className="flex items-center bg-primary-light/60 border-2 border-neutral-50 rounded-lg px-2 py-1 w-fit">
+    <input
+      type="text"
+      value={editableSlug}
+      onChange={(e) => {
+        const newSlug = e.target.value.toLowerCase().replace(/[^a-z0-9_-]/g, "")
+        setEditableSlug(newSlug)
+      }}
+      className="bg-transparent outline-none text-sm font-semibold text-neutral-700 dark:text-neutral-200 w-auto min-w-[6rem] max-w-[12rem] truncate"
+    />
+    {isCheckingSlug ? (
+      <Loader2 className="animate-spin w-4 h-4 text-neutral-600 ml-1" />
+    ) : (
+      <Pencil className="w-4 h-4 text-neutral-600 ml-1" />
+    )}
+  </div>
+  {slugError && <p className="text-sm text-error">{slugError}</p>}
+  {/* {slugAvailable && <p className="text-sm text-success">Slug is available</p>} */}
+</div>
+
               <div className="mt-6 flex items-center gap-4">
-                <Button
-                  onClick={handleSubmit}
-                  variant={"default"}
-                  className="border border-neutral-50 dark:border-d-primary-light shadow-sm"
-                  disabled={isSubmitting}
-                >
-                  <Download className="w-4 h-4" />
-                  {isSubmitting ? "Saving..." : "Save"}
-                </Button>
+               <Button
+  onClick={handleSubmit}
+  variant="default"
+  className="border border-neutral-50 dark:border-d-primary-light shadow-sm"
+  disabled={isSubmitting}
+>
+  <Download className="w-4 h-4" />
+  {isSubmitting ? "Saving..." : "Save"}
+</Button>
+
 
                 {submitError && (
                   <p className="text-error text-sm font-medium">{submitError}</p>

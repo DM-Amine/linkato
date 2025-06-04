@@ -76,7 +76,7 @@ export function PageCard({ page, onDelete }: PageCardProps) {
         {/* Thumbnail with overlay */}
         <div className="relative h-40 bg-gradient-to-br from-neutral-100 to-neutral-200 dark:from-neutral-800 dark:to-neutral-700 overflow-hidden">
           <img
-            src={page.thumbnail || "/placeholder.svg"}
+            src={page.coverImage || "/placeholder.svg"}
             alt={page.name}
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
           />

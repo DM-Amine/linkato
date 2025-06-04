@@ -49,7 +49,8 @@ export async function PUT(request: Request, context: { params: { slug: string } 
       )
     }
 
-    const slugChanged = newSlug && newSlug !== slug
+    const slugChanged = typeof newSlug === "string" && newSlug.trim() !== "" && newSlug !== slug
+
 
     if (slugChanged) {
       const slugExists = await Page.findOne({ slug: newSlug })

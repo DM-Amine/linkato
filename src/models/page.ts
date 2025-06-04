@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const pageSchema = new mongoose.Schema({
     id: {
         type: String,
-        required: [false, 'id is required'],
+        required: [true, 'id is required'],
         trim: true,
         unique: true,
     },
