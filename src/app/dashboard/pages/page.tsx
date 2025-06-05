@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { PageCard } from "@/components/dashboard/pages/pageCard"
 import { CreatePageModal } from "@/components/dashboard/pages/creatPageModal"
+import { useSession } from "next-auth/react" //
 
 export default function MyPages() {
   const [pages, setPages] = useState<Array<any>>([]) // initially empty, will load from API
@@ -13,26 +14,30 @@ export default function MyPages() {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+    const { data: session, status } = useSession(); //
 
   // Fetch pages from API on mount
-  useEffect(() => {
+useEffect(() => {
     async function fetchPages() {
+      if (!session?.user?.userID) return; // wait until session is ready
+
       setLoading(true)
       setError(null)
+
       try {
-        const res = await fetch('/api/page')
-        if (!res.ok) throw new Error('Failed to fetch pages')
+        const res = await fetch(`/api/page?userID=${session.user.userID}`) // ✅ pass userID
+        if (!res.ok) throw new Error("Failed to fetch pages")
         const data = await res.json()
         setPages(data)
       } catch (err: any) {
-        setError(err.message || 'Something went wrong')
+        setError(err.message || "Something went wrong")
       } finally {
         setLoading(false)
       }
     }
 
     fetchPages()
-  }, [])
+  }, [session?.user?.userID])
 
   const filteredPages = pages.filter((page) =>
     page.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -98,15 +103,28 @@ export default function MyPages() {
             </div>
 
             {/* Empty state */}
-            {filteredPages.length === 0 && searchQuery && (
-              <div className="text-center py-12 bg-neutral-50 rounded-lg border border-neutral-200">
-                <div className="text-neutral-400 mb-3">
-                  <Search className="w-12 h-12 mx-auto" />
-                </div>
-                <h3 className="text-lg font-medium text-neutral-700 mb-1">No pages found</h3>
-                <p className="text-neutral-500">Try a different search term</p>
-              </div>
-            )}
+          {filteredPages.length === 0 && (
+  <div className="text-center border border-neutral-600 dark:border-neutral-600 border-dashed py-12 bg-neutral-100/90 rounded-lg  dark:bg-neutral-900 ">
+    <div className="text-neutral-400 mb-3">
+      <Search className="w-12 h-12 mx-auto" />
+    </div>
+    <h3 className="text-lg font-medium text-neutral-700 dark:text-neutral-200 mb-1">
+      {searchQuery ? "No pages found" : "You don't have any pages yet"}
+    </h3>
+    <p className="text-neutral-500 dark:text-neutral-400 mb-4">
+      {searchQuery ? "Try a different search term" : "Start by creating your first page"}
+    </p>
+    {/* Add Create Button */}
+    {!searchQuery && (
+      <Button onClick={openCreateModal}>
+        <Plus className="w-4 h-4 mr-2" />
+        Create Page
+      </Button>
+    )}
+  </div>
+)}
+
+
           </>
         )}
 

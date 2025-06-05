@@ -7,6 +7,12 @@ const pageSchema = new mongoose.Schema({
         trim: true,
         unique: true,
     },
+    userID: {
+        type: String,
+        required: [true, 'id is required'],
+        trim: true,
+        unique: true,
+    },
     name: {
         type: String,
         required: [false, 'name is required'],

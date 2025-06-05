@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+
 import { Crown, Grid, Star } from "lucide-react"
 import { ThemePreviewCard } from "@/components/dashboard/pages/themePreviewCard"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -37,11 +37,11 @@ useEffect(() => {
   console.log("🧪 Initial selectedTheme.id:", selectedTheme?.id);
 }, [selectedTheme]);
   return (
-    <Card className="border-neutral-50 dark:border-neutral-600 bg-neutral-200 dark:bg-neutral-800 py-4">
-      <CardHeader>
+    <Card className="border-neutral-50 dark:border-neutral-600 bg-neutral-200 dark:bg-neutral-800 py-2">
+      <CardHeader className="px-2">
         <CardTitle className="text-neutral-700 dark:text-neutral-300">Themes</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent  className="px-2">
         <Tabs defaultValue="all" className="w-full">
           <TabsList className="grid grid-cols-3 mb-6 bg-neutral-300 dark:bg-neutral-700">
             <TabsTrigger value="all" >

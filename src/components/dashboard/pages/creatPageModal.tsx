@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { AlertCircle } from "lucide-react"
+import { useSession } from "next-auth/react";
 
 interface CreatePageModalProps {
   isOpen: boolean
@@ -21,6 +22,9 @@ export function CreatePageModal({ isOpen, onClose }: CreatePageModalProps) {
   const [isSlugEdited, setIsSlugEdited] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+  const { data: session } = useSession();
+  
 
   useEffect(() => {
     if (!isSlugEdited && pageName) {
@@ -66,40 +70,49 @@ export function CreatePageModal({ isOpen, onClose }: CreatePageModalProps) {
     return true
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
 
-    if (!validateForm()) {
-      return
-    }
-
-    setIsSubmitting(true)
-    setError(null)
-
-    try {
-      const response = await fetch("/api/page", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name: pageName, slug }),
-      })
-
-      if (!response.ok) {
-        const data = await response.json()
-        setError(data.error || "Failed to create page. Please try again.")
-        setIsSubmitting(false)
-        return
-      }
-
-      // Success: navigate to the new page URL
-      router.push(`/dashboard/pages/${slug}`)
-      onClose()
-    } catch (err) {
-      setError("Failed to create page. Please try again.")
-      setIsSubmitting(false)
-    }
+  if (!validateForm()) {
+    return;
   }
+
+  if (!session?.user?.userID) {
+    setError("You must be logged in to create a page.");
+    return;
+  }
+
+  setIsSubmitting(true);
+  setError(null);
+
+  try {
+    const response = await fetch("/api/page", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: pageName,
+        slug,
+        userID: session.user.userID, // ✅ Include userID from session
+      }),
+    });
+
+    if (!response.ok) {
+      const data = await response.json();
+      setError(data.error || "Failed to create page. Please try again.");
+      setIsSubmitting(false);
+      return;
+    }
+
+    router.push(`/dashboard/pages/${slug}`);
+    onClose();
+  } catch (err) {
+    setError("Failed to create page. Please try again.");
+    setIsSubmitting(false);
+  }
+};
+
 
   const handleClose = () => {
     setPageName("")
@@ -111,14 +124,14 @@ export function CreatePageModal({ isOpen, onClose }: CreatePageModalProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700">
         <DialogHeader>
-          <DialogTitle className="text-xl font-semibold text-neutral-800">Create New Page</DialogTitle>
+          <DialogTitle className="text-xl font-semibold ">Create New Page</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4 pt-2">
           <div className="space-y-2">
-            <Label htmlFor="page-name" className="text-neutral-700">
+            <Label htmlFor="page-name" className="text-neutral-700 dark:text-neutral-300">
               Page Name
             </Label>
             <Input
@@ -134,10 +147,10 @@ export function CreatePageModal({ isOpen, onClose }: CreatePageModalProps) {
 
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <Label htmlFor="page-slug" className="text-neutral-700">
+              <Label htmlFor="page-slug" className="text-neutral-700 dark:text-neutral-300">
                 URL Slug
               </Label>
-              <span className="text-xs text-neutral-500">yoursite.com/</span>
+              
             </div>
             <Input
               id="page-slug"
@@ -145,11 +158,12 @@ export function CreatePageModal({ isOpen, onClose }: CreatePageModalProps) {
               onChange={handleSlugChange}
               placeholder="my-awesome-page"
               className="border-neutral-300 focus:border-primary"
-              disabled={isSubmitting}
+              disabled={isSubmitting} 
             />
             <p className="text-xs text-neutral-500">
               This will be the URL of your page. Only use lowercase letters, numbers, and hyphens.
             </p>
+      
           </div>
 
           {error && (
