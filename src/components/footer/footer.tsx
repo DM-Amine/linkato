@@ -5,9 +5,31 @@ const Footer = () => {
     const pathname = usePathname();
     
     // Check if the current pathname starts with '/dashboard' or '/adminPanel'
-    const isDynamicPublicPage = /^\/[^/]+$/.test(pathname);
-    const hideFooter = pathname.startsWith("/dashboard") || pathname.startsWith("/adminPanel") || isDynamicPublicPage;
-    
+    const reserved = [
+  "blogs",
+  "features",
+  "roadmap",
+  "price",
+  "contact",
+  "dashboard",
+  "privacy-policy",
+  "terms-of-service",
+  "waitlist",
+  "thank-you",
+  "auth",
+  "adminPanel",
+  "",
+];
+
+const pathSegment = pathname.split("/").filter(Boolean)[0];
+const isDynamicPublicPage = pathname.split("/").filter(Boolean).length === 1 && !reserved.includes(pathSegment);
+
+const hideFooter =
+  pathname.startsWith("/dashboard") ||
+  pathname.startsWith("/adminPanel") ||
+  isDynamicPublicPage;
+
+  
     if (hideFooter) {
       return null; // Return null to hide the footer
     }

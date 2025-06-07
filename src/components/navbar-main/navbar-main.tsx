@@ -40,8 +40,6 @@ const reserved = [
    "waitlist",
    "thank-you",
   "auth",
-
-
   "adminPanel",
   "",
 ];
