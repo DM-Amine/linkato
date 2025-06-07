@@ -15,9 +15,10 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
       
         <div className="flex pt-11 h-full">
           {/*  Sidebar */}
-          <div className="w-fit h-[calc(100vh-4rem)]  z-40">
-            <Sidebar />
-          </div>
+         <div className="w-fit h-[calc(100vh-2.75rem)] z-40 flex">
+  <Sidebar />
+</div>
+
       
           {/* Main  */}
           <main className="max-w-full text-neutral-800 dark:text-neutral-200   flex-1 overflow-y-scroll overflow-x-hidden">
