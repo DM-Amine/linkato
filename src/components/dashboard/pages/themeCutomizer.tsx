@@ -106,11 +106,11 @@ useEffect(() => {
             {/* Pro upgrade message */}
             <div className="mt-6 p-4 bg-warning/10 border border-warning/20 rounded-lg">
               <div className="flex items-center gap-2 text-sm text-warning-600 dark:text-warning-400 mb-2">
-                <Crown className="w-4 h-4" />
-                <span className="font-medium">Upgrade to Pro</span>
+                {/* <Crown className="w-4 h-4" /> */}
+                <span className="font-medium">Upcoming..</span>
               </div>
               <p className="text-xs text-neutral-600 dark:text-neutral-400">
-                Unlock premium themes with advanced styling and animations
+                premium themes with advanced styling
               </p>
             </div>
           </TabsContent>

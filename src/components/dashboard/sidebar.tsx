@@ -31,7 +31,7 @@ const Sidebar = () => {
   const isPagesSection = pathname.startsWith("/dashboard/pages");
 
   const activeStyles =
-    "bg-gradient-to-r from-[rgba(232,245,162,0.3)] to-[rgba(232,245,162,0.8)] border border-neutral-50 dark:border-d-primary-light dark:bg-gradient-to-r dark:from-[rgba(47,58,1,0.2)] dark:to-[rgba(47,58,1,0.8)] text-neutral-700 dark:text-primary-light font-semibold";
+    "bg-gradient-to-r from-[rgba(232,245,162,0.3)] to-[rgba(232,245,162,0.8)] border border-neutral-50 dark:border-d-primary-light dark:bg-gradient-to-r dark:from-[rgba(47,58,1,0.2)] dark:to-[rgba(47,58,1,0.8)] text-neutral-700 dark:text-neutral-300 font-semibold";
 
   return (
     <aside
