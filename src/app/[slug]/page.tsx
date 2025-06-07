@@ -16,7 +16,7 @@ export default async function PublicPage({ params }: { params: Promise<{ slug: s
   const { slug } = await params
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? `http://localhost:3000`
-  const res = await fetch(`${baseUrl}/api/page/${slug}`, { next: { revalidate: 10 } })
+  const res = await fetch(`${baseUrl}/api/page/${slug}` )
 
   if (res.status === 404) return notFound()
   if (!res.ok) throw new Error("Failed to load page")
@@ -116,10 +116,7 @@ export default async function PublicPage({ params }: { params: Promise<{ slug: s
           </a>
         ))}
       </div>
-      {/* watermark */}
-      <div className={`${theme?.links?.background} w-full flex justify-center mt-20 py-3 items-center `}>
-        <h4>Powered by Linkatoo</h4>
-      </div>
+     
     </div>
   )
 }

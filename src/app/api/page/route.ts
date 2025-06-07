@@ -69,7 +69,7 @@ export async function POST(request: Request) {
       avatar: '/placeholder.svg?height=100&width=100',
       links: [],
       socials: [],
-      theme: 'minimal-light',
+      theme: 'minimal-dark',
       createdAt: new Date(),
       updatedAt: new Date(),
     });

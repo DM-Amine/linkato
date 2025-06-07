@@ -21,7 +21,7 @@ export function MobilePreview({ profile, links, socialMedia, theme }: MobilePrev
   const coverImage = profile?.coverImage;
 
   return (
-    <Card className="w-fit border-neutral-50 h-fit dark:border-neutral-600 bg-neutral-200 dark:bg-neutral-800 py-2">
+    <Card className="min-w-full border-neutral-50 h-fit dark:border-neutral-600 bg-neutral-200 dark:bg-neutral-800 py-2">
       <CardHeader>
         <div className="flex items-center justify-center gap-2">
           <Eye className="w-4 h-4 text-neutral-600 dark:text-neutral-300" />

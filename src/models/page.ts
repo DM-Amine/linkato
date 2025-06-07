@@ -91,7 +91,7 @@ const pageSchema = new mongoose.Schema({
     },
     theme: {
         type: String,
-        default: 'minimal-light',
+        default: 'minimal-dark',
         trim: true,
     },
     createdAt: {

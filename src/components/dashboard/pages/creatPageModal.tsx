@@ -124,7 +124,7 @@ const handleSubmit = async (e: React.FormEvent) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="sm:max-w-[425px] bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700">
+      <DialogContent className="sm:max-w-[425px] bg-neutral-300 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 px-2 py-1">
         <DialogHeader>
           <DialogTitle className="text-xl font-semibold ">Create New Page</DialogTitle>
         </DialogHeader>
@@ -139,7 +139,7 @@ const handleSubmit = async (e: React.FormEvent) => {
               value={pageName}
               onChange={(e) => setPageName(e.target.value)}
               placeholder="My Awesome Page"
-              className="border-neutral-300 focus:border-primary"
+              className="border-neutral-500 focus:ring-primary"
               autoFocus
               disabled={isSubmitting}
             />
@@ -157,7 +157,7 @@ const handleSubmit = async (e: React.FormEvent) => {
               value={slug}
               onChange={handleSlugChange}
               placeholder="my-awesome-page"
-              className="border-neutral-300 focus:border-primary"
+              className="border-neutral-500 focus:ring-primary"
               disabled={isSubmitting} 
             />
             <p className="text-xs text-neutral-500">
@@ -173,17 +173,17 @@ const handleSubmit = async (e: React.FormEvent) => {
             </div>
           )}
 
-          <DialogFooter className="pt-2">
+          <DialogFooter className="py-1.5">
             <Button
               type="button"
               variant="outline"
               onClick={handleClose}
-              className="border-neutral-300 text-neutral-700"
+            
               disabled={isSubmitting}
             >
               Cancel
             </Button>
-            <Button type="submit" className="bg-primary hover:bg-primary/90 text-white" disabled={isSubmitting}>
+            <Button type="submit" className="border border-white"  disabled={isSubmitting}>
               {isSubmitting ? "Creating..." : "Create Page"}
             </Button>
           </DialogFooter>
