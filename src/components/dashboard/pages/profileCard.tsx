@@ -131,7 +131,7 @@ export function ProfileCard({ profile, onProfileUpdate }: ProfileEditorProps) {
               value={profile.name}
               onChange={(e) => onProfileUpdate({ ...profile, name: e.target.value })}
               placeholder="Your name"
-              className="border-neutral-400 dark:border-neutral-600 focus:border-primary focus:ring-primary"
+              className="border-neutral-400  dark:border-neutral-600 focus:border-primary focus:ring-primary"
             />
           </div>
         </div>

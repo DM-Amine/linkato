@@ -73,7 +73,7 @@ export function MobilePreview({ profile, links, socialMedia, theme }: MobilePrev
                         return (
                           <div
                             key={social.id}
-                            className={`w-10 h-10 rounded-full flex items-center justify-center cursor-pointer border
+                            className={`w-10 h-10 rounded-full flex items-center justify-center cursor-pointer border transition-all duration-200
                               ${theme?.socialIcons?.background ?? ""}
                               ${theme?.socialIcons?.border ?? ""}
                               ${theme?.socialIcons?.hover ?? ""}
@@ -98,7 +98,7 @@ export function MobilePreview({ profile, links, socialMedia, theme }: MobilePrev
                     {links.map((link) => (
                       <div
                         key={link.id}
-                        className={`w-full p-3 rounded-xl text-center cursor-pointer border
+                        className={`w-full p-3 rounded-xl text-center cursor-pointer border transition-all duration-200
                           ${theme?.links?.background ?? ""}
                           ${theme?.links?.text ?? ""}
                           ${theme?.links?.border ?? ""}

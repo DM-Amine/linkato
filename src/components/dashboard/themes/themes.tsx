@@ -8,36 +8,52 @@ export const themes: Theme[] = [
     name: "Minimal Light",
     isPro: false,
     preview: "#F8F8F8",
-    background: "bg-neutral-50",
+    background: "bg-neutral-200",
+     profile_card:{
+      position : "-mt-24",
+      Background : "bg-neutral-900"
+    },
+    cover_image : {
+      size : "sm:w-9/12 w-full",
+      margin: "sm:my-2 ",
+      shadow: "shadow-lg",
+      corners : "sm:rounded-lg rounded-none",
+    },
     avatar: {
-      border: "border-neutral-200",
-      size: "w-20 h-20",
+      
+      border: "border-neutral-300 border-4",
+      corners : "rounded-full",
+      size: "w-24 h-24",
     },
     text: {
       name: "text-neutral-800",
-      bio: "text-neutral-600",
+      bio: "text-neutral-700",
     },
-    socialIcons: {
-      background: "bg-white",
-      border: "border-neutral-200",
-      iconColor: "platform-color", 
-      hover: "hover:bg-neutral-50 hover:scale-110",
+     socialIcons: {
+      background: "bg-neutral-100",
+      border: "border-neutral-400",
+      iconColor: "text-neutral-700",
+      hover: "hover:bg-neutral-50 hover:scale-110 hover:shadow-lg",
     },
     links: {
-      background: "bg-white",
-      text: "text-neutral-800",
-      border: "border-neutral-200",
-      hover: "hover:bg-neutral-50",
+      background: "bg-neutral-100",
+      text: "text-neutral-700",
+      border: "border-neutral-500",
+      hover: "hover:bg-neutral-50/90 hover:scale-102 hover:shadow-lg",
     },
-    watermark:{
-      background: "bg-white",
-      text: "text-neutral-800",
-    }
-
+   
+        watermark:{
+      background: "bg-neutral-800",
+      text: "text-neutral-200",
+    },
+    separator: {
+      size: "sm:w-9/12 w-full ",
+      background : "bg-neutral-700",
+    },
    
   },
   {
-    id: "minimal-dark",
+    id: "minimal-dark", 
     name: "Minimal Dark",
     isPro: false,
     preview: "#1A1A1A",
@@ -48,8 +64,9 @@ export const themes: Theme[] = [
     },
     cover_image : {
       size : "sm:w-9/12 w-full",
+      margin: "sm:my-2 ",
       shadow: "shadow-lg",
-      corners : "rounded-lg",
+      corners : "sm:rounded-lg rounded-none",
     },
     avatar: {
       

@@ -1,6 +1,8 @@
 "use client"
+import { useEffect, useState } from "react"
 
-import { Download, Loader2, Pencil, Trash2, Settings } from "lucide-react"
+
+import { Check,Loader2, Pencil, Trash2, Settings } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { DeletePageModal } from "@/components/dashboard/pages/deletePageModal"
@@ -20,6 +22,7 @@ interface PageNavBarProps {
     handleDeleteCancel: () => void
     handleDeleteConfirm: () => void
     originalSlug: string
+    submitSuccess: string
 }
 
 export function PageNavBar({
@@ -35,7 +38,18 @@ export function PageNavBar({
   handleDeleteCancel,
   handleDeleteConfirm,
   originalSlug,
+  submitSuccess, 
 }: PageNavBarProps) {
+
+     const [justSaved, setJustSaved] = useState(false)
+
+  useEffect(() => {
+    if (submitSuccess) {
+      setJustSaved(true)
+      const timer = setTimeout(() => setJustSaved(false), 2000)
+      return () => clearTimeout(timer)
+    }
+  }, [submitSuccess])
     return (
         <div className="border-b border-neutral-400 dark:border-neutral-700 sticky top-0 z-10 max-w-full flex sm:flex-row flex-col sm:items-center justify-between bg-neutral-200 dark:bg-neutral-900 px-2 py-1">
             <div className="flex items-center gap-2">
@@ -46,15 +60,21 @@ export function PageNavBar({
             </div>
 
             <div className="flex items-center my-1 sm:my-0 gap-2">
-                <Button
-                    onClick={handleSubmit}
-                    variant="default"
-                    className="border border-neutral-50 dark:border-d-primary-light shadow-sm"
-                    disabled={isSubmitting}
-                >
-                    <Download className="w-4 h-4 mr-1" />
-                    {isSubmitting ? "Saving..." : "Save"}
-                </Button>
+                <div className="flex items-center text-sm font-medium text-neutral-700 dark:text-neutral-200 min-w-[70px] h-8">
+   {isSubmitting ? (
+    <span className="flex items-center gap-1">
+        <Loader2 className="w-4 h-4 animate-spin text-neutral-500" />
+        Saving...
+    </span>
+) : justSaved ? (
+    <span className="flex items-center gap-1 text-success/80">
+        <Check className="w-4 h-4" />
+        Saved
+    </span>
+) : null}
+
+</div>
+
 
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>

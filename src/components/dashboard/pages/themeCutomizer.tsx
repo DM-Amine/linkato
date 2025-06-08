@@ -109,7 +109,7 @@ useEffect(() => {
                 {/* <Crown className="w-4 h-4" /> */}
                 <span className="font-medium">Upcoming..</span>
               </div>
-              <p className="text-xs text-neutral-600 dark:text-neutral-400">
+              <p className="text-xs text-neutral-700 dark:text-neutral-400">
                 premium themes with advanced styling
               </p>
             </div>

@@ -3,14 +3,18 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { socialPlatforms } from "@/components/dashboard/socialPlatforms/socialPlatforms"
 import { themes } from "@/components/dashboard/themes/themes"
-import type { Profile, Link, Theme, SocialMedia } from "../types"
+import Link from "next/link"
+import Image from "next/image"
+import type { Profile, Link as LinkType, Theme, SocialMedia } from "../types"
+
 
 interface PageData {
   profile: Profile
-  links: Link[]
+  links: LinkType[]
   socialMedia: SocialMedia[]
-  theme: string // theme ID, not object
+  theme: string
 }
+
 
 export default async function PublicPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
@@ -36,8 +40,8 @@ export default async function PublicPage({ params }: { params: Promise<{ slug: s
 
       {/* Cover Image */}
       {coverImage && (
-        <div className= {` ${theme?.cover_image?.size } mx-4 my-2 ${theme?.cover_image?.corners }  overflow-hidden mb-6 ${theme?.cover_image?.shadow } relative`}>
-          <img src={coverImage} alt="Cover" className="w-full h-40 object-cover" />
+        <div className= {` ${theme?.cover_image?.size } mx-4 ${theme?.cover_image?.margin} ${theme?.cover_image?.corners }  overflow-hidden mb-6 ${theme?.cover_image?.shadow } relative`}>
+          <Image width={800} height={600} src={coverImage} alt="Cover" className="w-full h-40 object-cover" />
           {theme?.coverOverlay && <div className={`absolute inset-0 ${theme.coverOverlay}`} />}
         </div>
       )}
@@ -68,7 +72,7 @@ export default async function PublicPage({ params }: { params: Promise<{ slug: s
                 if (!platform) return null
                 const Icon = platform.icon
                 return (
-                  <a
+                  <Link
                     key={social.id}
                     href={social.url}
                     target="_blank"
@@ -85,13 +89,13 @@ export default async function PublicPage({ params }: { params: Promise<{ slug: s
                         color: theme?.socialIcons?.iconColor === "platform-color" ? platform.color : undefined,
                       }}
                     />
-                  </a>
+                  </Link>
                 )
               })}
             </div>
           )}
         </CardContent>
-      </Card>
+      </Card> 
 
       {/* Separator */}
       {/* {theme?.separator && (
@@ -99,21 +103,21 @@ export default async function PublicPage({ params }: { params: Promise<{ slug: s
       )} */}
 
       {/* Links */}
-      <div className="max-w-md w-full mt-8 mb-6 space-y-4">
+      <div className="max-w-md w-full px-2 mt-8 mb-6 space-y-4  ">
         {links.map((link) => (
-          <a
+          <Link
             key={link.id}
             href={link.url}
             target="_blank"
             rel="noopener noreferrer"
-            className={`block w-full text-center py-3 rounded-xl font-medium cursor-pointer border transition-colors duration-200
+            className={`block w-full text-center py-3 rounded-xl font-medium cursor-pointer border transition-all duration-200
               ${theme?.links?.background ?? "bg-white dark:bg-neutral-700"}
               ${theme?.links?.text ?? "text-neutral-900 dark:text-neutral-100"}
               ${theme?.links?.border ?? "border-neutral-300 dark:border-neutral-600"}
               ${theme?.links?.hover ?? "hover:bg-neutral-200 dark:hover:bg-neutral-600"}`}
           >
             {link.title}
-          </a>
+          </Link>
         ))}
       </div>
      
