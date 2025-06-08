@@ -121,8 +121,8 @@ export default function MyPages() {
                   {searchQuery ? "Try a different search term" : "Start by creating your first page"}
                 </p>
                 {!searchQuery && (
-                  <Button onClick={openCreateModal}>
-                    <Plus className="w-4 h-4 mr-2" />
+                  <Button onClick={openCreateModal} className="py-4 !px-4 rounded-xl">
+                    <Plus className="w-4 h-4 " />
                     Create Page
                   </Button>
                 )}

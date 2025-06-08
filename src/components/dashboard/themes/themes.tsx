@@ -46,10 +46,10 @@ export const themes: Theme[] = [
       background: "bg-neutral-800",
       text: "text-neutral-200",
     },
-    separator: {
-      size: "sm:w-9/12 w-full ",
-      background : "bg-neutral-700",
-    },
+    // separator: {
+    //   size: "sm:w-9/12 w-full ",
+    //   background : "bg-neutral-700",
+    // },
    
   },
   {
@@ -78,26 +78,24 @@ export const themes: Theme[] = [
       name: "text-white",
       bio: "text-neutral-300",
     },
-    links: {
-      background: "bg-neutral-800",
-      text: "text-white",
-      border: "border-neutral-700",
-      hover: "hover:bg-neutral-700",
-    },
     socialIcons: {
       background: "bg-neutral-800",
       border: "border-neutral-700",
       iconColor: "text-white",
       hover: "hover:bg-neutral-700 hover:scale-110",
     },
-        watermark:{
+    links: {
       background: "bg-neutral-800",
-      text: "text-neutral-200",
+      text: "text-white",
+      border: "border-neutral-700",
+      hover: "hover:bg-neutral-700 hover:scale-102 hover:shadow-lg",
     },
-    separator: {
-      size: "sm:w-9/12 w-full ",
-      background : "bg-neutral-700",
-    },
+
+  
+    // separator: {
+    //   size: "sm:w-9/12 w-full ",
+    //   background : "bg-neutral-700",
+    // },
   },
   // {
   //   id: "primary-classic",

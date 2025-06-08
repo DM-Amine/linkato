@@ -5,7 +5,7 @@ import { useParams, useRouter } from "next/navigation"
 import { ProfileCard } from "@/components/dashboard/pages/profileCard"
 import { LinksManager } from "@/components/dashboard/pages/linkManager"
 import { SocialMediaManager } from "@/components/dashboard/pages/socialMediaManager"
-import { ThemeCustomizer } from "@/components/dashboard/pages/themeCutomizer" // fixed typo here
+import { ThemeCustomizer } from "@/components/dashboard/pages/themeCutomizer"
 import { MobilePreview } from "@/components/dashboard/pages/mobilePreview"
 import { toast } from "sonner"
 import { themes } from "@/components/dashboard/themes/themes"
@@ -27,7 +27,7 @@ const initialLinks: Link[] = [
 
 const initialSocialMedia: SocialMedia[] = []
 
-export default function Dashboard(): JSX.Element {
+export default function Dashboard() {
   const router = useRouter()
   const params = useParams() as { slug: string }
   const originalSlug = params.slug
@@ -37,7 +37,7 @@ export default function Dashboard(): JSX.Element {
   const [links, setLinks] = useState<Link[]>(initialLinks)
   const [socialMedia, setSocialMedia] = useState<SocialMedia[]>(initialSocialMedia)
   const [selectedTheme, setSelectedTheme] = useState<Theme>(themes[0])
-  const [editableSlug, setEditableSlug] = useState<string>(originalSlug)
+  const [editableSlug, setEditableSlug] = useState(originalSlug)
 
   const [isCheckingSlug, setIsCheckingSlug] = useState(false)
   const [slugError, setSlugError] = useState<string | null>(null)
@@ -48,7 +48,7 @@ export default function Dashboard(): JSX.Element {
 
   const autoSaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  const handleAutoSave = async (): Promise<void> => {
+  const handleAutoSave = async () => {
     if (!editableSlug.trim() || !slugAvailable) return
 
     const trimmedSlug = editableSlug.trim()
@@ -87,7 +87,7 @@ export default function Dashboard(): JSX.Element {
   }
 
   useEffect(() => {
-    const fetchPageData = async (): Promise<void> => {
+    const fetchPageData = async () => {
       try {
         const res = await fetch(`/api/page/${originalSlug}`)
         if (!res.ok) throw new Error("Failed to fetch page data")
@@ -160,9 +160,9 @@ export default function Dashboard(): JSX.Element {
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
 
-  const handleDeleteCancel = (): void => setShowDeleteModal(false)
+  const handleDeleteCancel = () => setShowDeleteModal(false)
 
-  const handleDeleteConfirm = async (): Promise<void> => {
+  const handleDeleteConfirm = async () => {
     setIsDeleting(true)
     try {
       const res = await fetch(`/api/page/${originalSlug}`, { method: "DELETE" })
@@ -213,14 +213,6 @@ export default function Dashboard(): JSX.Element {
           </div>
         </div>
       </div>
-
-      {showDeleteModal && (
-        <DeletePageModal
-          isDeleting={isDeleting}
-          onCancel={handleDeleteCancel}
-          onConfirm={handleDeleteConfirm}
-        />
-      )}
     </div>
   )
 }

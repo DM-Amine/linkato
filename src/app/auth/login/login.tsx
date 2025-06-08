@@ -15,7 +15,7 @@ export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
 
   if (session) {
-    redirect("/dashboard");
+    redirect("/dashboard/pages");
   }
 
   const handleSubmit = async (e: React.FormEvent) => {

@@ -152,15 +152,21 @@ const handleSubmit = async (e: React.FormEvent) => {
               </Label>
               
             </div>
-            <Input
-              id="page-slug"
-              value={slug}
-              onChange={handleSlugChange}
-              placeholder="my-awesome-page"
-              className="border-neutral-500 focus:ring-primary"
-              disabled={isSubmitting} 
-            />
-            <p className="text-xs text-neutral-500">
+           <div className="relative">
+  <span className="absolute inset-y-0 left-3 flex items-center text-sm text-neutral-600 dark:text-neutral-400 select-none">
+    linkato.io/
+  </span>
+  <Input
+    id="page-slug"
+    value={slug}
+    onChange={handleSlugChange}
+    placeholder="my-awesome-page"
+    className="pl-[74px] border-neutral-500 focus:ring-primary"
+    disabled={isSubmitting}
+  />
+</div>
+
+            <p className="text-xs   text-neutral-700 dark:text-neutral-300">
               This will be the URL of your page. Only use lowercase letters, numbers, and hyphens.
             </p>
       

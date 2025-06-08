@@ -118,10 +118,10 @@ const Sidebar = () => {
       </div>
 
       {/* Footer: Fixed */}
-      <div className="px-1 mb-8 pb-5">
+      <div className="px-1 mb-8 pb-5 "> 
   <Link
     href="/dashboard/contact"
-    className={`sidebar-link w-fit text-neutral-700 dark:text-neutral-200 sm:w-full font-normal text-sm transition duration-300 rounded-md px-2 py-2 block ${
+    className={`sidebar-link whitespace-nowrap w-fit text-neutral-700 dark:text-neutral-200 sm:w-full font-normal text-sm transition duration-300 rounded-md px-2 py-2 block ${
       pathname === "/dashboard/contact"
         ? "bg-gradient-to-r from-[rgba(232,245,162,0.3)] to-[rgba(232,245,162,0.8)] border border-neutral-50 dark:border-d-primary-light dark:bg-gradient-to-r dark:from-[rgba(47,58,1,0.2)] dark:to-[rgba(47,58,1,0.8)] text-neutral-700 dark:text-primary-light font-semibold"
         : "text-neutral-700 dark:text-neutral-200 hover:bg-primary-light/40 dark:hover:bg-d-primary-light/40"

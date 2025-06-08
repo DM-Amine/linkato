@@ -40,7 +40,7 @@ export default function SignUp() {
           });
         
           if (signInRes?.ok) {
-            router.push("/dashboard");
+            router.push("/dashboard/pages");
           } else {
             setError("Failed to sign in after signup. Please try logging in.");
           }

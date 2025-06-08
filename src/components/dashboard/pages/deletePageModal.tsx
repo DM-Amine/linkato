@@ -15,8 +15,8 @@ interface DeletePageModalProps {
 export function DeletePageModal({ open, onConfirm, onCancel, pageName }: DeletePageModalProps) {
   return (
     <Dialog open={open} onOpenChange={onCancel}>
-      <DialogContent className="sm:max-w-[425px] bg-neutral-300 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 px-2 py-1">
-        <DialogHeader>
+     <DialogContent className="pointer-events-auto z-[100] sm:max-w-[425px] bg-neutral-300 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 px-2 py-1">
+   <DialogHeader>
           <DialogTitle className="text-xl font-semibold">Delete Page</DialogTitle>
         </DialogHeader>
 
