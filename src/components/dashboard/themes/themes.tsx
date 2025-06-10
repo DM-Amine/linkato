@@ -10,7 +10,7 @@ export const themes: Theme[] = [
     preview: "#F8F8F8",
     background: "bg-neutral-200",
      profile_card:{
-      position : "-mt-24",
+      // position : "-mt-24",
       Background : "bg-neutral-900"
     },
     cover_image : {
@@ -20,7 +20,7 @@ export const themes: Theme[] = [
       corners : "sm:rounded-lg rounded-none",
     },
     avatar: {
-      
+      position : "-mt-24",
       border: "border-neutral-300 border-4",
       corners : "rounded-full",
       size: "w-24 h-24",
@@ -59,7 +59,7 @@ export const themes: Theme[] = [
     preview: "#1A1A1A",
     background: "bg-neutral-900",
     profile_card:{
-      position : "-mt-24",
+      // position : "-mt-24",
       Background : "bg-neutral-900"
     },
     cover_image : {
@@ -69,7 +69,7 @@ export const themes: Theme[] = [
       corners : "sm:rounded-lg rounded-none",
     },
     avatar: {
-      
+      position : "-mt-24",
       border: "border-neutral-900 border-4",
       corners : "rounded-full",
       size: "w-24 h-24",

@@ -22,7 +22,7 @@ interface PageNavBarProps {
     handleDeleteCancel: () => void
     handleDeleteConfirm: () => void
     originalSlug: string
-    submitSuccess: string
+    submitSuccess: boolean
 }
 
 export function PageNavBar({
@@ -30,7 +30,7 @@ export function PageNavBar({
   setEditableSlug,
   isCheckingSlug,
   slugError,
-  handleSubmit,
+ 
   isSubmitting,
   isDeleting,
   setShowDeleteModal,
