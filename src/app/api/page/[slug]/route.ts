@@ -5,57 +5,66 @@ import Page from "@/models/page"
 
 export async function GET(_: Request, context: { params: { slug: string } }) {
   try {
-    await connectDB()
-    const { slug } = context.params
+    await connectDB();
+    const { slug } = context.params;
 
-    const page = await Page.findOne({ slug })
+    const page = await Page.findOne({ slug });
     if (!page) {
-      return NextResponse.json({ error: "Page not found" }, { status: 404 })
+      return NextResponse.json({ error: "Page not found" }, { status: 404 });
     }
 
     return NextResponse.json({
       profile: {
         name: page.name,
         bio: page.bio,
-        image: page.avatar, 
-        coverImage: page.coverImage, 
+        image: page.avatar,
+        coverImage: page.coverImage,
       },
       links: page.links,
-      socialMedia: page.socials, // match this with `socialMedia` in frontend
-      theme: page.theme
-    })
+      socialMedia: page.socials,
+      theme: page.theme,
+      content: page.content || "", // add content here
+    });
   } catch (error: any) {
     return NextResponse.json(
       { error: "Internal server error", message: error?.message || String(error) },
       { status: 500 }
-    )
+    );
   }
 }
 
+
 export async function PUT(request: Request, context: { params: { slug: string } }) {
   try {
-    console.log("🔧 [PUT] Start processing request...")
+    console.log("🔧 [PUT] Start processing request...");
 
-    await connectDB()
-    const { slug } = context.params
-    const body = await request.json()
+    await connectDB();
+    const { slug } = context.params;
+    const body = await request.json();
 
-    const { profile, links: rawLinks, socialMedia, theme, slug: newSlug } = body
+    const { profile, links: rawLinks, socialMedia, theme, slug: newSlug, content } = body;
 
-    if (!profile || !theme || !Array.isArray(rawLinks) || !Array.isArray(socialMedia)) {
+    if (
+      !profile ||
+      !theme ||
+      !Array.isArray(rawLinks) ||
+      !Array.isArray(socialMedia)
+    ) {
       return NextResponse.json(
         { error: "Missing or invalid fields in request body" },
         { status: 400 }
-      )
+      );
     }
 
-    const slugChanged = typeof newSlug === "string" && newSlug.trim() !== "" && newSlug !== slug
-
+    const slugChanged =
+      typeof newSlug === "string" &&
+      newSlug.trim() !== "" &&
+      newSlug !== slug;
 
     if (slugChanged) {
-      const slugExists = await Page.findOne({ slug: newSlug })
+      const slugExists = await Page.findOne({ slug: newSlug });
       if (slugExists) {
-        return NextResponse.json({ error: "Slug already in use" }, { status: 400 })
+        return NextResponse.json({ error: "Slug already in use" }, { status: 400 });
       }
     }
 
@@ -63,9 +72,9 @@ export async function PUT(request: Request, context: { params: { slug: string } 
     const links = rawLinks.map((link: any) => ({
       ...link,
       id: link.id || uuidv4(),
-    }))
+    }));
 
-    const updatePayload = {
+    const updatePayload: any = {
       name: profile.name,
       bio: profile.bio,
       avatar: profile.image,
@@ -73,29 +82,35 @@ export async function PUT(request: Request, context: { params: { slug: string } 
       links,
       socials: socialMedia,
       theme,
-      ...(slugChanged && { slug: newSlug }), // only include new slug if changed
+      ...(slugChanged && { slug: newSlug }),
       updatedAt: new Date(),
+    };
+
+    // Optionally include content if it's a string (can be empty string too)
+    if (typeof content === "string") {
+      updatePayload.content = content.trim();
     }
 
-    console.log("🔄 Update Payload:", updatePayload)
+    console.log("🔄 Update Payload:", updatePayload);
 
     const updatedPage = await Page.findOneAndUpdate({ slug }, updatePayload, {
       new: true,
-    })
+    });
 
     if (!updatedPage) {
-      return NextResponse.json({ error: "Page not found" }, { status: 404 })
+      return NextResponse.json({ error: "Page not found" }, { status: 404 });
     }
 
-    return NextResponse.json(updatedPage, { status: 200 })
+    return NextResponse.json(updatedPage, { status: 200 });
   } catch (error: any) {
-    console.error("🔥 Failed to update page:", error?.message || error)
+    console.error("🔥 Failed to update page:", error?.message || error);
     return NextResponse.json(
       { error: "Internal server error", message: error?.message || String(error) },
       { status: 500 }
-    )
+    );
   }
 }
+
 
 export async function DELETE(_: Request, context: { params: { slug: string } }) {
   try {

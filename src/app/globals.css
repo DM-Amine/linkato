@@ -1,4 +1,8 @@
 @import 'tailwindcss';
+@import '../styles/_variables.css';
+@import '../styles/_keyframe-animations.css';
+
+
 
 
 @config '../../tailwind.config.ts';
@@ -11,6 +15,30 @@ html {
   scroll-behavior: smooth;
 }
 
+
+/* @layer components {
+  .tiptap p {
+    @apply text-base text-neutral-800 dark:text-neutral-100;
+  }
+
+  .tiptap h1 {
+    @apply text-2xl font-bold mb-2;
+  }
+
+  .tiptap h2 {
+    @apply text-xl font-semibold mb-2;
+  }
+
+  .tiptap ul, .tiptap ol {
+    @apply list-disc list-inside ml-5;
+  }
+
+  .tiptap a {
+    @apply text-info underline;
+  }
+
+
+} */
 
 @layer base {
 

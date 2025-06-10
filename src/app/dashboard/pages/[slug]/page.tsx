@@ -11,6 +11,7 @@ import { ThemeCustomizer } from "@/components/dashboard/pages/themeCutomizer"
 import { MobilePreview } from "@/components/dashboard/pages/mobilePreview"
 import { PageNavBar } from "@/components/dashboard/pages/PageNavBar"
 import { themes } from "@/components/dashboard/themes/themes"
+import { SimpleEditor } from '@/components/tiptap-templates/simple/simple-editor'
 
 import type { Profile, Link, SocialMedia, Theme } from "./types"
 
@@ -35,6 +36,7 @@ export default function Dashboard() {
   const [socialMedia, setSocialMedia] = useState<SocialMedia[]>(initialSocialMedia)
   const [selectedTheme, setSelectedTheme] = useState<Theme>(themes[0])
   const [editableSlug, setEditableSlug] = useState(originalSlug)
+  const [pageContent, setPageContent] = useState<string>("")
 
   const [isPageLoaded, setIsPageLoaded] = useState(false)
   const [isCheckingSlug, setIsCheckingSlug] = useState(false)
@@ -50,7 +52,7 @@ export default function Dashboard() {
   const autoSaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const lastSavedState = useRef<string>("")
 
-  // 1️⃣ Load initial data
+  // Load page data
   useEffect(() => {
     const fetchPageData = async () => {
       try {
@@ -63,6 +65,7 @@ export default function Dashboard() {
         setSocialMedia(data.socialMedia)
         setSelectedTheme(themes.find(t => t.id === data.theme) ?? themes[0])
         setEditableSlug(originalSlug)
+        setPageContent(data.content || "")
         setSlugAvailable(true)
         setIsPageLoaded(true)
 
@@ -72,6 +75,7 @@ export default function Dashboard() {
           socialMedia: data.socialMedia,
           theme: data.theme,
           slug: originalSlug,
+          content: data.content || "",
         })
       } catch (err) {
         console.error("❌ Failed to load page data:", err)
@@ -81,7 +85,7 @@ export default function Dashboard() {
     if (originalSlug) fetchPageData()
   }, [originalSlug])
 
-  // 2️⃣ Slug availability check
+  // Slug availability check
   useEffect(() => {
     if (!editableSlug || editableSlug === originalSlug) {
       setSlugError(null)
@@ -113,7 +117,7 @@ export default function Dashboard() {
     return () => clearTimeout(handler)
   }, [editableSlug, originalSlug])
 
-  // 3️⃣ Auto-save effect
+  // Auto-save
   useEffect(() => {
     if (!isPageLoaded || !slugAvailable) return
 
@@ -126,6 +130,7 @@ export default function Dashboard() {
         socialMedia,
         theme: selectedTheme.id,
         slug: editableSlug.trim(),
+        content: pageContent,
       })
 
       if (currentState !== lastSavedState.current) {
@@ -144,9 +149,9 @@ export default function Dashboard() {
     editableSlug,
     slugAvailable,
     isPageLoaded,
+    pageContent,
   ])
 
-  // 4️⃣ Auto-save handler
   const handleAutoSave = async (nextStateStr: string) => {
     if (!editableSlug.trim() || !slugAvailable) return
 
@@ -158,6 +163,7 @@ export default function Dashboard() {
       links: links.map((link, i) => ({ ...link, index: i.toString() })),
       socialMedia,
       theme: selectedTheme.id,
+      content: pageContent,
     }
 
     setIsSubmitting(true)
@@ -186,7 +192,6 @@ export default function Dashboard() {
     }
   }
 
-  // 5️⃣ Deletion logic
   const handleDeleteCancel = () => setShowDeleteModal(false)
   const handleDeleteConfirm = async () => {
     setIsDeleting(true)
@@ -227,6 +232,19 @@ export default function Dashboard() {
         <div className="flex md:flex-row flex-col min-w-full justify-between">
           <div className="max-w-full sm:w-full mt-6 mx-3 space-y-6">
             <ProfileCard profile={profile} onProfileUpdate={setProfile} />
+
+            <div className="border-neutral-50 dark:border-neutral-600 bg-neutral-100 dark:bg-neutral-800 pt-2 shadow-xs rounded-xl">
+              <h2 className="text-xl font-semibold text-neutral-800 dark:text-neutral-100">Content</h2>
+              <div className="tiptap rounded-2xl border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-900">
+             <SimpleEditor
+  key={isPageLoaded ? "editor-loaded" : "editor-loading"} // or key={pageContent}
+  content={pageContent}
+  onContentChange={setPageContent}
+/>
+
+              </div>
+            </div>
+
             <SocialMediaManager socialMedia={socialMedia} onSocialMediaUpdate={setSocialMedia} />
             <LinksManager links={links} onLinksUpdate={setLinks} />
             <ThemeCustomizer

@@ -42,6 +42,12 @@ const pageSchema = new mongoose.Schema({
         trim: true,
         maxLength: [300, 'Bio cannot exceed 300 characters'],
     },
+    content :{
+        type: String,
+        default: '',
+        trim: true,
+
+    },
     socials: {
         type: [{
             id: {
