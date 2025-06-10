@@ -255,11 +255,13 @@ export default function Dashboard() {
 
           <div className="w-full hidden md:flex sm:w-10/12 md:w-8/12 lg:w-4/12 md:sticky md:top-12 md:h-fit mx-auto">
             <MobilePreview
-              profile={profile}
-              links={links}
-              socialMedia={socialMedia}
-              theme={selectedTheme}
-            />
+  profile={profile}
+  links={links}
+  socialMedia={socialMedia}
+  theme={selectedTheme}
+  content={pageContent}
+/>
+
           </div>
         </div>
       </div>

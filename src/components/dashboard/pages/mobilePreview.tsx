@@ -8,12 +8,13 @@ import type { Profile, Link, Theme, SocialMedia } from "../types"
 
 interface MobilePreviewProps {
   profile: Profile
+  content: string
   links: Link[]
   socialMedia: SocialMedia[]
   theme: Theme
 }
 
-export function MobilePreview({ profile, links, socialMedia, theme }: MobilePreviewProps) {
+export function MobilePreview({ profile, links, socialMedia, theme,content }: MobilePreviewProps) {
   // Defensive defaults for profile properties
   const name = profile?.name ?? "No Name";
   const bio = profile?.bio ?? "";
@@ -92,6 +93,14 @@ export function MobilePreview({ profile, links, socialMedia, theme }: MobilePrev
                       })}
                     </div>
                   )}
+
+                  {/* Content Preview */}
+                  {content && (
+  <div
+    className="prose prose-sm dark:prose-invert mx-auto px-4 pb-6"
+    dangerouslySetInnerHTML={{ __html: content }}
+  />
+)}
 
                   {/* Links Preview */}
                   <div className="space-y-2 pb-4">
