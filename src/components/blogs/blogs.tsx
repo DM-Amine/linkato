@@ -452,7 +452,7 @@ const BlogsPage = () => {
     ))
   ) : (
     <div className="col-span-full bg-neutral-100 dark:bg-neutral-900 rounded-xl h-[480px] flex justify-center items-center py-10">
-      <div className="text-center mx-2 border border-dashed border-border rounded-xl px-6 py-10 bg-muted/40 dark:bg-muted/10 max-w-md w-full">
+      <div className="text-center mx-2 border border-dashed rounded-xl px-6 py-10 bg-muted/40 dark:bg-muted/10 max-w-md w-full">
         <p className="text-lg font-semibold text-muted-foreground">
           No blogs found
         </p>
@@ -525,7 +525,7 @@ const BlogsPage = () => {
     .slice(0, 5)
     .map((blog) => (
       <Link key={blog.blogID} href={`/blogs`} className="group block">
-        <Card className="border border-border dark:border-neutral-800 hover:shadow-lg transition-shadow duration-300 h-full flex flex-col justify-between group relative">
+        <Card className="border  dark:border-neutral-800 hover:shadow-lg transition-shadow duration-300 h-full flex flex-col justify-between group relative">
           <div className="absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity bg-neutral-50/80 dark:bg-neutral-950/60 backdrop-blur-sm border border-neutral-200 dark:border-neutral-700 shadow-md p-0.5 rounded-md">
             <SquareArrowOutUpRight className="h-4 w-4 text-muted-foreground hover:text-primary transition-colors cursor-pointer" />
           </div>

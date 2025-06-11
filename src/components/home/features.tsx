@@ -4,14 +4,14 @@ import { useRef, useLayoutEffect, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
-  ShieldCheck,
-  MessageSquare,
-  Filter,
-  Search,
-  LogIn,
-  Palette,
-  UserCheck,
-  Moon,
+  ChartNoAxesCombined ,
+  MousePointerClick ,
+  MoonStar ,
+  PanelTop ,
+  Frame ,
+  RectangleEllipsis ,
+  SquareDashedMousePointer ,
+  Layers ,
 } from "lucide-react";
 import type { ReactNode } from "react";
 
@@ -26,14 +26,22 @@ type FeatureItem = {
 };
 
 const features: FeatureItem[] = [
-  { title: "Secure API", description: "Robust and secure API with full CRUD support.", icon: <ShieldCheck className="h-6 w-6" />, size: "small" },
-  { title: "Contact System", description: "Receive your customers' messages, feedback, reports, and manage them with ease.", icon: <MessageSquare className="h-6 w-6" />, size: "medium" },
-  { title: "URL Filtering", description: "Fine-grained content control through URL-based filters, including search, tags, and pagination.", icon: <Filter className="h-6 w-6" />, size: "small" },
-  { title: "SEO (Search Engine Optimization)", description: "Optimized for search engines with both static and dynamic SEO features.", icon: <Search className="h-6 w-6" />, size: "medium" },
-  { title: "Seamless Authentication", description: "Integrated Google OAuth via NextAuth for quick and secure onboarding.", icon: <LogIn className="h-6 w-6" />, size: "medium" },
-  { title: "Modern UI/UX", description: "Crafted with shadcn/ui and Tailwind CSS for a sleek and professional interface.", icon: <Palette className="h-6 w-6" />, size: "medium" },
-  { title: "Role-Based Access", description: "Built-in support for user, admin, and moderator roles with secure access control.", icon: <UserCheck className="h-6 w-6" />, size: "small" },
-  { title: "Theming Support", description: "Effortlessly toggle between light and dark modes for an adaptive user experience.", icon: <Moon className="h-6 w-6" />, size: "small" },
+  { title: "Multi-Page", description: "Robust and secure API with full CRUD support.", icon: <PanelTop  className="h-6 w-6" />, size: "small" },
+  { title: "No watermark", description: "Robust and secure API with full CRUD support.", icon: <Frame  className="h-6 w-6" />, size: "small" },
+ 
+  { title: "Flexibility", description: "Add what you need without forcing", icon: <Layers  className="h-6 w-6" />, size: "small" },
+  { title: "Instant Setup", description: "Receive your customers' messages, feedback, reports, and manage them with ease.", icon: <MousePointerClick  className="h-6 w-6" />, size: "small" },
+  { title: "themes", description: "Premium themes built to boost conversion rate with light and dark mode.", icon: <MoonStar   className="h-6 w-6" />, size: "small" },
+ 
+  { title: "Custom forms (soon)", description: "Fine-grained content control through URL-based filters, including search, tags, and pagination.", icon: <RectangleEllipsis  className="h-6 w-6" />, size: "small" },
+  { title: "Custom CTA (soon)", description: "Fine-grained content control through URL-based filters, including search, tags, and pagination.", icon: <SquareDashedMousePointer  className="h-6 w-6" />, size: "small" },
+  
+  { title: "Analytics (soon)", description: "Fine-grained content control through URL-based filters, including search, tags, and pagination.", icon: <ChartNoAxesCombined  className="h-6 w-6" />, size: "small" },
+  // { title: "SEO (Search Engine Optimization)", description: "Optimized for search engines with both static and dynamic SEO features.", icon: <Search className="h-6 w-6" />, size: "medium" },
+  // { title: "Seamless Authentication", description: "Integrated Google OAuth via NextAuth for quick and secure onboarding.", icon: <LogIn className="h-6 w-6" />, size: "medium" },
+  // { title: "Modern UI/UX", description: "Crafted with shadcn/ui and Tailwind CSS for a sleek and professional interface.", icon: <Palette className="h-6 w-6" />, size: "medium" },
+  // { title: "Role-Based Access", description: "Built-in support for user, admin, and moderator roles with secure access control.", icon: <UserCheck className="h-6 w-6" />, size: "small" },
+  // { title: "Theming Support", description: "Effortlessly toggle between light and dark modes for an adaptive user experience.", icon: <Moon className="h-6 w-6" />, size: "small" },
 ];
 
 const sizeToClass = {
@@ -76,11 +84,11 @@ useLayoutEffect(() => {
       className="container min-h-[60vh] relative z-10 mx-auto px-4 py-12"
       ref={containerRef}
     >
-      <div className="pointer-events-none absolute top-0 left-0 w-full -translate-y-1/2 z-10">
+      {/* <div className="pointer-events-none absolute top-0 left-0 w-full -translate-y-1/2 z-10">
         <div className="absolute left-0 top-1/2 h-px w-full bg-gradient-to-r from-transparent via-amber-500 to-transparent" />
         <div className="absolute left-0 top-1/2 h-[5px] w-full bg-gradient-to-r from-transparent via-primary to-transparent blur-sm" />
         <div className="absolute left-0 top-1/2 h-px w-full bg-gradient-to-r from-transparent via-primary to-transparent" />
-      </div>
+      </div> */}
 
       <div className="grid auto-rows-min grid-cols-1 gap-4 md:grid-cols-4 md:gap-6">
         {features.map((feature, index) => {
@@ -93,11 +101,11 @@ useLayoutEffect(() => {
                 cardRefs.current[index] = el;
               }}
 
-              className={`group relative overflow-hidden rounded-2xl border border-neutral-50 
-                bg-neutral-100/80 p-6 backdrop-blur-sm transition-all duration-500 ease-out
+              className={`group relative overflow-hidden rounded-2xl border border-neutral-400 
+                bg-neutral-200/80 p-3 backdrop-blur-sm transition-all duration-500 ease-out
                 dark:border-neutral-100 dark:bg-neutral-900/80
                 dark:[border:1px_solid_rgba(255,255,255,.1)] 
-                dark:[box-shadow:0_-20px_80px_-30px_#DF5D231f_inset] 
+               
                 [box-shadow:0_0_0_1px_rgba(0,0,0,.03),0_2px_4px_rgba(0,0,0,.05),0_12px_24px_rgba(0,0,0,.05)]
                 hover:shadow-[0_8px_30px_rgba(0,0,0,0.12)] 
                 dark:hover:shadow-[0_8px_30px_rgba(0,0,0,0.3)]
@@ -105,10 +113,10 @@ useLayoutEffect(() => {
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/1 via-primary/10 to-neutral-100 dark:to-neutral-900 dark:opacity-30 opacity-100 group-hover:opacity-0 transition-opacity duration-700" />
+              {/* <div className="absolute inset-0 bg-gradient-to-br from-primary/1 via-primary/10 to-neutral-100 dark:to-neutral-900 dark:opacity-30 opacity-100 group-hover:opacity-0 transition-opacity duration-700" /> */}
               <div className="absolute inset-0 bg-white/5 dark:bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-900" />
               <div className="absolute -bottom-6 -right-6 h-24 w-24 rounded-full bg-gradient-to-br from-primary/20 to-primary-light/5 dark:from-primary/10 dark:to-d-primary-light/5 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-              <div className="absolute -top-6 -left-6 h-24 w-24 rounded-full bg-gradient-to-br from-amber/20 to-primary-light/5 dark:from-amber/10 dark:to-d-primary-light/5 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              {/* <div className="absolute -top-6 -left-6 h-24 w-24 rounded-full bg-gradient-to-br from-neutral-900/20 to-primary-light/5 dark:from-amber/10 dark:to-d-primary-light/5 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" /> */}
 
               <div className="relative z-10 flex h-full flex-col">
                 <div className="relative mb-4">

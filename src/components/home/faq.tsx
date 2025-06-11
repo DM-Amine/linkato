@@ -53,7 +53,7 @@ const faqs = [
 
 export function Faq() {
   return (
-    <section className="py-24 px-4 border-y border-border bg-muted/10 dark:bg-muted/5">
+    <section className="py-24 px-4 bg-muted/10 dark:bg-muted/5">
       <div className="max-w-3xl mx-auto">
         <h2 className="text-3xl font-bold mb-8 text-center tracking-tight">
           Frequently Asked Questions
@@ -64,7 +64,7 @@ export function Faq() {
             <AccordionItem
               key={index}
               value={`item-${index}`}
-              className="border border-border rounded-xl bg-muted/30 dark:bg-muted/20"
+              className="border rounded-xl bg-muted/30 dark:bg-muted/20"
             >
               <AccordionTrigger className="text-left px-4 py-3 text-base font-medium text-foreground">
                 {faq.question}

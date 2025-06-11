@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent} from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Label } from "@/components/ui/label"
+import Image from "next/image"
 import type { Profile } from "../types"
 
 interface ProfileEditorProps {
@@ -57,9 +58,11 @@ export function ProfileCard({ profile, onProfileUpdate }: ProfileEditorProps) {
           <div className="relative">
             {profile.coverImage ? (
               <div className="relative w-full h-32 rounded-lg overflow-hidden border-2 border-neutral-300 dark:border-neutral-600">
-                <img
+                <Image
+                width={800}
+                height={600}
                   src={profile.coverImage || "/placeholder.svg"}
-                  alt="Cover"
+                  alt={`${profile.name}` || "Cover"}
                   className="w-full h-full object-cover"
                 />
                 <Button

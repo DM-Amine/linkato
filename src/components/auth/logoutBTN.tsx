@@ -11,7 +11,7 @@ export default function LogoutBTN() {
     variant={"default"}
    
     onClick={() => signOut({ callbackUrl: "/" })}
-    className="bg-primary sm:mt-1 text-xs text-neutral-200 "
+    className=" text-xs"
   >
     
     Logout

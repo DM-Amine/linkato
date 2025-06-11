@@ -10,6 +10,7 @@ import type { Profile, Link as LinkType, Theme, SocialMedia } from "../types"
 
 interface PageData {
   profile: Profile
+  content: string
   links: LinkType[]
   socialMedia: SocialMedia[]
   theme: string
@@ -26,7 +27,7 @@ export default async function PublicPage({ params }: { params: Promise<{ slug: s
   if (!res.ok) throw new Error("Failed to load page")
 
   const data = (await res.json()) as PageData
-  const { profile, links, socialMedia } = data
+  const { profile, links, socialMedia ,content} = data
   const themeFromDB = data.theme
   const theme = themes.find(t => t.id === themeFromDB)
   const name = profile?.name ?? "No Name"
@@ -101,6 +102,17 @@ export default async function PublicPage({ params }: { params: Promise<{ slug: s
       {/* {theme?.separator && (
         <div className={`h-px w-24 my-6 ${theme.separator.background} ${theme.separator.size}`} />
       )} */}
+
+      
+      {/* content */}
+{content && (
+  <div
+    className="sm:max-w-4xl w-full mt-6 px-4 prose dark:prose-invert"
+    dangerouslySetInnerHTML={{ __html: content }}
+  />
+)}
+
+
 
       {/* Links */}
       <div className="max-w-md w-full px-2 mt-8 mb-6 space-y-4  ">

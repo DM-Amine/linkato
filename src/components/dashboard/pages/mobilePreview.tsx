@@ -97,7 +97,7 @@ export function MobilePreview({ profile, links, socialMedia, theme,content }: Mo
                   {/* Content Preview */}
                   {content && (
   <div
-    className="prose prose-sm dark:prose-invert mx-auto px-4 pb-6"
+    className="mx-auto px-4 pb-6"
     dangerouslySetInnerHTML={{ __html: content }}
   />
 )}

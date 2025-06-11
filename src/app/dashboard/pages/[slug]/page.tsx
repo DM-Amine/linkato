@@ -233,7 +233,7 @@ export default function Dashboard() {
           <div className="max-w-full sm:w-full mt-6 mx-3 space-y-6">
             <ProfileCard profile={profile} onProfileUpdate={setProfile} />
 
-            <div className="border-neutral-50 dark:border-neutral-600 bg-neutral-100 dark:bg-neutral-800 pt-2 shadow-xs rounded-xl">
+            {/* <div className=" border-neutral-50 dark:border-neutral-600 bg-neutral-200 dark:bg-neutral-800 pt-2 shadow-xs rounded-xl">
               <h2 className="text-xl font-semibold text-neutral-800 dark:text-neutral-100">Content</h2>
               <div className="tiptap rounded-2xl border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-900">
              <SimpleEditor
@@ -243,7 +243,7 @@ export default function Dashboard() {
 />
 
               </div>
-            </div>
+            </div> */}
 
             <SocialMediaManager socialMedia={socialMedia} onSocialMediaUpdate={setSocialMedia} />
             <LinksManager links={links} onLinksUpdate={setLinks} />

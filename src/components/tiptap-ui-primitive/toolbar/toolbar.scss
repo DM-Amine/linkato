@@ -11,7 +11,7 @@
 }
 
 .tiptap-toolbar {
-  border-radius: 0.75rem;
+  border-radius: 0.75rem 0.75rem 0 0 ;
   display: flex;
   align-items: center;
   gap: 0.25rem;
@@ -32,7 +32,7 @@
   }
 
   &[data-variant="fixed"] {
-    position: sticky;
+    position: static;
     top: 0;
     z-index: 10;
     width: 100%;
@@ -51,7 +51,7 @@
     }
 
     @media (max-width: 480px) {
-      position: fixed;
+      position: static;
       top: auto;
       bottom: 0;
       height: calc(var(--tt-toolbar-height) + var(--tt-safe-area-bottom));

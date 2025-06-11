@@ -160,7 +160,7 @@ const MobileToolbarContent = ({
         )}
       </Button>
     </ToolbarGroup>
-
+ 
     <ToolbarSeparator />
 
     {type === "highlighter" ? (
