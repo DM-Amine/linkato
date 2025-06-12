@@ -9,46 +9,35 @@ import {
 
 const faqs = [
   {
-    question: "What is Lunitea?",
+    question: "Is it free?",
     answer:
-      "Lunitea is Boilerplate more than a template. It’s a full-stack solution for building modern web applications saving you months of development time.",
+      "Yes, all current features are free for personal use.",
   },
   {
-    question: "is Lunitea SaaS boilerplate?",
+    question: "Is my data private?",
     answer:
-      "Lunitea is open project can match any type of web application, including SaaS, Starup, platforms, muliple tenants...etc, It’s a flexible foundation for any project.",
+      "Absolutely. Your private links and pages are only visible to you unless you choose to share them.",
   },
   {
-    question: "can i resell it?",
+    question: "Is there a limit on the number of links?",
     answer:
-      "NO, you can’t resell Lunitea as it is, but you can use it as a base for your own product and sell that product.",
-  },
-   {
-    question: "can i work with you?",
-    answer:
-      "if you have your Lunitea copy we will offer a market place where you can sell your own copy after review it, if you are interested please reach out to us via email.",
+      "No. You can add as many links as you like to your page without restrictions.",
   },
   {
-    question: "why there is no email sender?",
+    question: "How many pages can I create?",
     answer:
-      "we know the important of email sender, but we want to keep the project clean and simple currently, you can add any email sender you like, we also added exporing emails button so you can use other external tools.",
+      "You can create one page with the personal plan. Unlimited pages will be available in the upcoming business plan.",
   },
   {
-    question: "is it uncluded payment system?",
+    question: "Is there any hidden watermark?",
     answer:
-      "currently, we don’t include any payment system since Lunitea is open starter project not focusing on subscription apps, but we let you know this we be available in the neer future.",
+      "No. We don't add any hidden watermarks or branding. Your pages stay clean and professional.",
   },
   {
-    question: "can i get new updates?",
+    question: "Are the themes customizable?",
     answer:
-      "Yes, we will keep updating & improving with new features, bugs fixes, and add market place for more boilerplates matching more busnisses. you will receive updates via email, and make sure you follow us on twitter and linkedin.",
+      "To maintain a clean and high-conversion design, themes are minimalist in black and white. You can still personalize your page with your brand color, avatar, and cover image.",
   },
-  {
-    question: "is there a documentation?",
-    answer:
-      "not yet, but we will provide a full documentation for Lunitea when it have more features and copies, for now lunitea is exremly simple and easy to use with detailed Readme file.",
-  },
-
 ]
 
 export function Faq() {

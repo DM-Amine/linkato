@@ -26,23 +26,62 @@ type FeatureItem = {
 };
 
 const features: FeatureItem[] = [
-  { title: "Multi-Page", description: "Robust and secure API with full CRUD support.", icon: <PanelTop  className="h-6 w-6" />, size: "small" },
-  { title: "No watermark", description: "Robust and secure API with full CRUD support.", icon: <Frame  className="h-6 w-6" />, size: "small" },
- 
-  { title: "Flexibility", description: "Add what you need without forcing", icon: <Layers  className="h-6 w-6" />, size: "small" },
-  { title: "Instant Setup", description: "Receive your customers' messages, feedback, reports, and manage them with ease.", icon: <MousePointerClick  className="h-6 w-6" />, size: "small" },
-  { title: "themes", description: "Premium themes built to boost conversion rate with light and dark mode.", icon: <MoonStar   className="h-6 w-6" />, size: "small" },
- 
-  { title: "Custom forms (soon)", description: "Fine-grained content control through URL-based filters, including search, tags, and pagination.", icon: <RectangleEllipsis  className="h-6 w-6" />, size: "small" },
-  { title: "Custom CTA (soon)", description: "Fine-grained content control through URL-based filters, including search, tags, and pagination.", icon: <SquareDashedMousePointer  className="h-6 w-6" />, size: "small" },
-  
-  { title: "Analytics (soon)", description: "Fine-grained content control through URL-based filters, including search, tags, and pagination.", icon: <ChartNoAxesCombined  className="h-6 w-6" />, size: "small" },
-  // { title: "SEO (Search Engine Optimization)", description: "Optimized for search engines with both static and dynamic SEO features.", icon: <Search className="h-6 w-6" />, size: "medium" },
+  {
+    title: "Multi-Page",
+    description: "Make as many pages as you need. Each one can have its own links, bio, and layout.",
+    icon: <PanelTop className="h-6 w-6" />,
+    size: "small",
+  },
+  {
+    title: "No Watermark",
+    description: "We don’t force our branding on your page. It’s your space, not ours.",
+    icon: <Frame className="h-6 w-6" />,
+    size: "small",
+  },
+  {
+    title: "Flexibility",
+    description: "Show what matters, hide what doesn't. Your page stays clean and focused.",
+    icon: <Layers className="h-6 w-6" />,
+    size: "small",
+  },
+  {
+    title: "Instant Setup",
+    description: "No setup steps. Just sign in, build your page, and you’re live.",
+    icon: <MousePointerClick className="h-6 w-6" />,
+    size: "small",
+  },
+  {
+    title: "Themes",
+    description: "Minimal themes built for clarity. Includes light and dark mode, no extra work needed.",
+    icon: <MoonStar className="h-6 w-6" />,
+    size: "small",
+  },
+  {
+    title: "Custom Forms (soon)",
+    description: "Let visitors reach out or send info with built-in forms.",
+    icon: <RectangleEllipsis className="h-6 w-6" />,
+    size: "small",
+  },
+  {
+    title: "Custom CTA (soon)",
+    description: "Add your own call-to-action to direct traffic where it matters.",
+    icon: <SquareDashedMousePointer className="h-6 w-6" />,
+    size: "small",
+  },
+  {
+    title: "Analytics (soon)",
+    description: "See how people interact with your page. Simple insights without tracking bloat.",
+    icon: <ChartNoAxesCombined className="h-6 w-6" />,
+    size: "small",
+  },
+];
+
+ // { title: "SEO (Search Engine Optimization)", description: "Optimized for search engines with both static and dynamic SEO features.", icon: <Search className="h-6 w-6" />, size: "medium" },
   // { title: "Seamless Authentication", description: "Integrated Google OAuth via NextAuth for quick and secure onboarding.", icon: <LogIn className="h-6 w-6" />, size: "medium" },
   // { title: "Modern UI/UX", description: "Crafted with shadcn/ui and Tailwind CSS for a sleek and professional interface.", icon: <Palette className="h-6 w-6" />, size: "medium" },
   // { title: "Role-Based Access", description: "Built-in support for user, admin, and moderator roles with secure access control.", icon: <UserCheck className="h-6 w-6" />, size: "small" },
   // { title: "Theming Support", description: "Effortlessly toggle between light and dark modes for an adaptive user experience.", icon: <Moon className="h-6 w-6" />, size: "small" },
-];
+
 
 const sizeToClass = {
   small: "col-span-1 row-span-1",
