@@ -19,7 +19,7 @@ export function MobilePreview({ profile, links, socialMedia, theme,content }: Mo
   // Defensive defaults for profile properties
   const name = profile?.name ?? "No Name";
   const bio = profile?.bio ?? "";
-  const image = profile?.image ?? "/placeholder.svg";
+  const image = profile?.image ?? "";
   const coverImage = profile?.coverImage;
 
   return (

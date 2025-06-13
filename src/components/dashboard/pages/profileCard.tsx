@@ -62,7 +62,7 @@ export function ProfileCard({ profile, onProfileUpdate }: ProfileEditorProps) {
                 <Image
                 width={800}
                 height={600}
-                  src={profile.coverImage || "/placeholder.svg"}
+                  src={profile.coverImage || ""}
                   alt={`${profile.name}` || "Cover"}
                   className="w-full h-full object-cover"
                 />
@@ -100,7 +100,7 @@ export function ProfileCard({ profile, onProfileUpdate }: ProfileEditorProps) {
         <div className="flex items-center gap-4">
           <div className="relative">
             <Avatar className="w-20 h-20 border-2 border-neutral-200 dark:border-neutral-700">
-              <AvatarImage src={profile.image || "/placeholder.svg"} className="object-cover" />
+              <AvatarImage src={profile.image || ""} className="object-cover" />
               <AvatarFallback className="bg-neutral-100 dark:bg-neutral-900 text-neutral-600 dark:text-neutral-300">
               {profile.name?.charAt(0) || "?"}
 

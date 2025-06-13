@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation"
+import { headers } from "next/headers"
 import { Card, CardContent } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { socialPlatforms } from "@/components/dashboard/socialPlatforms/socialPlatforms"
@@ -6,7 +7,6 @@ import { themes } from "@/components/dashboard/themes/themes"
 import Link from "next/link"
 import Image from "next/image"
 import type { Profile, Link as LinkType, SocialMedia } from "@/types/pages"
-
 
 interface PageData {
   profile: Profile
@@ -16,52 +16,76 @@ interface PageData {
   theme: string
 }
 
+export default async function PublicPage({
+  params,
+}: {
+  params: { slug: string } // ✅ fixed type
+}) {
+  const { slug } = params // ✅ no await needed
 
-export default async function PublicPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params
+const headersList = await headers()
 
- const res = await fetch(`/api/page/${slug}`)
+  const host = headersList.get("host")
+  const protocol = host?.includes("localhost") ? "http" : "https"
+  const url = `${protocol}://${host}/api/page/${slug}`
 
+  const res = await fetch(url, {
+    cache: "no-store",
+  })
 
   if (res.status === 404) return notFound()
   if (!res.ok) throw new Error("Failed to load page")
 
   const data = (await res.json()) as PageData
-  const { profile, links, socialMedia ,content} = data
+  const { profile, links, socialMedia, content } = data
   const themeFromDB = data.theme
-  const theme = themes.find(t => t.id === themeFromDB)
+  const theme = themes.find((t) => t.id === themeFromDB)
   const name = profile?.name ?? "No Name"
   const bio = profile?.bio ?? ""
-  const image = profile?.image ?? "/placeholder.svg"
+  const image = profile?.image ?? ""
   const coverImage = profile?.coverImage
- 
 
   return (
-    <div className={`min-h-screen  flex flex-col items-center ${theme?.background ?? ""}`}>
-      
-
+    <div className={`min-h-screen flex flex-col items-center ${theme?.background ?? ""}`}>
       {/* Cover Image */}
       {coverImage && (
-        <div className= {` ${theme?.cover_image_wrapper?.size }  ${theme?.cover_image_wrapper?.margin} ${theme?.cover_image_wrapper?.corners }  overflow-hidden  `}>
-          <Image width={800} height={600} src={coverImage} alt="Cover" className={`${theme?.cover_image?.size}  object-cover`} />
-          {/* {theme?.coverOverlay && <div className={`absolute inset-0 ${theme.coverOverlay}`} />} */}
+        <div
+          className={` ${theme?.cover_image_wrapper?.size} ${theme?.cover_image_wrapper?.margin} ${theme?.cover_image_wrapper?.corners} overflow-hidden`}
+        >
+          <Image
+            width={800}
+            height={600}
+            src={coverImage}
+            alt="Cover"
+            className={`${theme?.cover_image?.size} object-cover`}
+          />
         </div>
       )}
 
       {/* Profile Card */}
-      <Card className={` ${theme?.profile_card?.position } shadow-none border-none`}>
-        <CardContent className={`flex flex-col  items-center space-y-4 py-8 px-6`}>
-          <Avatar className={`${theme?.avatar?.size ?? "w-24 h-24"} ${theme?.avatar?.border } ${theme?.avatar?.corners } ${theme?.avatar?.position }  mb-2   `}>
-            <AvatarImage src={image} alt={name} className="object-cover " />
+      <Card className={` ${theme?.profile_card?.position} shadow-none border-none`}>
+        <CardContent className="flex flex-col items-center space-y-4 py-8 px-6">
+          <Avatar
+            className={`${theme?.avatar?.size ?? "w-24 h-24"} ${theme?.avatar?.border} ${theme?.avatar?.corners} ${theme?.avatar?.position} mb-2`}
+          >
+            <AvatarImage src={image} alt={name} className="object-cover" />
             <AvatarFallback>{name.charAt(0)}</AvatarFallback>
           </Avatar>
 
-          <h1 className={`text-2xl font-semibold ${theme?.text?.name ?? "text-neutral-900 dark:text-neutral-100"}`}>
+          <h1
+            className={`text-2xl font-semibold ${
+              theme?.text?.name ?? "text-neutral-900 dark:text-neutral-100"
+            }`}
+          >
             {name}
           </h1>
 
           {bio && (
-            <p className={`text-center text-sm leading-relaxed ${theme?.text?.bio ?? "text-neutral-700 dark:text-neutral-300"}`}>
+            <p
+              className={`text-center text-sm leading-relaxed ${
+                theme?.text?.bio ?? "text-neutral-700 dark:text-neutral-300"
+              }`}
+            >
               {bio}
             </p>
           )}
@@ -86,9 +110,16 @@ export default async function PublicPage({ params }: { params: Promise<{ slug: s
                     aria-label={platform.name}
                   >
                     <Icon
-                      className={`w-5 h-5 ${theme?.socialIcons?.iconColor === "platform-color" ? "" : theme?.socialIcons?.iconColor ?? "text-neutral-800 dark:text-neutral-200"}`}
+                      className={`w-5 h-5 ${
+                        theme?.socialIcons?.iconColor === "platform-color"
+                          ? ""
+                          : theme?.socialIcons?.iconColor ?? "text-neutral-800 dark:text-neutral-200"
+                      }`}
                       style={{
-                        color: theme?.socialIcons?.iconColor === "platform-color" ? platform.color : undefined,
+                        color:
+                          theme?.socialIcons?.iconColor === "platform-color"
+                            ? platform.color
+                            : undefined,
                       }}
                     />
                   </Link>
@@ -97,26 +128,18 @@ export default async function PublicPage({ params }: { params: Promise<{ slug: s
             </div>
           )}
         </CardContent>
-      </Card> 
+      </Card>
 
-      {/* Separator */}
-      {/* {theme?.separator && (
-        <div className={`h-px w-24 my-6 ${theme.separator.background} ${theme.separator.size}`} />
-      )} */}
-
-      
-      {/* content */}
-{content && (
-  <div
-    className="sm:max-w-4xl w-full mt-6 px-4 prose dark:prose-invert"
-    dangerouslySetInnerHTML={{ __html: content }}
-  />
-)}
-
-
+      {/* Content */}
+      {content && (
+        <div
+          className="sm:max-w-4xl w-full mt-6 px-4 prose dark:prose-invert"
+          dangerouslySetInnerHTML={{ __html: content }}
+        />
+      )}
 
       {/* Links */}
-      <div className="max-w-md w-full px-2 mt-8 mb-6 space-y-4  ">
+      <div className="max-w-md w-full px-2 mt-8 mb-6 space-y-4">
         {links.map((link) => (
           <Link
             key={link.id}
@@ -133,7 +156,6 @@ export default async function PublicPage({ params }: { params: Promise<{ slug: s
           </Link>
         ))}
       </div>
-     
     </div>
   )
 }
