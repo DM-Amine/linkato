@@ -20,8 +20,8 @@ interface PageData {
 export default async function PublicPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? `http://localhost:3000`
-  const res = await fetch(`${baseUrl}/api/page/${slug}` )
+ const res = await fetch(`/api/page/${slug}`)
+
 
   if (res.status === 404) return notFound()
   if (!res.ok) throw new Error("Failed to load page")
