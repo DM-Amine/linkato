@@ -1,12 +1,12 @@
 "use client"
 
 import { useState } from "react"
-import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd"
+import { DragDropContext, Droppable, Draggable,DropResult  } from "@hello-pangea/dnd"
 import { Plus, Edit2, Trash2, GripVertical } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import type { Link } from "../types"
+import type {Link} from "@/types/pages"
 
 interface LinksManagerProps {
   links: Link[]
@@ -19,7 +19,7 @@ export function LinksManager({ links, onLinksUpdate }: LinksManagerProps) {
   const [newLink, setNewLink] = useState({ title: "", url: "" })
   const [showNewLinkForm, setShowNewLinkForm] = useState(false)
 
-  const handleDragEnd = (result: any) => {
+  const handleDragEnd = (result: DropResult) => {
     if (!result.destination) return
 
     const items = Array.from(links)

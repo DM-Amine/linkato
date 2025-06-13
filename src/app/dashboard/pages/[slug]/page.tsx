@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useCallback, useRef } from "react"
 import { useParams, useRouter } from "next/navigation"
 import { toast } from "sonner"
 
@@ -11,11 +11,12 @@ import { ThemeCustomizer } from "@/components/dashboard/pages/themeCutomizer"
 import { MobilePreview } from "@/components/dashboard/pages/mobilePreview"
 import { PageNavBar } from "@/components/dashboard/pages/PageNavBar"
 import { themes } from "@/components/dashboard/themes/themes"
-import { SimpleEditor } from '@/components/tiptap-templates/simple/simple-editor'
+// import { SimpleEditor } from "@/components/tiptap-templates/simple/simple-editor"
 
-import type { Profile, Link, SocialMedia, Theme } from "./types"
+import type { Profile, Link, SocialMedia, Theme } from "@/types/pages"
 
 const initialProfile: Profile = {
+  id: "",
   name: "",
   bio: "",
   image: "",
@@ -23,13 +24,12 @@ const initialProfile: Profile = {
 
 const initialLinks: Link[] = []
 const initialSocialMedia: SocialMedia[] = []
+const slugRegex = /^[a-z0-9_-]+$/
 
 export default function Dashboard() {
   const router = useRouter()
   const params = useParams() as { slug: string }
   const originalSlug = params.slug
-
-  const slugRegex = /^[a-z0-9_-]+$/
 
   const [profile, setProfile] = useState<Profile>(initialProfile)
   const [links, setLinks] = useState<Link[]>(initialLinks)
@@ -117,7 +117,65 @@ export default function Dashboard() {
     return () => clearTimeout(handler)
   }, [editableSlug, originalSlug])
 
-  // Auto-save
+  // Memoized Auto-save handler
+  const handleAutoSave = useCallback(
+    async (nextStateStr: string) => {
+      if (!editableSlug.trim() || !slugAvailable) return
+
+      const trimmedSlug = editableSlug.trim()
+
+      const payload = {
+        ...(trimmedSlug !== originalSlug && { slug: trimmedSlug }),
+        profile,
+        links: links.map((link, i) => ({ ...link, index: i.toString() })),
+        socialMedia,
+        theme: selectedTheme.id,
+        content: pageContent,
+      }
+
+      setIsSubmitting(true)
+      setSubmitSuccess(false)
+
+      try {
+        const res = await fetch(`/api/page/${originalSlug}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        })
+
+        if (!res.ok) throw new Error("Failed to update page")
+
+        lastSavedState.current = nextStateStr
+        setSubmitSuccess(true)
+
+        if (
+          trimmedSlug !== originalSlug &&
+          `/dashboard/pages/${trimmedSlug}` !== window.location.pathname
+        ) {
+          router.push(`/dashboard/pages/${trimmedSlug}`)
+        }
+      } catch (err) {
+        const error = err instanceof Error ? err : new Error("Unknown error")
+        console.error("❌ Auto-save failed:", error)
+        toast.error(error.message || "An error occurred while saving.")
+      } finally {
+        setIsSubmitting(false)
+      }
+    },
+    [
+      editableSlug,
+      slugAvailable,
+      profile,
+      links,
+      socialMedia,
+      selectedTheme.id,
+      pageContent,
+      originalSlug,
+      router,
+    ]
+  )
+
+  // Auto-save effect
   useEffect(() => {
     if (!isPageLoaded || !slugAvailable) return
 
@@ -145,54 +203,16 @@ export default function Dashboard() {
     profile,
     links,
     socialMedia,
-    selectedTheme,
+    selectedTheme.id,
     editableSlug,
     slugAvailable,
     isPageLoaded,
     pageContent,
+    handleAutoSave,
   ])
 
-  const handleAutoSave = async (nextStateStr: string) => {
-    if (!editableSlug.trim() || !slugAvailable) return
-
-    const trimmedSlug = editableSlug.trim()
-
-    const payload = {
-      ...(trimmedSlug !== originalSlug && { slug: trimmedSlug }),
-      profile,
-      links: links.map((link, i) => ({ ...link, index: i.toString() })),
-      socialMedia,
-      theme: selectedTheme.id,
-      content: pageContent,
-    }
-
-    setIsSubmitting(true)
-    setSubmitSuccess(false)
-
-    try {
-      const res = await fetch(`/api/page/${originalSlug}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      })
-
-      if (!res.ok) throw new Error("Failed to update page")
-
-      lastSavedState.current = nextStateStr
-      setSubmitSuccess(true)
-
-      if (trimmedSlug !== originalSlug && `/dashboard/pages/${trimmedSlug}` !== window.location.pathname) {
-        router.push(`/dashboard/pages/${trimmedSlug}`)
-      }
-    } catch (err: any) {
-      console.error("❌ Auto-save failed:", err)
-      toast.error(err.message || "An error occurred while saving.")
-    } finally {
-      setIsSubmitting(false)
-    }
-  }
-
   const handleDeleteCancel = () => setShowDeleteModal(false)
+
   const handleDeleteConfirm = async () => {
     setIsDeleting(true)
     try {
@@ -203,8 +223,9 @@ export default function Dashboard() {
 
       toast.success("Page deleted successfully.")
       router.push("/dashboard/pages")
-    } catch (err: any) {
-      toast.error(err.message || "An error occurred while deleting.")
+    } catch (err) {
+      const error = err instanceof Error ? err : new Error("Unknown error")
+      toast.error(error.message || "An error occurred while deleting.")
     } finally {
       setIsDeleting(false)
     }
@@ -240,7 +261,7 @@ export default function Dashboard() {
   key={isPageLoaded ? "editor-loaded" : "editor-loading"} // or key={pageContent}
   content={pageContent}
   onContentChange={setPageContent}
-/>
+/> 
 
               </div>
             </div> */}

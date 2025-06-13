@@ -4,7 +4,8 @@ import { Eye } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { socialPlatforms } from "@/components/dashboard/socialPlatforms/socialPlatforms"
-import type { Profile, Link, Theme, SocialMedia } from "../types"
+import Image from "next/image"
+import type { Profile, Link, SocialMedia, Theme } from "@/types/pages"
 
 interface MobilePreviewProps {
   profile: Profile
@@ -32,14 +33,14 @@ export function MobilePreview({ profile, links, socialMedia, theme,content }: Mo
       <CardContent>
         {/* Add a key here to remount component on theme change */}
         <div key={theme.id} className="mx-auto w-80 h-[490px] bg-neutral-900 dark:bg-neutral-200 rounded-[2.5rem] p-2 shadow-xl">
-          <div className={`w-full h-full rounded-[2rem] overflow-hidden ${theme?.background ?? ""}`}>
+          <div className={`w-full h-full rounded-[2rem] overflow-hidden ${theme?.background ??  ""}`}>
             <div className="scrollbar-hide h-full overflow-y-auto">
               <div className="relative">
                 {/* Cover Image */}
                 {coverImage && (
                   <div className="w-full h-32 relative">
-                    <img src={coverImage} alt="Cover" className="w-full h-full object-cover" />
-                    {theme?.coverOverlay && <div className={`absolute inset-0 ${theme.coverOverlay}`} />}
+                    <Image width={800} height={600} src={coverImage} alt="Cover" className="w-full h-full object-cover" />
+                    {/* {theme?.coverOverlay && <div className={`absolute inset-0 ${theme.coverOverlay}`} />} */}
                   </div>
                 )}
 

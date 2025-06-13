@@ -2,7 +2,7 @@
 
 import { Check, Crown, Lock } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
-import type { Theme } from "../types"
+import type {  Theme } from "@/types/pages"
 
 interface ThemePreviewCardProps {
   theme: Theme

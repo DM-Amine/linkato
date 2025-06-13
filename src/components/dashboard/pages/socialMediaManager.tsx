@@ -1,11 +1,11 @@
 "use client"
 
 import { useState } from "react"
-import { Plus, Edit2, Trash2, ExternalLink } from "lucide-react"
+import { Plus, Edit2, Trash2} from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+
 import { Label } from "@/components/ui/label"
 import {
   Select,
@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/select"
 import { socialPlatforms } from "@/components/dashboard/socialPlatforms/socialPlatforms"
 
-import type { SocialMedia } from "../types"
+import type { SocialMedia } from "@/types/pages"
 
 interface SocialMediaManagerProps {
   socialMedia: SocialMedia[]
@@ -252,7 +252,7 @@ export function SocialMediaManager({
         {socialMedia.length === 0 && (
           <div className="text-center py-8 text-neutral-500 dark:text-neutral-400">
             <div className="text-sm">No social media links added yet</div>
-            <div className="text-xs mt-1">Click "Add Social" to get started</div>
+            <div className="text-xs mt-1">Click &quot;Add Social&quot; to get started</div>
           </div>
         )}
       </CardContent>

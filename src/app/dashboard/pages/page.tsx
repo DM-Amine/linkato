@@ -8,17 +8,19 @@ import { PageCard } from "@/components/dashboard/pages/pageCard"
 import { PageCardSkeleton } from "@/components/dashboard/pages/PageCardSkeleton"
 import { CreatePageModal } from "@/components/dashboard/pages/creatPageModal"
 import { useSession } from "next-auth/react"
+import type { PageData  } from "@/types/pages"
+
+
+
 
 export default function MyPages() {
-  const [pages, setPages] = useState<Array<any>>([])
+  const [pages, setPages] = useState<PageData[]>([])
   const [searchQuery, setSearchQuery] = useState("")
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   const { data: session, status } = useSession()
-
-  // Prevent premature render while session is loading
   const isSessionLoading = status === "loading"
 
   useEffect(() => {
@@ -31,10 +33,12 @@ export default function MyPages() {
       try {
         const res = await fetch(`/api/page?userID=${session.user.userID}`)
         if (!res.ok) throw new Error("Failed to fetch pages")
-        const data = await res.json()
+        const data: PageData[] = await res.json()
         setPages(data)
-      } catch (err: any) {
-        setError(err.message || "Something went wrong")
+      } catch (err) {
+        const errorMessage =
+          err instanceof Error ? err.message : "Something went wrong"
+        setError(errorMessage)
       } finally {
         setLoading(false)
       }
@@ -44,19 +48,17 @@ export default function MyPages() {
   }, [session?.user?.userID])
 
   const filteredPages = pages.filter((page) =>
-    page.name.toLowerCase().includes(searchQuery.toLowerCase())
+    page.name?.toLowerCase().includes(searchQuery.toLowerCase())
   )
 
   const deletePage = (id: string) => {
-    setPages(pages.filter((page) => page.id !== id))
+    setPages((prev) => prev.filter((page) => page.id !== id))
   }
 
   const openCreateModal = () => setIsCreateModalOpen(true)
   const closeCreateModal = () => setIsCreateModalOpen(false)
 
-  if (isSessionLoading) {
-    return null // Prevent premature render
-  }
+  if (isSessionLoading) return null
 
   return (
     <div className="min-h-screen p-4 md:p-6">
@@ -67,11 +69,12 @@ export default function MyPages() {
             <h1 className="text-3xl font-bold text-neutral-800 dark:text-neutral-200">
               My Pages
             </h1>
-            {/* <p className="text-neutral-500 mt-1">
-              Manage all your link pages in one place
-            </p> */}
           </div>
-          <Button variant="default" className="gap-0 border !px-2" onClick={openCreateModal}>
+          <Button
+            variant="default"
+            className="gap-0 border !px-2"
+            onClick={openCreateModal}
+          >
             <Plus className="w-4 h-4 mr-2" />
             Create
           </Button>
@@ -82,16 +85,14 @@ export default function MyPages() {
           <Search className="absolute left-1.5 top-1/2 -translate-y-1/2 text-neutral-400 w-4 h-4" />
           <Input
             placeholder="Search pages..."
-            className="pl-7 sm:w-4/12 w-full h-7 border-neutral-500 "
+            className="pl-7 sm:w-4/12 w-full h-7 border-neutral-500"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
 
         {/* Error State */}
-        {error && (
-          <div className="text-center text-red-500 mb-4">{error}</div>
-        )}
+        {error && <div className="text-center text-red-500 mb-4">{error}</div>}
 
         {/* Loading State */}
         {loading ? (
@@ -104,7 +105,11 @@ export default function MyPages() {
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {filteredPages.map((page) => (
-                <PageCard key={page._id ?? page.id} page={page} onDelete={deletePage} />
+                <PageCard
+                  key={page._id ?? page.id}
+                  page={page}
+                  onDelete={deletePage}
+                />
               ))}
             </div>
 
@@ -115,14 +120,21 @@ export default function MyPages() {
                   <Search className="w-12 h-12 mx-auto" />
                 </div>
                 <h3 className="text-lg font-medium text-neutral-700 dark:text-neutral-200 mb-1">
-                  {searchQuery ? "No pages found" : "You don't have any pages yet"}
+                  {searchQuery
+                    ? "No pages found"
+                    : "You don't have any pages yet"}
                 </h3>
                 <p className="text-neutral-500 dark:text-neutral-400 mb-4">
-                  {searchQuery ? "Try a different search term" : "Start by creating your first page"}
+                  {searchQuery
+                    ? "Try a different search term"
+                    : "Start by creating your first page"}
                 </p>
                 {!searchQuery && (
-                  <Button onClick={openCreateModal} className="py-4 !px-4 rounded-xl">
-                    <Plus className="w-4 h-4 " />
+                  <Button
+                    onClick={openCreateModal}
+                    className="py-4 !px-4 rounded-xl"
+                  >
+                    <Plus className="w-4 h-4" />
                     Create Page
                   </Button>
                 )}

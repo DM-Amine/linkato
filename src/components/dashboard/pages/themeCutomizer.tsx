@@ -7,7 +7,7 @@ import { Crown, Grid, Star } from "lucide-react"
 import { ThemePreviewCard } from "@/components/dashboard/pages/themePreviewCard"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { themes } from "@/components/dashboard/themes/themes"
-import type { Theme } from "../types"
+import type {  Theme } from "@/types/pages"
 
 interface ThemeCustomizerProps {
   // Optional props if you want external control
@@ -27,9 +27,9 @@ useEffect(() => {
   const newTheme = themes.find((t) => t.id === initialThemeId)
   if (newTheme && newTheme.id !== selectedTheme.id) {
     setSelectedTheme(newTheme)
-    onThemeChange?.(newTheme) // ✅ Notify parent
+    onThemeChange?.(newTheme)
   }
-}, [initialThemeId])
+}, [initialThemeId, selectedTheme.id, onThemeChange])
 
   const freeThemes = themes.filter((theme) => !theme.isPro)
   const proThemes = themes.filter((theme) => theme.isPro)

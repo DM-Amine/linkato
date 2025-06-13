@@ -1,6 +1,7 @@
 // app/terms-of-service/page.tsx
 
 import { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Terms of Service - Lunitea",
@@ -35,9 +36,9 @@ export default function TermsOfServicePage() {
 <h2 className="text-lg font-semibold mt-8 mb-4">Refunds</h2>
 <p className="mb-4">
   Refunds are available within 7 days of purchase, according to our{" "}
-  <a href="/refund-policy" className="underline">
+  <Link href="/refund-policy" className="underline">
     Refund Policy
-  </a>
+  </Link>
   .
 </p>
 

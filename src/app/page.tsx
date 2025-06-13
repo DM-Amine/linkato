@@ -5,7 +5,7 @@ import Features from "@/components/home/features";
 import HowItWorks from "@/components/home/howItWorks"
 import AudienceCard from "@/components/home/audience";
 import { Faq } from "@/components/home/faq";
-import Link from "next/link";
+
 
 import CTA from "@/components/CTA";
 

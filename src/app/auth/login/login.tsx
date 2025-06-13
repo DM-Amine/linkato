@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { Eye, EyeOff, Mail, Lock } from "lucide-react";
+import Link from "next/link";
 
 export default function SignIn() {
   const { data: session } = useSession();
@@ -116,9 +117,9 @@ export default function SignIn() {
 
         <div className="mt-4 text-center text-sm text-neutral-500 dark:text-neutral-400">
           Don&apos;t have an account?{" "}
-          <a href="/auth/signup" className="text-info dark:text-d-info">
+          <Link href="/auth/signup" className="text-info dark:text-d-info">
             Create an account
-          </a>
+          </Link>
         </div>
       </div>
     </div>

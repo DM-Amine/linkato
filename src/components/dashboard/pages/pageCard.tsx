@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { Edit2, ExternalLink, Trash2, Calendar, ImageOff } from "lucide-react"
+import { ExternalLink, Trash2, Calendar, ImageOff, Eye } from "lucide-react"
 import { DeletePageModal } from "@/components/dashboard/pages/deletePageModal"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -82,6 +82,14 @@ export function PageCard({ page, onDelete }: PageCardProps) {
                 <p>No cover image!</p>
               </div>
             )}
+
+            {/* Optional hover icon */}
+            {isHovered && (
+              <div className="absolute top-2 right-2 bg-black/50 text-white p-1 rounded-full">
+                <Eye className="w-4 h-4" />
+              </div>
+            )}
+
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
           </div>
 

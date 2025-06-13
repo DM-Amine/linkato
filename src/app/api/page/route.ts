@@ -1,86 +1,65 @@
-// /api/page/route.ts (GET)
+import { NextResponse } from "next/server"
+import connectDB from "@/lib/mongodb"
+import Page from "@/models/page"
+import { v4 as uuidv4 } from "uuid"
+import type { Link, SocialMedia } from "@/types/pages"
 
-import { NextResponse } from "next/server";
-import connectDB from "@/lib/mongodb";
-import Page from "@/models/page";
-import { v4 as uuidv4 } from "uuid";
+interface PageData {
+  _id: string
+  id: string
+  name: string
+  slug: string
+  userID: string
+  bio?: string
+  avatar?: string
+  links: Link[]
+  socials: SocialMedia[]
+  theme: string
+  createdAt: Date
+  updatedAt: Date
+  content?: string
+  coverImage?: string
+}
 
 export async function GET(request: Request) {
   try {
-    await connectDB();
+    await connectDB()
 
-    const { searchParams } = new URL(request.url);
-    const userID = searchParams.get("userID");
+    const { searchParams } = new URL(request.url)
+    const userID = searchParams.get("userID")
 
     if (!userID) {
-      return NextResponse.json({ error: "userID is required" }, { status: 400 });
+      return NextResponse.json({ error: "userID is required" }, { status: 400 })
     }
 
-    const pages = await Page.find({ userID }).lean();
+    const rawPages = await Page.find({ userID }).lean()
 
-    // Ensure all links have a UUID
-    const sanitizedPages = pages.map((page) => ({
-      ...page,
-      links: (page.links || []).map((link) => ({
+    const sanitizedPages: PageData[] = rawPages.map((page) => ({
+      _id: String(page._id),
+      id: page.id ?? uuidv4(), // fallback if not set
+      name: page.name ?? "",
+      slug: page.slug ?? "",
+      userID: page.userID ?? "",
+      bio: page.bio ?? "",
+      avatar: page.avatar ?? "",
+      links: (page.links || []).map((link: Link) => ({
         ...link,
         id: link.id || uuidv4(),
       })),
-    }));
+      socials: page.socials ?? [],
+      theme: page.theme ?? "default",
+      createdAt: page.createdAt ?? new Date(),
+      updatedAt: page.updatedAt ?? new Date(),
+      content: page.content ?? "",
+      coverImage: page.coverImage ?? "",
+    }))
 
-    return NextResponse.json(sanitizedPages, { status: 200 });
+    return NextResponse.json(sanitizedPages, { status: 200 })
   } catch (error) {
-    console.error("Failed to fetch pages:", error);
+    console.error("Failed to fetch pages:", error)
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
-    );
+    )
   }
 }
-
-export async function POST(request: Request) {
-  try {
-    await connectDB();
-
-    const body = await request.json();
-    const { name, slug, userID } = body;
-
-    if (!name || !slug || !userID) {
-      return NextResponse.json(
-        { error: 'Name, slug, and userID are required' },
-        { status: 400 }
-      );
-    }
-
-    // Check if slug already exists
-    const existingPage = await Page.findOne({ slug });
-    if (existingPage) {
-      return NextResponse.json(
-        { error: 'Slug already exists. Please choose another.' },
-        { status: 409 }
-      );
-    }
-
-    const newPage = await Page.create({
-      id: uuidv4(), // ✅ Add a custom UUID field
-      name,
-      slug,
-      userID,
-      bio: '',
-      avatar: '',
-      links: [],
-      socials: [],
-      theme: 'minimal-dark',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    });
-
-    return NextResponse.json(newPage, { status: 201 });
-  } catch (error) {
-    console.error('Failed to create page:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
-  }
-}
-

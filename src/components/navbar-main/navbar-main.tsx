@@ -13,11 +13,11 @@ import LogoutBTN from "../auth/logoutBTN";
 
 const links = [
   { name: "Home", href: "/" },
-  { name: "Blogs", href: "/blogs" },
+  // { name: "Blogs", href: "/blogs" },
  { name: "Features", href: "/features" },
 
-  { name: "Roadmap", href: "/roadmap" },
-  { name: "Price", href: "/price" },
+  // { name: "Roadmap", href: "/roadmap" },
+  // { name: "Price", href: "/price" },
   { name: "Contact", href: "/contact" },
  
 ];

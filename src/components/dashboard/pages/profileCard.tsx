@@ -11,7 +11,7 @@ import { Card, CardContent} from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Label } from "@/components/ui/label"
 import Image from "next/image"
-import type { Profile } from "../types"
+import type { Profile } from "@/types/pages"
 
 interface ProfileEditorProps {
   profile: Profile
@@ -21,6 +21,7 @@ interface ProfileEditorProps {
 export function ProfileCard({ profile, onProfileUpdate }: ProfileEditorProps) {
   const avatarFileInputRef = useRef<HTMLInputElement>(null)
   const coverFileInputRef = useRef<HTMLInputElement>(null)
+  const bioLength = profile.bio?.length ?? 0
 
   const handleAvatarUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
@@ -145,9 +146,11 @@ export function ProfileCard({ profile, onProfileUpdate }: ProfileEditorProps) {
             <Label htmlFor="bio" className="text-neutral-700 dark:text-neutral-300">
               Bio
             </Label>
-            <span className={`text-xs ${profile.bio.length > 280 ? "text-warning" : "text-neutral-500"}`}>
-              {profile.bio.length}/300
-            </span>
+            <span className={`text-xs ${bioLength > 280 ? "text-warning" : "text-neutral-500"}`}>
+  {bioLength}/300
+</span>
+
+
           </div>
           <Textarea
             id="bio"

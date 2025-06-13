@@ -5,7 +5,7 @@ import { socialPlatforms } from "@/components/dashboard/socialPlatforms/socialPl
 import { themes } from "@/components/dashboard/themes/themes"
 import Link from "next/link"
 import Image from "next/image"
-import type { Profile, Link as LinkType, Theme, SocialMedia } from "../types"
+import type { Profile, Link as LinkType, SocialMedia } from "@/types/pages"
 
 
 interface PageData {
@@ -34,23 +34,24 @@ export default async function PublicPage({ params }: { params: Promise<{ slug: s
   const bio = profile?.bio ?? ""
   const image = profile?.image ?? "/placeholder.svg"
   const coverImage = profile?.coverImage
+ 
 
   return (
-    <div className={`min-h-screen  flex flex-col items-center ${theme?.background ?? "bg-neutral-100 dark:bg-neutral-900"}`}>
+    <div className={`min-h-screen  flex flex-col items-center ${theme?.background ?? ""}`}>
       
 
       {/* Cover Image */}
       {coverImage && (
-        <div className= {` ${theme?.cover_image?.size } mx-4 ${theme?.cover_image?.margin} ${theme?.cover_image?.corners }  overflow-hidden mb-6 ${theme?.cover_image?.shadow } relative`}>
-          <Image width={800} height={600} src={coverImage} alt="Cover" className="w-full h-40 object-cover" />
-          {theme?.coverOverlay && <div className={`absolute inset-0 ${theme.coverOverlay}`} />}
+        <div className= {` ${theme?.cover_image_wrapper?.size }  ${theme?.cover_image_wrapper?.margin} ${theme?.cover_image_wrapper?.corners }  overflow-hidden  `}>
+          <Image width={800} height={600} src={coverImage} alt="Cover" className={`${theme?.cover_image?.size}  object-cover`} />
+          {/* {theme?.coverOverlay && <div className={`absolute inset-0 ${theme.coverOverlay}`} />} */}
         </div>
       )}
 
       {/* Profile Card */}
-      <Card className={`max-w-md w-full rounded-xl ${theme?.profile_card?.position } shadow-none border-none`}>
-        <CardContent className={`flex flex-col ${theme?.profile_card?.background } items-center space-y-4 py-8 px-6`}>
-          <Avatar className={`${theme?.avatar?.size ?? "w-24 h-24"} ${theme?.avatar?.border } ${theme?.avatar?.corners }  mb-2   `}>
+      <Card className={` ${theme?.profile_card?.position } shadow-none border-none`}>
+        <CardContent className={`flex flex-col  items-center space-y-4 py-8 px-6`}>
+          <Avatar className={`${theme?.avatar?.size ?? "w-24 h-24"} ${theme?.avatar?.border } ${theme?.avatar?.corners } ${theme?.avatar?.position }  mb-2   `}>
             <AvatarImage src={image} alt={name} className="object-cover " />
             <AvatarFallback>{name.charAt(0)}</AvatarFallback>
           </Avatar>

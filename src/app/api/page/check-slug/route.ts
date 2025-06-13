@@ -16,9 +16,10 @@ export async function GET(request: Request) {
     const exists = await Page.exists({ slug })
 
     return NextResponse.json({ exists: Boolean(exists) }, { status: 200 })
-  } catch (error: any) {
+  } catch (error) {
+    const err = error instanceof Error ? error : new Error(String(error))
     return NextResponse.json(
-      { error: "Internal server error", message: error?.message || String(error) },
+      { error: "Internal server error", message: err.message },
       { status: 500 }
     )
   }

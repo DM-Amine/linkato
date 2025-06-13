@@ -108,6 +108,8 @@ const handleSubmit = async (e: React.FormEvent) => {
     router.push(`/dashboard/pages/${slug}`);
     onClose();
   } catch (err) {
+    console.log(err);
+    
     setError("Failed to create page. Please try again.");
     setIsSubmitting(false);
   }
