@@ -19,20 +19,16 @@ interface PageData {
 export default async function PublicPage({
   params,
 }: {
-  params: { slug: string } // ✅ fixed type
+  params: Promise<{ slug: string }>
 }) {
-  const { slug } = params // ✅ no await needed
+  const { slug } = await params
 
-const headersList = await headers()
-
+  const headersList = await headers()
   const host = headersList.get("host")
   const protocol = host?.includes("localhost") ? "http" : "https"
   const url = `${protocol}://${host}/api/page/${slug}`
 
-  const res = await fetch(url, {
-    cache: "no-store",
-  })
-
+  const res = await fetch(url, { cache: "no-store" })
   if (res.status === 404) return notFound()
   if (!res.ok) throw new Error("Failed to load page")
 
