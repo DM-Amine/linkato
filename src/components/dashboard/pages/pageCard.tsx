@@ -9,18 +9,20 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import Image from "next/image"
 
+interface Page {
+  id: string
+  name: string
+  slug: string
+  createdAt: string
+  updatedAt: string
+  theme: string
+  views: number
+  thumbnail: string
+  coverImage?: string
+}
+
 interface PageCardProps {
-  page: {
-    id: string
-    name: string
-    slug: string
-    createdAt: string
-    updatedAt: string
-    theme: string
-    views: number
-    thumbnail: string
-    coverImage?: string
-  }
+  page: Page
   onDelete: (id: string) => void
 }
 
@@ -29,7 +31,7 @@ export function PageCard({ page, onDelete }: PageCardProps) {
   const [isHovered, setIsHovered] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
 
-  const formatDate = (dateString: string) => {
+  const formatDate = (dateString: string): string => {
     const date = new Date(dateString)
     return new Intl.DateTimeFormat("en-US", {
       month: "short",
@@ -40,12 +42,16 @@ export function PageCard({ page, onDelete }: PageCardProps) {
 
   const handleDeletePage = async () => {
     try {
-      const res = await fetch(`/api/page/${page.slug}`, { method: "DELETE" })
+      const res = await fetch(`/api/page/${page.slug}`, {
+        method: "DELETE",
+      })
+
       if (!res.ok) {
         const errorData = await res.json()
         console.error("❌ Delete failed:", errorData.error)
         return
       }
+
       onDelete(page.id)
       setShowDeleteModal(false)
     } catch (error) {
@@ -66,7 +72,7 @@ export function PageCard({ page, onDelete }: PageCardProps) {
         onClick={handleCardClick}
       >
         <CardContent className="p-0 h-full flex flex-col">
-          {/* Thumbnail */}
+          {/* Thumbnail / Cover */}
           <div className="relative h-40 bg-gradient-to-br from-neutral-100 to-neutral-200/5 dark:from-neutral-800 dark:to-neutral-700 overflow-hidden">
             {page.coverImage ? (
               <Image
@@ -83,17 +89,18 @@ export function PageCard({ page, onDelete }: PageCardProps) {
               </div>
             )}
 
-            {/* Optional hover icon */}
+            {/* Hover Icon */}
             {isHovered && (
               <div className="absolute top-2 right-2 bg-black/50 text-white p-1 rounded-full">
                 <Eye className="w-4 h-4" />
               </div>
             )}
 
+            {/* Gradient Overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
           </div>
 
-          {/* Content */}
+          {/* Card Content */}
           <div className="px-2 flex-1 flex flex-col">
             <div>
               <h3 className="font-semibold text-neutral-800 dark:text-neutral-200 mb-1 truncate text-lg">
@@ -103,7 +110,7 @@ export function PageCard({ page, onDelete }: PageCardProps) {
               <div className="flex items-center mb-1">
                 <Badge
                   variant="outline"
-                  className="text-xs max-w-full !truncate border-primary bg-primary-light/40 dark:bg-d-primary-light/40 text-neutral-600 dark:text-neutral-300 hover:bg-primary/10 transition-colors"
+                  className="text-xs max-w-full truncate border-primary bg-primary-light/40 dark:bg-d-primary-light/40 text-neutral-600 dark:text-neutral-300 hover:bg-primary/10 transition-colors"
                 >
                   /{page.slug}
                 </Badge>
@@ -149,6 +156,7 @@ export function PageCard({ page, onDelete }: PageCardProps) {
         </CardContent>
       </Card>
 
+      {/* Delete Confirmation Modal */}
       {showDeleteModal && (
         <DeletePageModal
           open={showDeleteModal}

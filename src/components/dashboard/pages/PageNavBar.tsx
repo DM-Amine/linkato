@@ -58,7 +58,8 @@ export function PageNavBar({
   </div>
 
             <div className="flex items-center my-1 sm:my-0 gap-2">
-                <div className="flex bg-amber-300 hidden sm:block items-center text-sm font-medium text-neutral-700 dark:text-neutral-200 min-w-[70px] h-8">
+                <div className="hidden sm:flex items-center text-sm font-medium text-neutral-700 dark:text-neutral-200 min-w-[70px] h-8">
+
                     {isSubmitting ? (
                         <span className="flex items-center gap-1">
                             <Loader2 className="w-4 h-4 animate-spin text-neutral-500" />

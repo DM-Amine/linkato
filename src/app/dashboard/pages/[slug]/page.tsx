@@ -5,10 +5,17 @@ import { useParams, useRouter } from "next/navigation"
 import { toast } from "sonner"
 
 import { ProfileCard } from "@/components/dashboard/pages/profileCard"
-import { LinksManager } from "@/components/dashboard/pages/linkManager"
+import { ProfileCardSkeleton } from "@/components/skeleton/ProfileCardSkeleton"
+
+
 import { SocialMediaManager } from "@/components/dashboard/pages/socialMediaManager"
+import { SocialMediaManagerSkeleton } from "@/components/skeleton/SocialMediaManagerSkeleton"
+import { LinksManager } from "@/components/dashboard/pages/linkManager"
+import { LinksManagerSkeleton } from "@/components/skeleton/LinksManagerSkeleton"
 import { ThemeCustomizer } from "@/components/dashboard/pages/themeCutomizer"
+import { ThemeCustomizerSkeleton } from "@/components/skeleton/themeCustimizerSkeleton"
 import { MobilePreview } from "@/components/dashboard/pages/mobilePreview"
+import { MobilePreviewSkeleton } from "@/components/skeleton/MobilePreviewSkeleton"
 import { PageNavBar } from "@/components/dashboard/pages/PageNavBar"
 import { themes } from "@/components/dashboard/themes/themes"
 // import { SimpleEditor } from "@/components/tiptap-templates/simple/simple-editor"
@@ -252,7 +259,12 @@ export default function Dashboard() {
       <div className="w-full mx-auto">
         <div className="flex md:flex-row flex-col min-w-full justify-between">
           <div className="max-w-full sm:w-full mt-6 mx-3 space-y-6">
-            <ProfileCard profile={profile} onProfileUpdate={setProfile} />
+            {!isPageLoaded ? (
+  <ProfileCardSkeleton />
+) : (
+  <ProfileCard profile={profile} onProfileUpdate={setProfile} />
+)}
+
 
             {/* <div className=" border-neutral-50 dark:border-neutral-600 bg-neutral-200 dark:bg-neutral-800 pt-2 shadow-xs rounded-xl">
               <h2 className="text-xl font-semibold text-neutral-800 dark:text-neutral-100">Content</h2>
@@ -266,15 +278,35 @@ export default function Dashboard() {
               </div>
             </div> */}
 
-            <SocialMediaManager socialMedia={socialMedia} onSocialMediaUpdate={setSocialMedia} />
-            <LinksManager links={links} onLinksUpdate={setLinks} />
+            {!isPageLoaded ? (
+  <SocialMediaManagerSkeleton />
+) : (
+  <SocialMediaManager
+    socialMedia={socialMedia}
+    onSocialMediaUpdate={setSocialMedia}
+  />
+)}
+
+            {!isPageLoaded ? (
+  <LinksManagerSkeleton />
+) : (
+  <LinksManager links={links} onLinksUpdate={setLinks} />
+)}
+
+{!isPageLoaded ? (
+  <ThemeCustomizerSkeleton />
+) : (
             <ThemeCustomizer
               initialThemeId={selectedTheme.id}
               onThemeChange={setSelectedTheme}
             />
+            )}
           </div>
 
           <div className="w-full hidden md:flex sm:w-10/12 md:w-8/12 lg:w-4/12 md:sticky md:top-12 md:h-fit mx-auto">
+            {!isPageLoaded ? (
+  <MobilePreviewSkeleton /> 
+) : (
             <MobilePreview
   profile={profile}
   links={links}
@@ -282,6 +314,7 @@ export default function Dashboard() {
   theme={selectedTheme}
   content={pageContent}
 />
+            )}
 
           </div>
         </div>
