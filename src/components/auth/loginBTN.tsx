@@ -9,7 +9,7 @@ export default function LogintBTN() {
     <Button
     variant={"ghost"}
     size={"default"}
-    className=" text-neutral-800 text-xs border border-neutral-600 dark:text-neutral-200 dark:border-neutral-600 hover:bg-neutral-200 dark:hover:bg-neutral-800 has-[>svg]:px-1"
+    className=" text-neutral-800 text-xs border border-neutral-600 hover:border-neutral-400 dark:text-neutral-200 dark:border-neutral-600 hover:bg-neutral-300 dark:hover:bg-neutral-800 has-[>svg]:px-1"
   >
     <Link href="/auth/login" >
  

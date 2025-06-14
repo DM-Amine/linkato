@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const SignInButton = () => {
     return (
-        <Button variant="default" className="text-xs text-neutral-200 " >
+        <Button variant="default" className="text-xs " >
             <Link href="/auth/signup" >
            
         Sign up

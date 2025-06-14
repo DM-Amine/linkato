@@ -68,7 +68,7 @@ export function LinksManager({ links, onLinksUpdate }: LinksManagerProps) {
           <CardTitle className="text-neutral-700 dark:text-neutral-300">Links</CardTitle>
           <Button
             onClick={() => setShowNewLinkForm(true)}
-            size="sm"
+            
             className="gap-2"
             variant={"default"}
           >

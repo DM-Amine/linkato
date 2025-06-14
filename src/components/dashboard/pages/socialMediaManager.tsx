@@ -101,7 +101,7 @@ export function SocialMediaManager({
           >
             <Plus className="w-4 h-4" />
             Add Social
-          </Button>
+          </Button> 
         </div>
       </CardHeader>
       <CardContent className="space-y-4 px-2">

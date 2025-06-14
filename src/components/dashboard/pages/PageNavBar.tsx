@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react"
 
 
-import { Check,Loader2, Pencil, Trash2, Settings } from "lucide-react"
+import { Check, Loader2, Pencil, Trash2, Settings } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { DeletePageModal } from "@/components/dashboard/pages/deletePageModal"
@@ -26,54 +26,52 @@ interface PageNavBarProps {
 }
 
 export function PageNavBar({
-  editableSlug,
-  setEditableSlug,
-  isCheckingSlug,
-  slugError,
- 
-  isSubmitting,
-  isDeleting,
-  setShowDeleteModal,
-  showDeleteModal,
-  handleDeleteCancel,
-  handleDeleteConfirm,
-  originalSlug,
-  submitSuccess, 
+    editableSlug,
+    setEditableSlug,
+    isCheckingSlug,
+    slugError,
+
+    isSubmitting,
+    isDeleting,
+    setShowDeleteModal,
+    showDeleteModal,
+    handleDeleteCancel,
+    handleDeleteConfirm,
+    originalSlug,
+    submitSuccess,
 }: PageNavBarProps) {
 
-     const [justSaved, setJustSaved] = useState(false)
+    const [justSaved, setJustSaved] = useState(false)
 
-  useEffect(() => {
-    if (submitSuccess) {
-      setJustSaved(true)
-      const timer = setTimeout(() => setJustSaved(false), 2000)
-      return () => clearTimeout(timer)
-    }
-  }, [submitSuccess])
+    useEffect(() => {
+        if (submitSuccess) {
+            setJustSaved(true)
+            const timer = setTimeout(() => setJustSaved(false), 2000)
+            return () => clearTimeout(timer)
+        }
+    }, [submitSuccess])
     return (
-        <div className="border-b border-neutral-400 dark:border-neutral-700 sticky top-0 z-10 max-w-full flex sm:flex-row flex-col sm:items-center justify-between bg-neutral-200 dark:bg-neutral-900 px-2 py-1">
-            <div className="flex items-center gap-2">
-                {/* <label className="text-sm whitespace-nowrap font-semibold text-neutral-700 dark:text-neutral-300">
-                    Page Slug:
-                </label> */}
-                {originalSlug && <Share slug={originalSlug} />}
-            </div>
+        <div className="border-b border-neutral-400 dark:border-neutral-700 sticky top-0 z-10 max-w-full flex  sm:items-center justify-between bg-neutral-200 dark:bg-neutral-900 px-2 py-1">
+            <div className="flex items-center gap-2 min-w-0 max-w-[75%] sm:max-w-[60%] flex-1">
+    {/* This div must have min-w-0 to enable truncation inside */}
+    <Share slug={originalSlug} />
+  </div>
 
             <div className="flex items-center my-1 sm:my-0 gap-2">
-                <div className="flex items-center text-sm font-medium text-neutral-700 dark:text-neutral-200 min-w-[70px] h-8">
-   {isSubmitting ? (
-    <span className="flex items-center gap-1">
-        <Loader2 className="w-4 h-4 animate-spin text-neutral-500" />
-        Saving...
-    </span>
-) : justSaved ? (
-    <span className="flex items-center gap-1 text-success/80">
-        <Check className="w-4 h-4" />
-        Saved
-    </span>
-) : null}
+                <div className="flex bg-amber-300 hidden sm:block items-center text-sm font-medium text-neutral-700 dark:text-neutral-200 min-w-[70px] h-8">
+                    {isSubmitting ? (
+                        <span className="flex items-center gap-1">
+                            <Loader2 className="w-4 h-4 animate-spin text-neutral-500" />
+                            Saving...
+                        </span>
+                    ) : justSaved ? (
+                        <span className="flex items-center gap-1 text-success/80">
+                            <Check className="w-4 h-4" />
+                            Saved
+                        </span>
+                    ) : null}
 
-</div>
+                </div>
 
 
                 <DropdownMenu>

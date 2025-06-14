@@ -106,7 +106,7 @@ export default function PriceCard({
               "w-full text-sm font-medium rounded-lg h-8 transition-all duration-200",
               highlighted
                 ? "bg-primary text-white hover:bg-primary/90"
-                : "hover:bg-muted"
+                : "bg-neutral-50"
             )}
             variant={highlighted ? "default" : "outline"}
           >

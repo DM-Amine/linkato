@@ -42,7 +42,7 @@ export default function SignIn() {
   return (
     <div className="flex justify-center items-center min-h-screen  mx-2">
     <div className="w-full max-w-md border border-neutral-500 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900 px-5 py-3 rounded-3xl shadow-lg ">
-      <h2 className="text-2xl font-semibold text-center text-primary dark:text-d-primary mb-6">
+      <h2 className="text-2xl font-semibold text-center text-neutral-700 dark:text-neutral-300 mb-6">
         Login In
       </h2>
 
@@ -99,7 +99,7 @@ export default function SignIn() {
           <div className="my-4 w-full text-center text-sm text-neutral-500 dark:text-neutral-400 border-t"></div>
         </div>
           {/* Submit */}
-          <Button className="w-full h-fit py-2 text-neutral-200 dark:text-neutral-200   text-sm sm:text-base">
+          <Button className="w-full h-fit py-2  text-sm sm:text-base">
             Sign In
           </Button>
         </form>

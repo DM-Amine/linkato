@@ -162,9 +162,9 @@ useLayoutEffect(() => {
                   <div className="absolute inset-0 scale-75 rounded-xl bg-gradient-to-br from-primary/20 to-primary-light/10 dark:from-primary/30 dark:to-d-primary-light/20 blur-md opacity-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-700" />
                   <div
                     className={`relative flex h-14 w-14 items-center justify-center rounded-xl 
-                      bg-gradient-to-br from-primary-light/30 to-primary/20 
+                      bg-gradient-to-br from-primary/30 to-primary/20 
                       dark:from-d-primary-light/40 dark:to-primary/30 
-                      text-primary dark:text-primary-light shadow-sm group-hover:shadow-md transition-all duration-300 ${
+                      text-neutral-700 dark:text-primary-light border border-neutral-400 dark:border-neutral-600 group-hover:shadow-md transition-all duration-300 ${
                         isHovered ? "animate-pulse" : ""
                       }`}
                   >

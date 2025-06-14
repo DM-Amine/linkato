@@ -61,7 +61,7 @@ export default function SignUp() {
   return (
     <div className="flex justify-center items-center min-h-screen mx-2">
       <div className="w-full max-w-md border border-neutral-500 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900 rounded-2xl shadow-md px-5 py-3">
-        <h2 className="text-center text-2xl sm:text-3xl font-semibold text-primary dark:text-d-primary mb-6">
+        <h2 className="text-center text-2xl sm:text-3xl font-semibold text-neutral-700 dark:text-neutral-300 mb-6">
           Create Account
         </h2>
 
@@ -125,7 +125,7 @@ export default function SignUp() {
           )}
 
           {/* Submit Button */}
-          <Button className="w-full text-neutral-200 h-fit py-2 text-sm font-medium  dark:text-neutral-200">
+          <Button className="w-full h-fit py-2 text-sm font-medium  ">
             Create Account
           </Button>
         </form>

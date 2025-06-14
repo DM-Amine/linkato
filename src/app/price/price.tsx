@@ -13,17 +13,18 @@ export default function Price() {
 
   const plans = [
     {
-      title: "Free",
-      price: "$0/month",
+      title: "Personal",
+      price: "Free",
       description: "Perfect for personal use and early testing.",
       highlighted: false,
       features: [
-        { text: "unlimited pages", included: true },
-        { text: "unlimited links", included: true },
+        { text: "one pages", included: true },
+        { text: "5 links", included: true },
         { text: "all popular social media", included: true },
         { text: "No watermark", included: true },
         { text: "page editor", included: false },
         { text: "link custimazation", included: false },
+        { text: "customers subscribe", included: false },
         { text: "form", included: false },
         { text: "premium themes", included: false },
         { text: "analytics", included: false },
@@ -31,34 +32,40 @@ export default function Price() {
       ],
     },
     {
-      title: "Pro",
+      title: "Business",
       price: billingCycle === "yearly" ? "$96/year" : "$12/month",
       description:
         billingCycle === "yearly"
           ? "Best for startups – Save 33% with yearly billing."
           : "Best for startups and growing teams.",
-      highlighted: true,
-      features: [
-        { text: "Unlimited projects", included: true },
-        { text: "Advanced analytics", included: true },
-        { text: "Custom domains", included: true },
-        { text: "Priority support", included: true },
-      ],
-    },
-    {
-      title: "Business",
-      price: billingCycle === "yearly" ? "$240/year" : "$25/month",
-      description:
-        billingCycle === "yearly"
-          ? "For teams managing multiple blogs – Save 20% yearly."
-          : "For businesses managing multiple projects and teams.",
       highlighted: false,
       features: [
-        { text: "Multiple blog projects", included: true },
-        { text: "Team collaboration", included: true },
-        { text: "AI-powered content tools", included: true },
+        { text: "unlimited pages", included: true },
+        { text: "unlimited links", included: true },
+        { text: "all popular social media", included: true },
+        { text: "No watermark", included: true },
+        { text: "page editor", included: true },
+        { text: "link custimazation", included: true },
+         { text: "customers subscribe", included: true },
+        { text: "form", included: true },
+        { text: "premium themes", included: true },
+        { text: "analytics", included: true },
       ],
     },
+    // {
+    //   title: "Business",
+    //   price: billingCycle === "yearly" ? "$240/year" : "$25/month",
+    //   description:
+    //     billingCycle === "yearly"
+    //       ? "For teams managing multiple blogs – Save 20% yearly."
+    //       : "For businesses managing multiple projects and teams.",
+    //   highlighted: false,
+    //   features: [
+    //     { text: "Multiple blog projects", included: true },
+    //     { text: "Team collaboration", included: true },
+    //     { text: "AI-powered content tools", included: true },
+    //   ],
+    // },
   ];
 
   return (
