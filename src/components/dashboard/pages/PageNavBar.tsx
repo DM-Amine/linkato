@@ -77,7 +77,7 @@ export function PageNavBar({
 
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="!p-3 h-5 w-5 border border-neutral-500 hover:border-neutral-400 !ring-0 hover:bg-neutral-300 ">
+                        <Button variant="outline" className="!p-3 h-5 w-5 border border-neutral-500 hover:border-neutral-400 hover:bg-neutral-300 !ring-0  ">
                             <Settings className="w-5 h-5 shrink-0  text-neutral-700 dark:text-neutral-300" />
                         </Button>
                     </DropdownMenuTrigger>

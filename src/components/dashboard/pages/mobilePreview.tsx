@@ -46,7 +46,7 @@ export function MobilePreview({ profile, links, socialMedia, theme,content }: Mo
 
                 {/* Profile Content */}
                 <div className={`text-center space-y-4 ${coverImage ? "px-6 pb-6" : "p-6"}`}>
-                  <div className={`space-y-3 ${coverImage ? "-mt-12" : ""}`}>
+                  <div className={`space-y-3 ${coverImage ? "" : ""}`}>
                     {image && (
                       <Avatar
                         className={`${theme?.avatar?.size ?? "w-20 h-20"} mx-auto ${

@@ -61,28 +61,26 @@ export default async function PublicPage({
       {/* Profile Card */}
       <Card className={` ${theme?.profile_card?.position} shadow-none border-none`}>
         <CardContent className="flex flex-col items-center space-y-4 py-8 px-6">
-         {image && (
-  <Avatar
-    className={`${theme?.avatar?.size ?? "w-24 h-24"} ${theme?.avatar?.border} ${theme?.avatar?.corners} ${theme?.avatar?.position} mb-2`}
-  >
-    <AvatarImage src={image} alt={name} className="object-cover" />
-  </Avatar>
-)}
+          {image && (
+            <Avatar
+              className={`${theme?.avatar?.size ?? "w-24 h-24"} ${theme?.avatar?.border} ${theme?.avatar?.corners} ${theme?.avatar?.position} mb-2`}
+            >
+              <AvatarImage src={image} alt={name} className="object-cover" />
+            </Avatar>
+          )}
 
-{name && (
-          <h1
-            className={`text-2xl font-semibold ${
-              theme?.text?.name ?? "text-neutral-900 dark:text-neutral-100"
-            }`}
-          >
-            {name}
-          </h1>
-)}
+          {name && (
+            <h1
+              className={`text-2xl font-semibold ${theme?.text?.name ?? "text-neutral-900 dark:text-neutral-100"
+                }`}
+            >
+              {name}
+            </h1>
+          )}
           {bio && (
             <p
-              className={`text-center text-sm leading-relaxed ${
-                theme?.text?.bio ?? "text-neutral-700 dark:text-neutral-300"
-              }`}
+              className={`text-center text-sm leading-relaxed ${theme?.text?.bio ?? "text-neutral-700 dark:text-neutral-300"
+                }`}
             >
               {bio}
             </p>
@@ -108,11 +106,10 @@ export default async function PublicPage({
                     aria-label={platform.name}
                   >
                     <Icon
-                      className={`w-5 h-5 ${
-                        theme?.socialIcons?.iconColor === "platform-color"
+                      className={`w-5 h-5 ${theme?.socialIcons?.iconColor === "platform-color"
                           ? ""
                           : theme?.socialIcons?.iconColor ?? "text-neutral-800 dark:text-neutral-200"
-                      }`}
+                        }`}
                       style={{
                         color:
                           theme?.socialIcons?.iconColor === "platform-color"
