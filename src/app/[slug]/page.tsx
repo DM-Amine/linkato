@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation"
 import { headers } from "next/headers"
 import { Card, CardContent } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { socialPlatforms } from "@/components/dashboard/socialPlatforms/socialPlatforms"
 import { themes } from "@/components/dashboard/themes/themes"
 import Link from "next/link"
@@ -61,13 +61,15 @@ export default async function PublicPage({
       {/* Profile Card */}
       <Card className={` ${theme?.profile_card?.position} shadow-none border-none`}>
         <CardContent className="flex flex-col items-center space-y-4 py-8 px-6">
-          <Avatar
-            className={`${theme?.avatar?.size ?? "w-24 h-24"} ${theme?.avatar?.border} ${theme?.avatar?.corners} ${theme?.avatar?.position} mb-2`}
-          >
-            <AvatarImage src={image} alt={name} className="object-cover" />
-            <AvatarFallback>{name.charAt(0)}</AvatarFallback>
-          </Avatar>
+         {image && (
+  <Avatar
+    className={`${theme?.avatar?.size ?? "w-24 h-24"} ${theme?.avatar?.border} ${theme?.avatar?.corners} ${theme?.avatar?.position} mb-2`}
+  >
+    <AvatarImage src={image} alt={name} className="object-cover" />
+  </Avatar>
+)}
 
+{name && (
           <h1
             className={`text-2xl font-semibold ${
               theme?.text?.name ?? "text-neutral-900 dark:text-neutral-100"
@@ -75,7 +77,7 @@ export default async function PublicPage({
           >
             {name}
           </h1>
-
+)}
           {bio && (
             <p
               className={`text-center text-sm leading-relaxed ${
