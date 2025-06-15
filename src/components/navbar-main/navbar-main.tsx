@@ -12,47 +12,48 @@ import { useState } from "react";
 import LogoutBTN from "../auth/logoutBTN";
 
 const links = [
-  { name: "Home", href: "/" },
-  // { name: "Blogs", href: "/blogs" },
- { name: "Features", href: "/features" },
-
-  // { name: "Roadmap", href: "/roadmap" },
-  // { name: "Price", href: "/price" },
-  { name: "Contact", href: "/contact" },
- 
+  { name: "Home", href: "/", scrollTo: false },
+  { name: "Features", href: "#features", scrollTo: true },
+  { name: "Contact", href: "/contact", scrollTo: false },
 ];
 
 export default function NavbarMain() {
   const { data: session } = useSession();
-  
-  
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
-const reserved = [
-  "blogs",
-  "features",
-  "roadmap",
-  "price",
-  "contact",
-  "dashboard",
-  "privacy-policy",
-  "terms-of-service",
-   "waitlist",
-   "thank-you",
-  "auth",
-  "adminPanel",
-  "",
-];
 
-const pathSegment = pathname.split("/").filter(Boolean)[0];
-const isDynamicPublicPage = pathname.split("/").filter(Boolean).length === 1 && !reserved.includes(pathSegment);
+  const reserved = [
+    "blogs",
+    "features",
+    "roadmap",
+    "price",
+    "contact",
+    "dashboard",
+    "privacy-policy",
+    "terms-of-service",
+    "waitlist",
+    "thank-you",
+    "auth",
+    "adminPanel",
+    "",
+  ];
 
-const hideMainNav =
-  pathname.startsWith("/dashboard") ||
-  pathname.startsWith("/adminPanel") ||
-  isDynamicPublicPage;
+  const scrollToSection = (hash: string) => {
+    const element = document.querySelector(hash);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
+  const pathSegment = pathname.split("/").filter(Boolean)[0];
+  const isDynamicPublicPage =
+    pathname.split("/").filter(Boolean).length === 1 &&
+    !reserved.includes(pathSegment);
 
+  const hideMainNav =
+    pathname.startsWith("/dashboard") ||
+    pathname.startsWith("/adminPanel") ||
+    isDynamicPublicPage;
 
   if (hideMainNav) return null;
 
@@ -60,15 +61,15 @@ const hideMainNav =
     <nav className="relative px-2 py-1.5 pb-2 border-b border-neutral-400 dark:border-neutral-600 z-50">
       <div className="flex justify-between items-center">
         <h1 className="text-xl text-neutral-800 dark:text-neutral-200 font-bold">
-          Lunitea
+          Linkato
         </h1>
 
         {/* Right section (ThemeSwitcher + MobileMenuButton on mobile) */}
-        <div className="flex  items-center space-x-2 md:hidden">
+        <div className="flex items-center space-x-2 md:hidden">
           <ThemeSwitcher />
           <Button
-          variant={"ghost"}
-            className="p-0  h-6 w-6 border border-neutral-600 hover:border-neutral-400 dark:hover:border-neutral-400"
+            variant={"ghost"}
+            className="p-0 h-6 w-6 border border-neutral-600 hover:border-neutral-400 dark:hover:border-neutral-400"
             onClick={() => setMenuOpen(true)}
           >
             <AlignRight size={28} />
@@ -77,48 +78,56 @@ const hideMainNav =
 
         {/* Desktop Links */}
         <div className="hidden md:flex space-x-4">
-         {links.map((link) => {
-  const isActive = pathname === link.href;
-  
-  return (
-    <Link
-      key={link.name}
-      href={link.href}
-    
+          {links.map((link) => {
+            const isActive = pathname === link.href;
 
-      className={`
-        text-sm font-semibold transition duration-300 px-2 py-1 rounded-xl
-        ${isActive
-          ? "bg-neutral-50 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100"
-          : "text-neutral-800 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800"
-        }
-      `}
-    >
-      {link.name}
-    </Link>
-  );
-})}
+            const handleClick = (e: React.MouseEvent) => {
+              if (link.scrollTo) {
+                e.preventDefault();
+                if (pathname === "/") {
+                  scrollToSection(link.href);
+                } else {
+                  window.location.href = "/" + link.href;
+                }
+              }
+            };
 
+            return (
+              <a
+                key={link.name}
+                href={link.href}
+                onClick={handleClick}
+                className={`
+                  text-sm font-semibold transition duration-300 px-2 py-1 rounded-xl
+                  ${
+                    isActive
+                      ? "bg-neutral-50 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100"
+                      : "text-neutral-800 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800"
+                  }
+                `}
+              >
+                {link.name}
+              </a>
+            );
+          })}
         </div>
 
         {/* Auth + ThemeSwitcher on desktop */}
         <div className="hidden md:flex items-center justify-center space-x-2">
           <div className="mt-1 mx-0.5">
-            <ThemeSwitcher  />
+            <ThemeSwitcher />
           </div>
           {session?.user ? (
             <>
-              <Link href="/dashboard" >
+              <Link href="/dashboard">
                 <Button
                   variant="ghost"
-                  
-                  className="text-neutral-800  text-xs border border-neutral-600 dark:text-neutral-200 dark:border-neutral-600 hover:bg-neutral-200 dark:hover:bg-neutral-800 has-[>svg]:px-1"
+                  className="text-neutral-800 text-xs border border-neutral-600 dark:text-neutral-200 dark:border-neutral-600 hover:bg-neutral-200 dark:hover:bg-neutral-800 has-[>svg]:px-1"
                 >
                   Dashboard
                 </Button>
               </Link>
-              <LogoutBTN/>
-             
+              <LogoutBTN />
             </>
           ) : (
             <>
@@ -144,7 +153,7 @@ const hideMainNav =
               onClick={() => setMenuOpen(false)}
               className="text-neutral-800 dark:text-neutral-200 border border-neutral-500 rounded-lg focus:bg-neutral-800 focus:text-neutral-200 dark:focus:bg-neutral-200 dark:focus:text-neutral-800"
             >
-             <X size={28} />
+              <X size={28} />
             </button>
           </div>
 
@@ -152,10 +161,24 @@ const hideMainNav =
           <div className="flex flex-col space-y-3">
             {links.map((link) => {
               const isActive = pathname === link.href;
+
+              const handleClick = (e: React.MouseEvent) => {
+                if (link.scrollTo) {
+                  e.preventDefault();
+                  if (pathname === "/") {
+                    scrollToSection(link.href);
+                  } else {
+                    window.location.href = "/" + link.href;
+                  }
+                }
+                setMenuOpen(false);
+              };
+
               return (
-                <Link
+                <a
                   key={link.name}
                   href={link.href}
+                  onClick={handleClick}
                   className={`
                     text-sm font-semibold transition duration-300 px-3 py-2 rounded-xl
                     ${
@@ -164,10 +187,9 @@ const hideMainNav =
                         : "text-neutral-800 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800"
                     }
                   `}
-                  onClick={() => setMenuOpen(false)}
                 >
                   {link.name}
-                </Link>
+                </a>
               );
             })}
           </div>
@@ -186,7 +208,7 @@ const hideMainNav =
                     Dashboard
                   </Button>
                 </Link>
-                <LogoutBTN/>
+                <LogoutBTN />
               </>
             ) : (
               <>
