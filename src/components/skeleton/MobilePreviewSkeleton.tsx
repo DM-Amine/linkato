@@ -6,7 +6,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 
 export function MobilePreviewSkeleton() {
   return (
-    <Card className="min-w-full border-neutral-200 dark:border-neutral-600 bg-neutral-100 dark:bg-neutral-900 py-2">
+    <Card className="min-w-full border-neutral-200 dark:border-neutral-600 bg-neutral-100 dark:bg-neutral-900 animate-pulse py-2">
       {/* Header */}
       <CardHeader className="flex items-center justify-center gap-2">
         

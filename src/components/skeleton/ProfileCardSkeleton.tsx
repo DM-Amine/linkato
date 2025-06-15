@@ -5,7 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 
 export function ProfileCardSkeleton() {
   return (
-    <Card className="border-neutral-50 dark:border-neutral-600 bg-neutral-200 dark:bg-neutral-800 py-2">
+    <Card className="border-neutral-50 dark:border-neutral-600 bg-neutral-200 dark:bg-neutral-800 animate-pulse py-2">
       <CardContent className="space-y-4 px-2">
         {/* Cover Image Skeleton */}
         <div className="space-y-2">

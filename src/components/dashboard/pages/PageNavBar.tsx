@@ -87,7 +87,7 @@ export function PageNavBar({
                             <label className="text-sm font-semibold text-neutral-700 dark:text-neutral-300">
                                 Edit Slug
                             </label>
-                            <div className="flex items-center mt-1 bg-primary-light/60 border-2 border-neutral-50 rounded-lg px-2 py-1">
+                            <div className="flex items-center mt-1 bg-primary-light/60 dark:bg-d-primary-light/60 border-1 border-neutral-500 rounded-lg px-2 py-1">
                                 <input
                                     type="text"
                                     value={editableSlug}
@@ -100,9 +100,9 @@ export function PageNavBar({
                                     className="bg-transparent outline-none text-sm font-semibold text-neutral-700 dark:text-neutral-200 w-full"
                                 />
                                 {isCheckingSlug ? (
-                                    <Loader2 className="animate-spin w-4 h-4 text-neutral-600 ml-1" />
+                                    <Loader2 className="animate-spin w-4 h-4 text-neutral-700 dark:text-neutral-300 ml-1" />
                                 ) : (
-                                    <Pencil className="w-4 h-4 text-neutral-600 ml-1" />
+                                    <Pencil className="w-4 h-4 text-neutral-700 dark:text-neutral-300 ml-1" />
                                 )}
                             </div>
                             {slugError && (
