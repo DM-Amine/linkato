@@ -53,7 +53,7 @@ export default async function PublicPage({
             height={600}
             src={coverImage}
             alt="Cover"
-            className={`${theme?.cover_image?.size} object-cover`}
+            className={`${theme?.cover_image?.size} w-full h-auto`}
           />
         </div>
       )}
@@ -71,7 +71,7 @@ export default async function PublicPage({
 
           {name && (
             <h1
-              className={`text-2xl font-semibold ${theme?.text?.name ?? "text-neutral-900 dark:text-neutral-100"
+              className={`text-2xl font-semibold ${theme?.title?.color }
                 }`}
             >
               {name}
@@ -79,7 +79,7 @@ export default async function PublicPage({
           )}
           {bio && (
             <p
-              className={`text-center text-sm leading-relaxed ${theme?.text?.bio ?? "text-neutral-700 dark:text-neutral-300"
+              className={` ${theme?.bio?.color } ${theme?.bio?.size }
                 }`}
             >
               {bio}

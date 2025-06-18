@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid"
 import type { Link, SocialMedia } from "@/types/pages"
 
 interface PageData {
-  _id: string
+ 
   id: string
   name: string
   slug: string
@@ -35,7 +35,7 @@ export async function GET(request: Request) {
     const rawPages = await Page.find({ userID }).lean()
 
     const sanitizedPages: PageData[] = rawPages.map((page) => ({
-      _id: String(page._id),
+     
       id: page.id ?? uuidv4(), // fallback if not set
       name: page.name ?? "",
       slug: page.slug ?? "",
@@ -61,5 +61,47 @@ export async function GET(request: Request) {
       { error: "Internal server error" },
       { status: 500 }
     )
+  }
+}
+
+
+export async function POST(req: Request) {
+  try {
+    await connectDB()
+
+    const body = await req.json()
+    const { name, slug, userID } = body
+
+    if (!name || !slug || !userID) {
+      return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
+    }
+
+    const existing = await Page.findOne({ slug })
+
+    if (existing) {
+      return NextResponse.json({ error: "Slug is already in use" }, { status: 409 })
+    }
+
+    const newPage = new Page({
+      id: uuidv4(),
+      name,
+      slug,
+      userID,
+      links: [],
+      socials: [],
+      theme: "minimal-dark",
+      bio: "",
+      avatar: "",
+      content: "",
+      coverImage: "",
+      createdAt: new Date(),
+    })
+
+    await newPage.save()
+
+    return NextResponse.json({ success: true, slug }, { status: 201 })
+  } catch (error) {
+    console.error("Error creating page:", error)
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 })
   }
 }

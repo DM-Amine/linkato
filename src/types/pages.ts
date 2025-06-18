@@ -51,10 +51,20 @@ export interface Theme {
     size: string
   }
 
-  text: {
-    name: string
-    bio: string
-  }
+  // text: {
+  //   name: string
+  //   bio: string
+  // }
+ title: {
+      color: string
+      size: string
+      font: string
+    },
+    bio: {
+      color: string
+      size: string
+      font: string
+    },
 
   socialIcons: {
     background: string

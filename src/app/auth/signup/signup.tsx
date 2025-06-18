@@ -141,7 +141,7 @@ export default function SignUp() {
         <Button
           type="button"
           variant="outline"
-          className="w-full flex  items-center justify-center gap-2 h-fit py-2 text-sm font-medium"
+          className="w-full flex bg-neutral-300 dark:bg-neutral-700 hover:dark:bg-neutral-800 items-center justify-center gap-2 h-fit py-2 text-sm font-medium"
           onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
         >
           <Image src="/icons/auth/google-logo.svg" alt="Google" width={20} height={20} />

@@ -39,7 +39,7 @@ export function MobilePreview({ profile, links, socialMedia, theme,content }: Mo
                 {/* Cover Image */}
                 {coverImage && (
                   <div className="w-full h-32 relative">
-                    <Image width={800} height={600} src={coverImage} alt="Cover" className="w-full h-full object-cover" />
+                    <Image width={800} height={600} src={coverImage} alt="Cover" className="w-full h-auto" />
                     {/* {theme?.coverOverlay && <div className={`absolute inset-0 ${theme.coverOverlay}`} />} */}
                   </div>
                 )}
@@ -58,8 +58,8 @@ export function MobilePreview({ profile, links, socialMedia, theme,content }: Mo
                       </Avatar>
                     )}
                     <div>
-                      <h2 className={`text-lg mb-2 ${theme?.text?.name ?? ""}`}>{name}</h2>
-                      <p className={`text-sm leading-relaxed ${theme?.text?.bio ?? ""}`}>{bio}</p>
+                      <h2 className={`text-lg mb-2 ${theme?.title?.color}`}>{name}</h2>
+                      <p className={`text-sm leading-relaxed ${theme?.bio?.color }`}>{bio}</p>
                     </div>
                   </div>
 

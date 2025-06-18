@@ -31,12 +31,12 @@ export function ThemePreviewCard({ theme, isSelected, onSelect }: ThemePreviewCa
 
               {/* Mini Name */}
               <div
-                className={`h-1 w-8 mx-auto rounded ${theme.text.name.includes("white") ? "bg-white" : "bg-neutral-800"}`}
+                className={`h-1 w-8 mx-auto rounded ${theme.title}`}
               />
 
               {/* Mini Bio */}
               <div
-                className={`h-0.5 w-6 mx-auto rounded ${theme.text.bio.includes("white") ? "bg-white/70" : "bg-neutral-600"}`}
+                className={`h-0.5 w-6 mx-auto rounded ${theme.bio}`}
               />
 
               {/* Mini Social Icons */}

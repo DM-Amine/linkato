@@ -41,10 +41,10 @@ export default function SignIn() {
 
   return (
     <div className="flex justify-center items-center min-h-screen  mx-2">
-    <div className="w-full max-w-md border border-neutral-500 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900 px-5 py-3 rounded-3xl shadow-lg ">
-      <h2 className="text-2xl font-semibold text-center text-neutral-700 dark:text-neutral-300 mb-6">
-        Login In
-      </h2>
+      <div className="w-full max-w-md border border-neutral-500 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900 px-5 py-3 rounded-3xl shadow-lg ">
+        <h2 className="text-2xl font-semibold text-center text-neutral-700 dark:text-neutral-300 mb-6">
+          Login In
+        </h2>
 
         <form onSubmit={handleSubmit}>
           {/* Email */}
@@ -92,28 +92,28 @@ export default function SignIn() {
           {error && (
             <div className="text-sm text-error dark:text-d-error mb-4">{error}</div>
           )}
-{/* Divider */}
-<div className="flex my-3 justify-between items-center">
-        <div className="my-4 w-full text-center text-sm text-neutral-500 dark:text-neutral-400 border-t"></div>
-          <span className="mx-2 text-xl">or</span>
-          <div className="my-4 w-full text-center text-sm text-neutral-500 dark:text-neutral-400 border-t"></div>
-        </div>
+          
           {/* Submit */}
           <Button className="w-full h-fit py-2  text-sm sm:text-base">
             Sign In
           </Button>
         </form>
-      
+{/* Divider */}
+          <div className="flex my-3 justify-between items-center">
+            <div className="my-4 w-full text-center text-sm text-neutral-500 dark:text-neutral-400 border-t"></div>
+            <span className="mx-2 text-xl">or</span>
+            <div className="my-4 w-full text-center text-sm text-neutral-500 dark:text-neutral-400 border-t"></div>
+          </div>
         {/* Google Sign-In */}
-                <Button
-                  type="button"
-                  variant="outline"
-                  className="w-full mt-3 flex items-center justify-center gap-2 h-fit py-2 text-sm font-medium"
-                  onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
-                >
-                  <Image src="/icons/auth/google-logo.svg" alt="Google" width={20} height={20} />
-                  Continue with Google
-                </Button>
+        <Button
+          type="button"
+          variant="outline"
+          className="w-full mt-3 flex bg-neutral-300 dark:bg-neutral-700 hover:dark:bg-neutral-800  items-center justify-center gap-2 h-fit py-2 text-sm font-medium"
+          onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+        >
+          <Image src="/icons/auth/google-logo.svg" alt="Google" width={20} height={20} />
+          Continue with Google
+        </Button>
 
         <div className="mt-4 text-center text-sm text-neutral-500 dark:text-neutral-400">
           Don&apos;t have an account?{" "}

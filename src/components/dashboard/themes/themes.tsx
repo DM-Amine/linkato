@@ -19,7 +19,7 @@ export const themes: Theme[] = [
   cover_image_wrapper: {
     size: "sm:w-9/12 w-full",
     margin: "sm:my-2",
-    shadow: "shadow-lg",
+    shadow: "",
     corners: "sm:rounded-lg rounded-none",
   },
 
@@ -34,10 +34,20 @@ export const themes: Theme[] = [
     size: "w-24 h-24",
   },
 
-  text: {
-    name: "text-neutral-800",
-    bio: "text-neutral-700",
-  },
+  // text: {
+  //   name: "text-neutral-800",
+  //   bio: "text-neutral-700",
+  // },
+      title: {
+      color: "text-neutral-800",
+      size: "",
+      font: "",
+    },
+    bio: {
+      color: "text-neutral-600",
+      size: "max-w-lg text-center text-sm leading-relaxed",
+      font: "",
+    },
 
   socialIcons: {
     background: "bg-neutral-100",
@@ -69,9 +79,9 @@ export const themes: Theme[] = [
       Background : "bg-neutral-900"
     },
     cover_image_wrapper : {
-      size : "sm:w-9/12 w-full",
+      size : "sm:w-9/12 w-full h-fit",
       margin: "sm:my-2 ",
-      shadow: "shadow-lg",
+      shadow: "",
       corners : "sm:rounded-lg rounded-none",
     },
 
@@ -85,9 +95,19 @@ export const themes: Theme[] = [
       corners : "rounded-full",
       size: "w-24 h-24",
     },
-    text: {
-      name: "text-white",
-      bio: "text-neutral-300",
+    // text: {
+    //   name: "text-white",
+    //   bio: "text-neutral-300",
+    // },
+      title: {
+      color: "text-neutral-100",
+      size: "",
+      font: "",
+    },
+    bio: {
+      color: "text-neutral-400 ",
+      size: "max-w-lg  text-center text-sm leading-relaxed",
+      font: "",
     },
     socialIcons: {
       background: "bg-neutral-800",
