@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label"
 import { Progress } from "@/components/ui/progress"
 import type { Profile } from "@/types/pages"
 
-const MAX_FILE_SIZE_MB = 3
+const MAX_FILE_SIZE_MB = 5
 const ALLOWED_MIME_TYPES = [
   "image/jpeg",
   "image/png",
