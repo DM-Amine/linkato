@@ -1,7 +1,5 @@
 import { notFound } from "next/navigation"
 import { headers } from "next/headers"
-import { Card, CardContent } from "@/components/ui/card"
-import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { socialPlatforms } from "@/components/dashboard/socialPlatforms/socialPlatforms"
 import { themes } from "@/components/dashboard/themes/themes"
 import Link from "next/link"
@@ -36,7 +34,7 @@ export default async function PublicPage({
   const { profile, links, socialMedia, content } = data
   const themeFromDB = data.theme
   const theme = themes.find((t) => t.id === themeFromDB)
-  const name = profile?.name ?? "No Name"
+  const name = profile?.name ?? ""
   const bio = profile?.bio ?? ""
   const image = profile?.image ?? ""
   const coverImage = profile?.coverImage
@@ -46,7 +44,7 @@ export default async function PublicPage({
       {/* Cover Image */}
       {coverImage && (
         <div
-          className={` ${theme?.cover_image_wrapper?.size} ${theme?.cover_image_wrapper?.margin} ${theme?.cover_image_wrapper?.corners} overflow-hidden`}
+          className={`${theme?.cover_image_wrapper?.size} ${theme?.cover_image_wrapper?.margin} ${theme?.cover_image_wrapper?.corners} overflow-hidden`}
         >
           <Image
             width={800}
@@ -59,29 +57,30 @@ export default async function PublicPage({
       )}
 
       {/* Profile Card */}
-      <Card className={` ${theme?.profile_card?.position} shadow-none border-none`}>
-        <CardContent className="flex flex-col items-center space-y-4 py-8 px-6">
+      <div className={`${theme?.profile_card?.position} shadow-none border-none w-full max-w-md bg-transparent mt-6`}>
+        <div className="flex flex-col items-center space-y-4 py-8 px-6">
           {image && (
-            <Avatar
-              className={`${theme?.avatar?.size ?? "w-24 h-24"} ${theme?.avatar?.border} ${theme?.avatar?.corners} ${theme?.avatar?.position} mb-2`}
+            <div
+              className={`${theme?.avatar?.size ?? "w-24 h-24"} ${theme?.avatar?.border} ${theme?.avatar?.corners} ${theme?.avatar?.position} mb-2 overflow-hidden`}
             >
-              <AvatarImage src={image} alt={name} className="object-cover" />
-            </Avatar>
+              <Image
+              width={200}
+              height={200}
+                src={image}
+                alt={name}
+                className="object-cover w-full h-full"
+              />
+            </div>
           )}
 
           {name && (
-            <h1
-              className={`text-2xl font-semibold ${theme?.title?.color }
-                }`}
-            >
+            <h1 className={`text-2xl font-semibold ${theme?.title?.color}`}>
               {name}
             </h1>
           )}
+
           {bio && (
-            <p
-              className={` ${theme?.bio?.color } ${theme?.bio?.size }
-                }`}
-            >
+            <p className={`${theme?.bio?.color} ${theme?.bio?.size}`}>
               {bio}
             </p>
           )}
@@ -107,9 +106,9 @@ export default async function PublicPage({
                   >
                     <Icon
                       className={`w-5 h-5 ${theme?.socialIcons?.iconColor === "platform-color"
-                          ? ""
-                          : theme?.socialIcons?.iconColor ?? "text-neutral-800 dark:text-neutral-200"
-                        }`}
+                        ? ""
+                        : theme?.socialIcons?.iconColor ?? "text-neutral-800 dark:text-neutral-200"
+                      }`}
                       style={{
                         color:
                           theme?.socialIcons?.iconColor === "platform-color"
@@ -122,8 +121,8 @@ export default async function PublicPage({
               })}
             </div>
           )}
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Content */}
       {content && (

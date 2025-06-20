@@ -239,7 +239,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-full bg-neutral-400/30 dark:bg-neutral-900/70">
+    <div className="min-h-full h-full bg-neutral-400/30 dark:bg-neutral-900/70">
       <PageNavBar
         editableSlug={editableSlug}
         setEditableSlug={setEditableSlug}
@@ -303,7 +303,7 @@ export default function Dashboard() {
             )}
           </div>
 
-          <div className="w-full hidden md:flex sm:w-10/12 md:w-8/12 lg:w-4/12 md:sticky md:top-12 md:h-fit mx-auto">
+          <div className="w-full hidden md:flex sm:w-10/12 md:w-8/12 lg:w-4/12 md:sticky md:top-11 md:h-fit mx-1">
             {!isPageLoaded ? (
   <MobilePreviewSkeleton /> 
 ) : (

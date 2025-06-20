@@ -51,11 +51,12 @@ export function PageNavBar({
         }
     }, [submitSuccess])
     return (
-        <div className="border-b border-neutral-400 dark:border-neutral-700 sticky top-0 z-10 max-w-full flex  sm:items-center justify-between bg-neutral-200 dark:bg-neutral-900 px-2 py-1">
+       <div className="w-full border-b border-neutral-400 dark:border-neutral-700 bg-neutral-200 dark:bg-neutral-900 px-2 py-1 flex justify-between sm:items-center">
+
             <div className="flex items-center gap-2 min-w-0 max-w-[75%] sm:max-w-[60%] flex-1">
-    {/* This div must have min-w-0 to enable truncation inside */}
-    <Share slug={originalSlug} />
-  </div>
+                {/* This div must have min-w-0 to enable truncation inside */}
+                <Share slug={originalSlug} />
+            </div>
 
             <div className="flex items-center my-1 sm:my-0 gap-2">
                 <div className="hidden sm:flex items-center text-sm font-medium text-neutral-700 dark:text-neutral-200 min-w-[70px] h-8">
