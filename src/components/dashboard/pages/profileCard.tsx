@@ -1,202 +1,191 @@
 "use client"
 
-import type React from "react"
-import { useRef } from "react"
+import React, { useRef, useState } from "react"
 import { Upload, Trash2, ImagePlus } from "lucide-react"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Label } from "@/components/ui/label"
-import Image from "next/image"
 import type { Profile } from "@/types/pages"
+
+// Compress avatar image before upload
+async function compressImage(file: File, maxSize = 256): Promise<Blob> {
+  const img = await createImageBitmap(file)
+  const canvas = document.createElement("canvas")
+  const scale = maxSize / Math.max(img.width, img.height)
+  canvas.width = img.width * scale
+  canvas.height = img.height * scale
+  const ctx = canvas.getContext("2d")
+  ctx?.drawImage(img, 0, 0, canvas.width, canvas.height)
+  return await new Promise((res) => canvas.toBlob(blob => res(blob!), "image/jpeg", 0.7))
+}
+
+// Upload to API
+async function uploadImage(file: File, type: "avatar" | "cover", onProgress: (percent: number) => void): Promise<string | null> {
+  const formData = new FormData()
+  formData.append("file", file)
+  formData.append("type", type)
+
+  const xhr = new XMLHttpRequest()
+  return await new Promise((resolve, reject) => {
+    xhr.open("POST", "/api/upload", true)
+
+    xhr.upload.onprogress = (e) => {
+      if (e.lengthComputable) {
+        onProgress(Math.round((e.loaded / e.total) * 100))
+      }
+    }
+
+    xhr.onload = () => {
+      if (xhr.status === 200) {
+        const data = JSON.parse(xhr.responseText)
+        resolve(data.url)
+      } else {
+        reject("Upload failed")
+      }
+    }
+
+    xhr.onerror = () => reject("Upload failed")
+    xhr.send(formData)
+  })
+}
+
+interface UploadStatus {
+  progress: number
+  error: string | null
+  type: "avatar" | "cover" | null
+}
 
 interface ProfileEditorProps {
   profile: Profile
   onProfileUpdate: (profile: Profile) => void
 }
 
-// Upload helper
-async function uploadImageToBlob(file: File): Promise<string | null> {
-  const formData = new FormData()
-  formData.append("file", file)
-
-  const res = await fetch("/api/upload", {
-    method: "POST",
-    body: formData,
-  })
-
-  if (!res.ok) return null
-
-  const data = await res.json()
-  return data.url
-}
-
 export function ProfileCard({ profile, onProfileUpdate }: ProfileEditorProps) {
-  const avatarFileInputRef = useRef<HTMLInputElement>(null)
-  const coverFileInputRef = useRef<HTMLInputElement>(null)
-  const bioLength = profile.bio?.length ?? 0
+  const avatarRef = useRef<HTMLInputElement>(null)
+  const coverRef = useRef<HTMLInputElement>(null)
+  const [status, setStatus] = useState<UploadStatus>({ progress: 0, error: null, type: null })
 
-  const handleAvatarUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]
-    if (file) {
-      const blobUrl = await uploadImageToBlob(file)
-      if (blobUrl) {
-        onProfileUpdate({ ...profile, image: blobUrl })
-      }
+  const handleUpload = async (file: File, type: "avatar" | "cover") => {
+    try {
+      setStatus({ progress: 0, error: null, type })
+      const finalFile = type === "avatar" ? await compressImage(file) : file
+      const url = await uploadImage(finalFile as File, type, (p) =>
+        setStatus((prev) => ({ ...prev, progress: p }))
+      )
+      if (!url) throw new Error("Failed to upload")
+      onProfileUpdate({ ...profile, [type === "avatar" ? "image" : "coverImage"]: url })
+    } catch (err) {
+      console.log("Upload error:", err);
+      
+      setStatus({ progress: 0, error: "Upload failed", type })
+    } finally {
+      setTimeout(() => setStatus({ progress: 0, error: null, type: null }), 2000)
     }
-  }
-
-  const handleCoverUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]
-    if (file) {
-      const blobUrl = await uploadImageToBlob(file)
-      if (blobUrl) {
-        onProfileUpdate({ ...profile, coverImage: blobUrl })
-      }
-    }
-  }
-
-  const removeCoverImage = () => {
-    onProfileUpdate({ ...profile, coverImage: "" })
-  }
-
-  const removeAvatarImage = () => {
-    onProfileUpdate({ ...profile, image: "" })
   }
 
   return (
-    <Card className="border-neutral-50 dark:border-neutral-600 bg-neutral-200 dark:bg-neutral-800 py-2">
-      <CardContent className="space-y-4 px-2">
+    <Card className="border bg-neutral-200 dark:bg-neutral-800">
+      <CardContent className="space-y-4 p-4">
 
-        {/* Cover Image Section */}
+        {/* Cover Upload */}
         <div className="space-y-2">
-          <Label className="text-neutral-700 dark:text-neutral-300">Cover Image</Label>
+          <Label>Cover Image</Label>
           <div className="relative">
             {profile.coverImage ? (
-              <div className="relative w-full h-32 rounded-lg overflow-hidden border-2 border-neutral-300 dark:border-neutral-600">
+              <div className="relative w-full h-32 overflow-hidden rounded-lg border">
                 <Image
-                  width={800}
-                  height={600}
                   src={profile.coverImage}
-                  alt={profile.name || "Cover"}
-                  className="w-full h-full object-cover"
+                  alt="cover"
+                  layout="fill"
+                  objectFit="cover"
                 />
                 <Button
                   size="sm"
-                  variant="outline"
-                  className="absolute top-2 right-2 w-8 h-8 rounded-full p-0 bg-white/80 dark:bg-neutral-700 hover:dark:bg-neutral-800 hover:bg-white hover:text-error hover:dark:text-error border-neutral-400"
-                  onClick={removeCoverImage}
-                >
-                  <Trash2 className="w-3 h-3" />
-                </Button>
-              </div>
-            ) : (
-              <div
-                className="w-full h-32 rounded-lg border-2 border-dashed border-neutral-400 dark:border-neutral-600 bg-neutral-100 dark:bg-neutral-900 flex items-center justify-center cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors"
-                onClick={() => coverFileInputRef.current?.click()}
-              >
-                <div className="text-center">
-                  <Upload className="w-6 h-6 text-neutral-500 mx-auto mb-2" />
-                  <p className="text-sm text-neutral-500">Click to upload cover image</p>
-                </div>
-              </div>
-            )}
-            <input
-              ref={coverFileInputRef}
-              type="file"
-              accept="image/*"
-              className="hidden"
-              onChange={handleCoverUpload}
-            />
-          </div>
-        </div>
-
-        {/* Avatar Section */}
-        <div className="flex items-center gap-4">
-          <div className="relative">
-            <Avatar className="w-20 h-20 border-2 border-neutral-400 dark:border-neutral-700">
-              <AvatarImage src={profile.image || ""} className="object-cover" />
-              <AvatarFallback className="flex items-center justify-center bg-neutral-50 dark:bg-neutral-900">
-                {!profile.image && <ImagePlus className="w-5 h-5 text-neutral-500" />}
-              </AvatarFallback>
-            </Avatar>
-
-            {!profile.image ? (
-              <Button
-                size="sm"
-                variant="outline"
-                className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full p-0 border border-neutral-500 bg-neutral-100 dark:bg-neutral-900 hover:bg-neutral-50"
-                onClick={() => avatarFileInputRef.current?.click()}
-              >
-                <Upload className="w-4 h-4 text-neutral-600 dark:text-neutral-300" />
-              </Button>
-            ) : (
-              <div className="absolute -bottom-2 -right-2 flex gap-1">
-                <Button
-                  size="sm"
-                  variant="outline"
-                  className="w-8 h-8 rounded-full p-0 border border-neutral-400 hover:border-neutral-50 bg-white/90 dark:bg-neutral-800 hover:bg-neutral-100 dark:hover:bg-neutral-700"
-                  onClick={() => avatarFileInputRef.current?.click()}
-                  aria-label="Change Avatar"
-                >
-                  <Upload className="w-4 h-4 text-neutral-600 dark:text-neutral-300" />
-                </Button>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  className="w-8 h-8 rounded-full p-0 border border-neutral-400 bg-white/90 dark:bg-neutral-800 hover:text-error hover:border-error hover:dark:border-error hover:dark:text-error hover:bg-red-50 dark:hover:bg-red-900/40"
-                  onClick={removeAvatarImage}
-                  aria-label="Delete Avatar"
+                  className="absolute top-2 right-2"
+                  onClick={() => onProfileUpdate({ ...profile, coverImage: "" })}
                 >
                   <Trash2 className="w-4 h-4" />
                 </Button>
               </div>
+            ) : (
+              <div
+                onClick={() => coverRef.current?.click()}
+                className="w-full h-32 rounded-lg border-2 border-dashed flex items-center justify-center cursor-pointer"
+              >
+                <Upload className="w-6 h-6 text-neutral-500" />
+              </div>
             )}
             <input
-              ref={avatarFileInputRef}
+              ref={coverRef}
               type="file"
               accept="image/*"
-              className="hidden"
-              onChange={handleAvatarUpload}
+              hidden
+              onChange={(e) => e.target.files?.[0] && handleUpload(e.target.files[0], "cover")}
             />
+            {status.type === "cover" && status.progress > 0 && (
+              <p className="text-xs mt-1">{status.progress}% uploaded</p>
+            )}
+            {status.type === "cover" && status.error && (
+              <p className="text-xs text-red-500">{status.error}</p>
+            )}
           </div>
         </div>
 
-        {/* Name Input */}
-        <div className="flex-1 space-y-2">
-          <Label htmlFor="name" className="text-neutral-700 dark:text-neutral-300">Name</Label>
+        {/* Avatar Upload */}
+        <div className="flex gap-4 items-center">
+          <div className="relative">
+            <Avatar className="w-20 h-20 border">
+              <AvatarImage src={profile.image || ""} className="object-cover" />
+              <AvatarFallback>
+                <ImagePlus className="w-5 h-5 text-neutral-500" />
+              </AvatarFallback>
+            </Avatar>
+            <input
+              ref={avatarRef}
+              type="file"
+              accept="image/*"
+              hidden
+              onChange={(e) => e.target.files?.[0] && handleUpload(e.target.files[0], "avatar")}
+            />
+            <Button
+              size="sm"
+              className="absolute -bottom-2 -right-2 rounded-full"
+              onClick={() => avatarRef.current?.click()}
+            >
+              <Upload className="w-4 h-4" />
+            </Button>
+            {status.type === "avatar" && status.progress > 0 && (
+              <p className="text-xs mt-1">{status.progress}%</p>
+            )}
+            {status.type === "avatar" && status.error && (
+              <p className="text-xs text-red-500">{status.error}</p>
+            )}
+          </div>
+        </div>
+
+        {/* Name & Bio */}
+        <div>
+          <Label>Name</Label>
           <Input
-            id="name"
             value={profile.name}
             onChange={(e) => onProfileUpdate({ ...profile, name: e.target.value })}
-            placeholder="Your name"
-            className="border-neutral-400 dark:border-neutral-600 focus:border-primary focus:ring-primary"
           />
         </div>
-
-        {/* Bio Section */}
         <div>
-          <div className="flex justify-between items-center mb-1">
-            <Label htmlFor="bio" className="text-neutral-700 dark:text-neutral-300">Bio</Label>
-            <span className={`text-xs ${bioLength > 280 ? "text-warning" : "text-neutral-500"}`}>
-              {bioLength}/300
-            </span>
-          </div>
+          <Label>Bio</Label>
           <Textarea
-            id="bio"
-            value={profile.bio}
-            onChange={(e) => {
-              if (e.target.value.length <= 300) {
-                onProfileUpdate({ ...profile, bio: e.target.value })
-              }
-            }}
-            placeholder="Tell people about yourself"
             rows={3}
             maxLength={300}
-            className="border-neutral-400 dark:border-neutral-600 focus:border-primary focus:ring-primary resize-none"
+            value={profile.bio}
+            onChange={(e) =>
+              onProfileUpdate({ ...profile, bio: e.target.value.slice(0, 300) })
+            }
           />
+          <p className="text-xs text-neutral-500">{profile.bio?.length ?? 0}/300</p>
         </div>
       </CardContent>
     </Card>
