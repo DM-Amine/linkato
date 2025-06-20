@@ -12,19 +12,6 @@ import { Label } from "@/components/ui/label"
 import { Progress } from "@/components/ui/progress"
 import type { Profile } from "@/types/pages"
 
-
-// Compress avatar image
-async function compressImage(file: File, maxSize = 256): Promise<Blob> {
-  const img = await createImageBitmap(file)
-  const canvas = document.createElement("canvas")
-  const scale = maxSize / Math.max(img.width, img.height)
-  canvas.width = img.width * scale
-  canvas.height = img.height * scale
-  const ctx = canvas.getContext("2d")
-  ctx?.drawImage(img, 0, 0, canvas.width, canvas.height)
-  return new Promise((res) => canvas.toBlob(blob => res(blob!), "image/jpeg", 0.7))
-}
-
 async function uploadImage(file: File, type: "avatar" | "cover", onProgress: (p: number) => void): Promise<string | null> {
   const formData = new FormData()
   formData.append("file", file)
@@ -49,6 +36,25 @@ async function uploadImage(file: File, type: "avatar" | "cover", onProgress: (p:
   })
 }
 
+async function handleDeleteBlob(url: string, type: "avatar" | "cover", onProfileUpdate: (profile: Profile) => void, profile: Profile) {
+  try {
+    await fetch("/api/delete", {
+      method: "POST",
+      body: JSON.stringify({ url }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+  } catch (error) {
+    console.error("Failed to delete blob:", error)
+  } finally {
+    onProfileUpdate({
+      ...profile,
+      [type === "avatar" ? "image" : "coverImage"]: "",
+    })
+  }
+}
+
 interface UploadState {
   type: "avatar" | "cover" | null
   progress: number
@@ -70,15 +76,13 @@ export function ProfileCard({ profile, onProfileUpdate }: ProfileEditorProps) {
   const handleUpload = async (file: File, type: "avatar" | "cover") => {
     try {
       setUpload({ type, progress: 0, error: null })
-      const finalFile = type === "avatar" ? await compressImage(file) : file
-      const url = await uploadImage(finalFile as File, type, (progress) =>
+      const url = await uploadImage(file, type, (progress) =>
         setUpload(prev => ({ ...prev, progress }))
       )
       if (!url) throw new Error("Upload failed")
       onProfileUpdate({ ...profile, [type === "avatar" ? "image" : "coverImage"]: url })
     } catch (err) {
-      console.log("Upload error:", err);
-      
+      console.log("Upload error:", err)
       setUpload({ type, progress: 0, error: "Upload failed" })
     } finally {
       setTimeout(() => setUpload({ type: null, progress: 0, error: null }), 2000)
@@ -101,14 +105,19 @@ export function ProfileCard({ profile, onProfileUpdate }: ProfileEditorProps) {
                   fill
                   className="object-cover"
                 />
-                <Button
-                  size="sm"
-                  variant="outline"
-                  className="absolute top-2 right-2 w-8 h-8 p-0 rounded-full"
-                  onClick={() => onProfileUpdate({ ...profile, coverImage: "" })}
-                >
-                  <Trash2 className="w-4 h-4" />
-                </Button>
+                {profile.coverImage && (
+  <Button
+    size="sm"
+    variant="outline"
+    className="absolute top-2 right-2 w-8 h-8 p-0 rounded-full"
+    onClick={() =>
+      handleDeleteBlob(profile.coverImage!, "cover", onProfileUpdate, profile)
+    }
+  >
+    <Trash2 className="w-4 h-4" />
+  </Button>
+)}
+
               </div>
             ) : (
               <div
@@ -156,16 +165,19 @@ export function ProfileCard({ profile, onProfileUpdate }: ProfileEditorProps) {
               >
                 <Upload className="w-4 h-4" />
               </Button>
-              {profile.image && (
-                <Button
-                  size="sm"
-                  variant="outline"
-                  className="w-8 h-8 p-0 rounded-full hover:text-error"
-                  onClick={() => onProfileUpdate({ ...profile, image: "" })}
-                >
-                  <Trash2 className="w-4 h-4" />
-                </Button>
-              )}
+             {profile.image && (
+  <Button
+    size="sm"
+    variant="outline"
+    className="w-8 h-8 p-0 rounded-full hover:text-error"
+    onClick={() =>
+      handleDeleteBlob(profile.image!, "avatar", onProfileUpdate, profile)
+    }
+  >
+    <Trash2 className="w-4 h-4" />
+  </Button>
+)}
+
             </div>
 
             <input
