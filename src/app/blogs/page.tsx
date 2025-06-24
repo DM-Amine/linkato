@@ -1,4 +1,6 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
+
 export async function generateMetadata(): Promise<Metadata> {
   return {
     title: "Linkato Blog – Creator Tools, Link-in-Bio Strategies & Growth Tips",
@@ -18,11 +20,11 @@ export async function generateMetadata(): Promise<Metadata> {
       title: "Linkato Blog – Creator Tools, Link-in-Bio Strategies & Growth Tips",
       description:
         "Explore Linkato’s insights on link-in-bio design, creator growth, monetization, and social media strategy.",
-      url: "https://linkato.vercel.app/blogs",
+      url: "https://linkato.com/blogs",
       siteName: "Linkato",
       images: [
         {
-          url: "https://linkato.vercel.app/og/linkato-blogs-cover.jpg", // update when image is ready
+          url: "https://linkato.com/og/linkato-blogs-cover.jpg", // update when image is ready
           width: 1200,
           height: 630,
           alt: "Linkato Blog – Link-in-Bio Growth and Creator Insights"
@@ -36,7 +38,31 @@ export async function generateMetadata(): Promise<Metadata> {
       title: "Linkato Blog – Creator Tools, Link-in-Bio Strategies & Growth Tips",
       description:
         "Learn how to grow your online brand with Linkato. Insights on link-in-bio best practices and creator monetization.",
-      images: ["https://linkato.vercel.app/og/linkato-blogs-cover.jpg"] // update accordingly
+      images: ["https://linkato.com/og/linkato-blogs-cover.jpg"] // update accordingly
     }
   };
 }
+
+
+
+import dynamic from "next/dynamic";
+const BlogsPageComponent = dynamic(() => import('@/components/blogs/blogs'));
+
+export default function BlogsPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <BlogsPageComponent />
+    </Suspense>
+  );
+}
+
+// -- Coming Soon Placeholder --
+// export default function BlogsPage() {
+   
+  
+//   return (
+//     <Suspense fallback={<div>Loading...</div>}>
+//       <ComingSoon />
+//     </Suspense>
+//   );
+// }
