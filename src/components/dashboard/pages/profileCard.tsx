@@ -202,6 +202,7 @@ export function ProfileCard({ profile, onProfileUpdate }: ProfileEditorProps) {
               </div>
             )}
             <div className="absolute -bottom-2 -right-2 flex gap-1">
+              {!profile.image && (
               <Button
                 size="sm"
                 variant="outline"
@@ -210,6 +211,7 @@ export function ProfileCard({ profile, onProfileUpdate }: ProfileEditorProps) {
               >
                 <Upload className="w-4 h-4" />
               </Button>
+              )}
               {profile.image && (
                 <Button
                   size="sm"
