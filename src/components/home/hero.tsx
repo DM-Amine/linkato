@@ -29,7 +29,7 @@ export default function Hero() {
         {/* RIGHT - Carousel */}
          <div className="flex flex-col h-fit items-center space-y-4">
          
-          <Carousel items={customItems} loop autoplay autoplayDelay={2000} />
+          <Carousel items={customItems} baseWidth={260} loop autoplay autoplayDelay={2000} />
         </div>
       </div>
     </section>

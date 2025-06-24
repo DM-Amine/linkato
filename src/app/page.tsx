@@ -40,7 +40,7 @@ export default function Home() {
       <section id="get-started" className="my-24 py-10 px-4 mx-auto ring-10 shadow-2xl  ring-neutral-300 bg-neutral-100/80 dark:ring-neutral-900/80 dark:bg-neutral-900 w-fit rounded-4xl border-6 border-primary/40 dark:border-primary/80">
         <div className="max-w-3xl mx-auto px-6 text-center space-y-6">
           <h2 className="text-3xl font-bold">Join 200+ Early Access Users Who Love the Experience (actually i have no one)</h2>
-         <div className="h-fit w-fit mx-auto hover:scale-110 transition-all duration-300">
+         <div className="h-fit w-fit mx-auto ">
            <CTA/>
          </div>
         </div>

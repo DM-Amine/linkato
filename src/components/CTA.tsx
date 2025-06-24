@@ -11,7 +11,7 @@ export default function CTA() {
          <Button
                   variant="ghost"
                   className="w-30 h-8.5 group relative inline-flex items-center justify-center gap-1.5 py-4 rounded-xl text-sm font-semibold 
-               text-neutral-700 bg-primary 
+               text-neutral-700 bg-primary shadow-lg shadow-primary/70 hover:shadow-none ring-2 ring-primary hover:ring-primary-light
                
                hover:bg-primary 
               

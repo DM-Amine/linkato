@@ -119,7 +119,7 @@ export default function NavbarMain() {
           </div>
           {session?.user ? (
             <>
-              <Link href="/dashboard">
+              <Link href="/dashboard/pages">
                 <Button
                   variant="ghost"
                   className="text-neutral-800 text-xs border border-neutral-600 dark:text-neutral-200 dark:border-neutral-600 hover:bg-neutral-200 dark:hover:bg-neutral-800 has-[>svg]:px-1"

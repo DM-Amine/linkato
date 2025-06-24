@@ -153,14 +153,14 @@ export default function Carousel({
   return (
     <div
       ref={containerRef}
-      className={`carousel-container ${round ? "round" : ""}`}
+      className={`carousel-container border !rounded-3xl  ${round ? "round" : ""}`}
       style={{
         width: `${baseWidth}px`,
         ...(round && { height: `${baseWidth}px`, borderRadius: "50%" }),
       }}
     >
       <motion.div
-        className="carousel-track"
+        className="carousel-track "
         drag="x"
         {...dragProps}
         style={{
