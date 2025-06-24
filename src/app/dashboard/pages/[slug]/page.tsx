@@ -258,7 +258,7 @@ export default function Dashboard() {
 
       <div className="w-full mx-auto">
         <div className="flex md:flex-row flex-col min-w-full justify-between">
-          <div className="max-w-full sm:w-full mt-6 mx-3 space-y-6">
+          <div className="max-w-full sm:w-full mt-2 mx-3 space-y-6">
             {!isPageLoaded ? (
   <ProfileCardSkeleton />
 ) : (

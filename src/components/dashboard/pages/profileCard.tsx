@@ -126,7 +126,7 @@ export function ProfileCard({ profile, onProfileUpdate }: ProfileEditorProps) {
   return (
     <Card className="bg-neutral-200 dark:bg-neutral-800 py-2 border border-neutral-200 dark:border-neutral-600">
       <CardContent className="space-y-4 px-2">
-
+ 
         {/* Cover Upload */}
         <div className="space-y-2 relative">
           <Label className="text-neutral-700 dark:text-neutral-300">Cover Image</Label>
@@ -143,7 +143,7 @@ export function ProfileCard({ profile, onProfileUpdate }: ProfileEditorProps) {
                 <Button
                   size="sm"
                   variant="outline"
-                  className="absolute top-2 right-2 w-8 h-8 p-0 rounded-full z-10"
+                  className="absolute top-1 right-1 w-6 h-6 p-0 rounded-lg border shadow-md text-neutral-600 hover:text-error hover:dark:text-error bg-neutral-100 dark:bg-neutral-800 z-10"
                   onClick={(e) => {
                     e.stopPropagation()
                     handleDeleteBlob(profile.coverImage!, "cover", onProfileUpdate, profile)
@@ -205,7 +205,7 @@ export function ProfileCard({ profile, onProfileUpdate }: ProfileEditorProps) {
               <Button
                 size="sm"
                 variant="outline"
-                className="w-8 h-8 p-0 rounded-full"
+                className="w-6 h-6 p-0 rounded-lg border shadow-md text-neutral-600 hover:shadow-none bg-neutral-100 dark:bg-neutral-800 "
                 onClick={() => avatarRef.current?.click()}
               >
                 <Upload className="w-4 h-4" />
@@ -214,7 +214,7 @@ export function ProfileCard({ profile, onProfileUpdate }: ProfileEditorProps) {
                 <Button
                   size="sm"
                   variant="outline"
-                  className="w-8 h-8 p-0 rounded-full hover:text-red-500"
+                  className="w-6 h-6 p-0 rounded-lg border shadow-md text-neutral-600 hover:text-error hover:shadow-none hover:dark:text-error bg-neutral-100 dark:bg-neutral-800 "
                   onClick={() => handleDeleteBlob(profile.image!, "avatar", onProfileUpdate, profile)}
                 >
                   <Trash2 className="w-4 h-4" />
