@@ -34,7 +34,7 @@ export function MobilePreview({ profile, links, socialMedia, theme, content }: M
             <div className="relative">
               {/* Cover Image */}
               {coverImage && (
-                <div className="w-full h-32 relative">
+                <div className="w-full h-fit">
                   <Image
                     width={800}
                     height={600}
