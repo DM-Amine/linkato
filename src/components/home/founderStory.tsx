@@ -7,7 +7,7 @@ export function FounderStory() {
       <div className="py-24 px-6 md:px-8 lg:px-10 max-w-3xl mx-auto text-center">
         <div className="space-y-6">
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-neutral-900 dark:text-neutral-50">
-            Why I Built Lunitea
+            Why I Built Linkato
           </h2>
 
           <Separator className="mx-auto w-12 bg-primary h-[2px]" />
@@ -16,7 +16,7 @@ export function FounderStory() {
             
 
             <p className="italic">
-              I built <span className="font-bold text-foreground">Lunitea</span> because I was tired of setting up the same things over and over —
+              I built <span className="font-bold text-foreground">Linkato</span> because I was tired of setting up the same things over and over —
               <span className="font-semibold text-foreground">auth</span>, 
               <span className="font-semibold text-foreground">dashboards</span>, 
               <span className="font-semibold text-foreground">basic pages</span>, and 

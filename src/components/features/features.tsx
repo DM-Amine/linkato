@@ -275,7 +275,7 @@ export default function FeaturesPage() {
       <section className="w-full mx-auto">
         <section className="py-2 px-2">
           <h1 className="text-3xl font-bold text-center mb-8 text-neutral-900 dark:text-neutral-100">
-            Explore Dokweel Features
+            Explore Linkato Features
           </h1>
 
           {/* Search Bar */}

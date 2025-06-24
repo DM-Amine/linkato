@@ -49,7 +49,7 @@ export default function WaitlistTimeChart({ waitlist }: Props) {
   const chartConfig = {
     users: {
       label: "Users Joined",
-      color: "#8E8E8E", // Dokweel primary color
+      color: "#8E8E8E", 
     },
   } satisfies ChartConfig;
 
