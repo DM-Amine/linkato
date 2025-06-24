@@ -1,142 +1,78 @@
-/*
-	Installed from https://reactbits.dev/ts/default/
-*/
-
 .carousel-container {
   position: relative;
   overflow: hidden;
-  border: 1px solid #555;
-  border-radius: 24px;
   padding: 16px;
-  --outer-r: 24px;
-  --p-distance: 12px;
-
+  border-radius: 12px;
 }
-
 
 .carousel-track {
   display: flex;
-}
-
-.carousel-item {
-  position: relative;
-  display: flex;
-  flex-shrink: 0;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-  border: 1px solid #555;
-  border-radius: calc(var(--outer-r) - var(--p-distance));
-  background-color: #0d0d0d;
-  overflow: hidden;
   cursor: grab;
+  gap: 16px;
 }
 
-.carousel-item:active {
+.carousel-track:active {
   cursor: grabbing;
 }
 
-.carousel-container.round {
-  border: 1px solid #555;
+.carousel-item {
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 }
 
 .carousel-item.round {
-  background-color: #0d0d0d;
-  position: relative;
-  bottom: 0.1em;
-  border: 1px solid #555;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  border-radius: 50%;
 }
 
-.carousel-item-header.round {
-  padding: 0;
-  margin: 0;
+.carousel-item-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.carousel-indicators-container.round {
+.carousel-item-image.round {
+  border-radius: 50%;
+}
+
+.carousel-indicators-container {
   position: absolute;
-  z-index: 2;
-  bottom: 3em;
+  bottom: 8px;
   left: 50%;
   transform: translateX(-50%);
 }
 
-.carousel-indicator.active {
-  background-color: #333333;
-}
-
-.carousel-indicator.inactive {
-  background-color: rgba(51, 51, 51, 0.4);
-}
-
-.carousel-item-header {
-  margin-bottom: 16px;
-  padding: 20px;
-  padding-top: 20px;
-}
-
-.carousel-icon-container {
-  display: flex;
-  height: 28px;
-  width: 28px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  background-color: #fff;
-}
-
-.carousel-icon {
-  height: 16px;
-  width: 16px;
-  color: #060010;
-}
-
-.carousel-item-content {
-  padding: 20px;
-  padding-bottom: 20px;
-}
-
-.carousel-item-title {
-  margin-bottom: 4px;
-  font-weight: 900;
-  font-size: 18px;
-  color: #fff;
-}
-
-.carousel-item-description {
-  font-size: 14px;
-  color: #fff;
-}
-
-.carousel-indicators-container {
-  display: flex;
-  width: 100%;
-  justify-content: center;
+.carousel-indicators-container.round {
+  bottom: -40px;
 }
 
 .carousel-indicators {
-  margin-top: 16px;
   display: flex;
-  width: 150px;
-  justify-content: space-between;
-  padding: 0 32px;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
 }
 
 .carousel-indicator {
-  height: 8px;
   width: 8px;
+  height: 8px;
   border-radius: 50%;
   cursor: pointer;
-  transition: background-color 150ms;
+  transition: all 0.2s ease;
 }
 
 .carousel-indicator.active {
-  background-color: #bfe21f;
-  border: #333333 1px solid;
+  background: white;
 }
 
 .carousel-indicator.inactive {
-  background-color: #555;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.carousel-indicator:hover {
+  background: rgba(255, 255, 255, 0.8);
 }
