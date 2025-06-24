@@ -3,42 +3,44 @@ import type { Metadata } from "next";
 
 export const generateMetadata = async (): Promise<Metadata> => {
   return {
-    title: "Contact Us | Dokweel – Reach Out to Us Today",
+    title: "Contact Us | Linkato – We're Here to Help",
     description:
-      "Get in touch with the Dokweel team for any questions, inquiries, or support. We’re here to assist you with your SaaS and blogging needs.",
+      "Have questions or feedback about Linkato? Reach out to our team for support, partnership inquiries, or general assistance.",
     keywords: [
-      "contact us Dokweel",
-      "get in touch with Dokweel",
-      "SaaS support",
+      "contact Linkato",
+      "Linkato support",
+      "get in touch Linkato",
+      "creator support",
+      "bio link help",
       "contact form",
-      "reach out to Dokweel",
-      "Dokweel customer support"
+      "Linkato team"
     ],
     openGraph: {
-      title: "Contact Us | Dokweel – Reach Out to Us Today",
+      title: "Contact Us | Linkato – We're Here to Help",
       description:
-        "Have questions or need support? Contact Dokweel and get personalized help with our products and services.",
-      url: "https://dokweel.com/contact",
-      siteName: "Dokweel",
+        "Need help or have a question? Contact the Linkato team for support or collaboration opportunities.",
+      url: "https://linkato.vercel.app/contact",
+      siteName: "Linkato",
       images: [
         {
-          url: "https://dokweel.com/og/contact-cover.jpg", // Add the appropriate image URL for the contact page
+          url: "https://linkato.vercel.app/og/contact-cover.jpg", // Update with your actual contact OG image
           width: 1200,
           height: 630,
-          alt: "Contact Us - Dokweel"
+          alt: "Contact Linkato – Get Support or Say Hello"
         }
       ],
       type: "website"
     },
     twitter: {
       card: "summary_large_image",
-      title: "Contact Us | Dokweel – Reach Out to Us Today",
+      title: "Contact Us | Linkato – We're Here to Help",
       description:
-        "Get in touch with the Dokweel team for any inquiries or support, and we will assist you as quickly as possible.",
-      images: ["https://dokweel.com/og/contact-cover.jpg"] // Same as Open Graph image
+        "Reach out to the Linkato team for assistance, feedback, or partnership inquiries. We're here for you.",
+      images: ["https://linkato.vercel.app/og/contact-cover.jpg"] // Same as OG
     }
   };
 };
+
 
 
 export default function ContactPage() {

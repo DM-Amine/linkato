@@ -1,33 +1,31 @@
-import { Suspense } from "react";
 import type { Metadata } from "next";
-
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: "Lunitea Blogs – AI, Tech, Design & Growth for SaaS Teams",
+    title: "Linkato Blog – Creator Tools, Link-in-Bio Strategies & Growth Tips",
     description:
-      "Explore future-focused content on SaaS startups, AI tools, modern product design, and web development – curated by Lunitea.",
+      "Discover strategies for personal branding, creator monetization, and link-in-bio best practices. Stay updated with Linkato’s latest features and growth tips.",
     keywords: [
-      "Lunitea blog",
-      "SaaS blog posts",
-      "startup growth",
-      "AI product design",
-      "web development blogs",
-      "tech founder insights",
-      "UI/UX strategy",
-      "modern SaaS trends"
+      "Linkato blog",
+      "link in bio strategies",
+      "personal branding",
+      "creator economy",
+      "online presence tips",
+      "bio link customization",
+      "social media growth",
+      "content marketing"
     ],
     openGraph: {
-      title: "Lunitea Blogs – AI, Tech, Design & Growth for SaaS Teams",
+      title: "Linkato Blog – Creator Tools, Link-in-Bio Strategies & Growth Tips",
       description:
-        "Explore expert articles on SaaS, startups, AI tools, and web development curated by the Lunitea team.",
-      url: "https://lunitea.com/blogs",
-      siteName: "Lunitea",
+        "Explore Linkato’s insights on link-in-bio design, creator growth, monetization, and social media strategy.",
+      url: "https://linkato.vercel.app/blogs",
+      siteName: "Linkato",
       images: [
         {
-          url: "https://lunitea.com/og/lunitea-blogs-cover.jpg",
+          url: "https://linkato.vercel.app/og/linkato-blogs-cover.jpg", // update when image is ready
           width: 1200,
           height: 630,
-          alt: "Discover SaaS, AI, and design insights on the Lunitea blog"
+          alt: "Linkato Blog – Link-in-Bio Growth and Creator Insights"
         }
       ],
       type: "website",
@@ -35,33 +33,10 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     twitter: {
       card: "summary_large_image",
-      title: "Lunitea Blogs – AI, Tech, Design & Growth for SaaS Teams",
+      title: "Linkato Blog – Creator Tools, Link-in-Bio Strategies & Growth Tips",
       description:
-        "Future-focused blogs on SaaS, AI, product design, and modern tech workflows – brought to you by Lunitea.",
-      images: ["https://lunitea.com/og/lunitea-blogs-cover.jpg"]
+        "Learn how to grow your online brand with Linkato. Insights on link-in-bio best practices and creator monetization.",
+      images: ["https://linkato.vercel.app/og/linkato-blogs-cover.jpg"] // update accordingly
     }
   };
 }
-
-
-import dynamic from "next/dynamic";
-const BlogsPageComponent = dynamic(() => import('@/components/blogs/blogs'));
-
-export default function BlogsPage() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <BlogsPageComponent />
-    </Suspense>
-  );
-}
-
-// -- Coming Soon Placeholder --
-// export default function BlogsPage() {
-   
-  
-//   return (
-//     <Suspense fallback={<div>Loading...</div>}>
-//       <ComingSoon />
-//     </Suspense>
-//   );
-// }

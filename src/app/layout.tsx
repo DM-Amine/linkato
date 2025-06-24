@@ -16,39 +16,45 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Dokweel Blogs Management App",
-  description: "Organize your blogs with ease. Manage multiple blogs and projects efficiently with Dokweel.",
+  title: "Linkato – Build Your Link-in-Bio Page",
+  description:
+    "Create a professional link-in-bio page with Linkato. Showcase your links, social profiles, and content with fully customizable themes.",
   keywords: [
-    "Dokweel blogs management",
-    "blog management app",
-    "SaaS blogging tool",
-    "organize blogs",
-    "project management for blogs",
-    "blogging tools",
-    "content management system"
+    "Linkato",
+    "link in bio tool",
+    "linktree alternative",
+    "customizable bio link",
+    "social media links",
+    "personal branding",
+    "creator tools",
+    "link management",
+    "SaaS bio link builder"
   ],
   openGraph: {
-    title: "Dokweel Blogs Management App",
-    description: "Organize your blogs with ease and efficiency.",
-    url: "https://dokweel.com",
-    siteName: "Dokweel",
+    title: "Linkato – Build Your Link-in-Bio Page",
+    description:
+      "Linkato lets you create sleek, professional link-in-bio pages with full customization and mobile-friendly previews.",
+    url: "https://linkato.vercel.app",
+    siteName: "Linkato",
     images: [
       {
-        url: "https://dokweel.com/og/dokweel-blog-management.jpg", 
+        url: "https://linkato.vercel.app/og/linkato-hero.jpg", // Replace with your actual OG image path
         width: 1200,
         height: 630,
-        alt: "Dokweel Blog Management App"
+        alt: "Linkato – Your Custom Bio Link Page"
       }
     ],
     type: "website"
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dokweel Blogs Management App",
-    description: "Manage your blogs and projects with Dokweel – your easy-to-use blogging solution.",
-    images: ["https://dokweel.com/og/dokweel-blog-management.jpg"] 
+    title: "Linkato – Build Your Link-in-Bio Page",
+    description:
+      "Customize your online presence with Linkato. Create powerful link-in-bio pages with themes, avatars, and more.",
+    images: ["https://linkato.vercel.app/og/linkato-hero.jpg"] // Replace with your actual image
   }
 };
+
 
 export default function RootLayout({
   children,
