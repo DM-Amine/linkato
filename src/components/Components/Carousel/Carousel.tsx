@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from "react"
 import { motion, type PanInfo, useMotionValue, useTransform, type Transition } from "framer-motion"
 import Image from "next/image"
+import "./carousel.css" // Ensure you have the appropriate CSS for styling
 
 export interface CarouselItem {
   id: number

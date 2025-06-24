@@ -2,11 +2,11 @@ import CTA from "@/components/CTA"
 import Carousel from "@/components/Components/Carousel/Carousel"
 
 const customItems = [
-  { id: 1, image: "https://i.imgur.com/jgvv614.jpeg" },
-  { id: 2, image: "https://i.imgur.com/cf4wzbQ.jpeg" },
-  { id: 3, image: "https://i.imgur.com/qkR9MbN.jpeg" },
-  { id: 4, image: "https://i.imgur.com/rBf43at.jpeg" },
-  { id: 5, image: "https://i.imgur.com/Dn9rpSd.jpeg" },
+  { id: 1, image: "/images/mockups/mockup1.png" },
+  { id: 2, image: "/images/mockups/mockup2.png" },
+  { id: 3, image: "/images/mockups/mockup3.png" },
+  { id: 4, image: "/images/mockups/mockup4.png" },
+  { id: 5, image: "/images/mockups/mockup5.png" },
 ]
 
 export default function Hero() {
@@ -28,6 +28,7 @@ export default function Hero() {
 
         {/* RIGHT - Carousel */}
          <div className="flex flex-col h-fit items-center space-y-4">
+         
           <Carousel items={customItems} loop autoplay autoplayDelay={2000} />
         </div>
       </div>
