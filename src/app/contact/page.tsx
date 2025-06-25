@@ -23,7 +23,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
       siteName: "Linkato",
       images: [
         {
-          url: "https://linkato.vercel.app/og/contact-cover.jpg", // Update with your actual contact OG image
+          url: "https://linkato.vercel.app/images/linkato-link-in-bio.jpg", // Update with your actual contact OG image
           width: 1200,
           height: 630,
           alt: "Contact Linkato – Get Support or Say Hello"
@@ -36,7 +36,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
       title: "Contact Us | Linkato – We're Here to Help",
       description:
         "Reach out to the Linkato team for assistance, feedback, or partnership inquiries. We're here for you.",
-      images: ["https://linkato.vercel.app/og/contact-cover.jpg"] // Same as OG
+      images: ["https://linkato.vercel.app/images/linkato-link-in-bio.jpg"] // Same as OG
     }
   };
 };

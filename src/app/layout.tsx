@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     siteName: "Linkato",
     images: [
       {
-        url: "https://linkato.vercel.app/og/linkato-hero.jpg", // Replace with your actual OG image path
+        url: "https://linkato.vercel.app/images/linkato-link-in-bio.jpg", // Replace with your actual OG image path
         width: 1200,
         height: 630,
         alt: "Linkato – Your Custom Bio Link Page"
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     title: "Linkato – Build Your Link-in-Bio Page",
     description:
       "Customize your online presence with Linkato. Create powerful link-in-bio pages with themes, avatars, and more.",
-    images: ["https://linkato.vercel.app/og/linkato-hero.jpg"] // Replace with your actual image
+    images: ["https://linkato.vercel.app/images/linkato-link-in-bio.jpg"] // Replace with your actual image
   }
 };
 
